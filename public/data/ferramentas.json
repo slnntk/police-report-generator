@@ -1,0 +1,7 @@
+{
+  "ferramentas": [
+    { "id": 1, "nome": "Lockpick", "categoria": "Arrombamento" },
+    { "id": 2, "nome": "Chave Micha", "categoria": "Arrombamento" },
+    { "id": 3, "nome": "Furadeira", "categoria": "Arrombamento" }
+  ]
+}

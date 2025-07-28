@@ -1,0 +1,12 @@
+{
+  "produtos": [
+    { "id": 1, "nome": "Celular", "categoria": "Eletrônicos", "valor_medio": 800 },
+    { "id": 2, "nome": "Notebook", "categoria": "Eletrônicos", "valor_medio": 2500 },
+    { "id": 3, "nome": "Televisão", "categoria": "Eletrônicos", "valor_medio": 1500 },
+    { "id": 4, "nome": "Bicicleta", "categoria": "Veículos", "valor_medio": 600 },
+    { "id": 5, "nome": "Motocicleta", "categoria": "Veículos", "valor_medio": 8000 },
+    { "id": 6, "nome": "Automóvel", "categoria": "Veículos", "valor_medio": 25000 },
+    { "id": 7, "nome": "Joias", "categoria": "Objetos de Valor", "valor_medio": 1200 },
+    { "id": 8, "nome": "Relógio", "categoria": "Objetos de Valor", "valor_medio": 500 }
+  ]
+}

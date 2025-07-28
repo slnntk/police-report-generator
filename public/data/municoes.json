@@ -1,0 +1,18 @@
+{
+  "municoes": [
+    { "id": 1, "nome": "Munição de Revólver .38", "calibre": "38", "tipo": "Revólver" },
+    { "id": 2, "nome": "Munição de Pistola .380", "calibre": "380", "tipo": "Pistola" },
+    { "id": 3, "nome": "Munição de Glock 9mm", "calibre": "9", "tipo": "Pistola" },
+    { "id": 4, "nome": "Munição de Pistola .40", "calibre": "40", "tipo": "Pistola" },
+    { "id": 5, "nome": "Munição de Pistola .45", "calibre": "45", "tipo": "Pistola" },
+    { "id": 6, "nome": "Munição de Espingarda Cal. 12", "calibre": "12", "tipo": "Escopeta" },
+    { "id": 7, "nome": "Munição de Rifle .22", "calibre": "22", "tipo": "Rifle" },
+    { "id": 8, "nome": "Munição de AK-47", "calibre": "762", "tipo": "Fuzil" },
+    { "id": 9, "nome": "Munição de Five Seven", "calibre": "5.7", "tipo": "Pistola" },
+    { "id": 10, "nome": "Munição de MP5", "calibre": "9", "tipo": "Submetralhadora" },
+    { "id": 11, "nome": "Munição de MPX", "calibre": "9", "tipo": "Submetralhadora" },
+    { "id": 12, "nome": "Munição de M4A1", "calibre": "5.56", "tipo": "Fuzil" },
+    { "id": 13, "nome": "Munição de AUG", "calibre": "5.56", "tipo": "Fuzil" },
+    { "id": 14, "nome": "Munição de Desert Eagle", "calibre": "50", "tipo": "Pistola" }
+  ]
+}

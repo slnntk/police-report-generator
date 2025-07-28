@@ -1,0 +1,7 @@
+{
+  "entorpecentes": [
+    { "id": 1, "nome": "Maconha", "unidade": "Gramas", "categoria": "Cannabis" },
+    { "id": 2, "nome": "Cocaína", "unidade": "Gramas", "categoria": "Estimulante" },
+    { "id": 3, "nome": "Metanfetamina", "unidade": "Gramas", "categoria": "Sintético" }
+  ]
+}
