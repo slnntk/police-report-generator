@@ -8,7 +8,9 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Sistema Policial - Gerador de Relatórios",
   description: "Sistema automatizado para geração de relatórios policiais e cálculo de penas",
-    generator: 'v0.dev'
+    icons: {
+        icon: "/images/emblema-policia.png"
+    }
 }
 
 export default function RootLayout({
