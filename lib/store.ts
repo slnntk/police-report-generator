@@ -87,12 +87,22 @@ const fallbackData = {
         nome: "Flagrante Delito",
         descricao: "Ocorrência iniciada em flagrante delito",
       },
+      {
+        id: "corrida",
+        nome: "Corrida Ilegal",
+        descricao: "Ocorrência iniciada durante corrida ilegal de veículos",
+      },
     ],
     templates: {
       abordagem: {
         titulo: "Pena",
         template:
-            "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. Ao se deslocar para o referido local, encontramos o(s) requerente(s) cometendo o(s) referido(s) delito(s). Após aviso sonoro, luminoso e verbal, o indivíduo empreendeu fuga. Minutos depois, o mesmo ficou inoperante em seu veículo {veiculo}, na região do {local_prisao}. Iniciou tentativa de fuga a pé, porém foi capturado e conduzido até o departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses",
+          "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. Ao se deslocar para o referido local, encontramos o(s) requerente(s) cometendo o(s) referido(s) delito(s). Após aviso sonoro, luminoso e verbal, o indivíduo empreendeu fuga. Minutos depois, o mesmo ficou inoperante em seu veículo {veiculo}, na região do {local_prisao}. Iniciou tentativa de fuga a pé, porém foi capturado e conduzido até o departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses",
+      },
+      corrida: {
+        titulo: "Pena",
+        template:
+          "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Durante patrulhamento, as equipes identificaram uma corrida ilegal de veículos na região do {local_inicio}, envolvendo {tipo_crime}. Foi realizada operação para interceptar os participantes, resultando na apreensão do veículo {veiculo} e prisão do(s) envolvido(s) na região do {local_prisao}. O(s) indivíduo(s) foi/foram conduzido(s) ao departamento policial para as devidas providências.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses",
       },
     },
   },
@@ -139,20 +149,20 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
       // Selecionar template baseado no tipo de início
       const tipoTemplate = formData.tipo_inicio || "abordagem"
       const templateConfig = templateData.templates?.[tipoTemplate] ||
-          templateData.templates?.abordagem || {
-            template:
-                "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: {tipo_crime} em {local_inicio}.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses",
-          }
+        templateData.templates?.abordagem || {
+          template:
+            "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: {tipo_crime} em {local_inicio}.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses",
+        }
 
       let template = templateConfig.template
 
       // Substituir variáveis no template
       template = template
-          .replace("{tipo_crime}", formData.tipo_crime || "Não informado")
-          .replace(/\{local_inicio\}/g, formData.local_inicio || "Não informado")
-          .replace(/\{local_prisao\}/g, formData.local_prisao || "Não informado")
-          .replace("{veiculo}", formData.veiculo || "Não informado")
-          .replace("{data_hora}", new Date().toLocaleString("pt-BR"))
+        .replace("{tipo_crime}", formData.tipo_crime || "Não informado")
+        .replace(/\{local_inicio\}/g, formData.local_inicio || "Não informado")
+        .replace(/\{local_prisao\}/g, formData.local_prisao || "Não informado")
+        .replace("{veiculo}", formData.veiculo || "Não informado")
+        .replace("{data_hora}", new Date().toLocaleString("pt-BR"))
 
       // Gerar lista de itens apreendidos no formato compacto
       const itensCompactos = []
@@ -219,11 +229,11 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
       })
 
       template = template
-          .replace("{calculo_pena}", calculoPena || "Nenhuma infração calculada")
-          .replace("{pena_total}", penaltyCalculation.total.toString())
-          .replace("{observacoes}", formData.observacoes || "Nenhuma observação adicional.")
-          .replace("{responsavel}", "Sistema Automatizado")
-          .replace("{data_relatorio}", new Date().toLocaleDateString("pt-BR"))
+        .replace("{calculo_pena}", calculoPena || "Nenhuma infração calculada")
+        .replace("{pena_total}", penaltyCalculation.total.toString())
+        .replace("{observacoes}", formData.observacoes || "Nenhuma observação adicional.")
+        .replace("{responsavel}", "Sistema Automatizado")
+        .replace("{data_relatorio}", new Date().toLocaleDateString("pt-BR"))
 
       set({ generatedReport: template })
     } catch (error) {

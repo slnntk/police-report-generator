@@ -24,28 +24,37 @@
       "id": "flagrante",
       "nome": "Flagrante Delito",
       "descricao": "Ocorrência iniciada em flagrante delito"
+    },
+    {
+      "id": "corrida",
+      "nome": "Corrida Ilegal",
+      "descricao": "Ocorrência iniciada durante corrida ilegal de veículos"
     }
   ],
   "templates": {
     "abordagem": {
       "titulo": "Pena",
-      "template": "🛡️ 1º Batalhão de Polícia Militar - Alta Paradise (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. Ao se deslocar para o referido local, encontramos o(s) requerente(s) cometendo o(s) referido(s) delito(s). Após aviso sonoro, luminoso e verbal, o indivíduo empreendeu fuga. Minutos depois, o mesmo ficou inoperante em seu veículo {veiculo}, na região do {local_prisao}. Iniciou tentativa de fuga a pé, porém foi capturado e conduzido até o departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
+      "template": "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. Ao se deslocar para o referido local, encontramos o(s) requerente(s) cometendo o(s) referido(s) delito(s). Após aviso sonoro, luminoso e verbal, o indivíduo empreendeu fuga. Minutos depois, o mesmo ficou inoperante em seu veículo {veiculo}, na região do {local_prisao}. Iniciou tentativa de fuga a pé, porém foi capturado e conduzido até o departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
     },
     "fuga": {
       "titulo": "Pena",
-      "template": "🛡️ 1º Batalhão de Polícia Militar - Alta Paradise (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. O(s) indivíduo(s) tentou/tentaram empreender fuga, sendo acompanhado(s) pelas equipes policiais. Após perseguição veicular, o suspeito ficou inoperante em seu veículo {veiculo}, na região do {local_prisao}, tentando ainda fuga a pé, sendo contido e conduzido ao departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
+      "template": "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. O(s) indivíduo(s) tentou/tentaram empreender fuga, sendo acompanhado(s) pelas equipes policiais. Após perseguição veicular, o suspeito ficou inoperante em seu veículo {veiculo}, na região do {local_prisao}, tentando ainda fuga a pé, sendo contido e conduzido ao departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
     },
     "disparo": {
       "titulo": "Pena",
-      "template": "🛡️ 1º Batalhão de Polícia Militar - Alta Paradise (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} iniciada em {local_inicio}, envolvendo disparo de arma de fogo. As equipes deslocaram até o local, sendo constatada a veracidade dos fatos. O(s) indivíduo(s) fugiu/fugiram em veículo {veiculo} e foi/foram contido(s) na região do {local_prisao}, sendo conduzido(s) ao departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
+      "template": "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} iniciada em {local_inicio}, envolvendo disparo de arma de fogo. As equipes deslocaram até o local, sendo constatada a veracidade dos fatos. O(s) indivíduo(s) fugiu/fugiram em veículo {veiculo} e foi/foram contido(s) na região do {local_prisao}, sendo conduzido(s) ao departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
     },
     "denuncia": {
       "titulo": "Pena",
-      "template": "🛡️ 1º Batalhão de Polícia Militar - Alta Paradise (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia anônima (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. As equipes deslocaram até o local informado, sendo constatada a veracidade dos fatos. O(s) indivíduo(s) foi/foram detido(s) e conduzido(s) ao departamento policial para prisão, na região do {local_prisao}.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
+      "template": "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia anônima (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. As equipes deslocaram até o local informado, sendo constatada a veracidade dos fatos. O(s) indivíduo(s) foi/foram detido(s) e conduzido(s) ao departamento policial para prisão, na região do {local_prisao}.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
     },
     "flagrante": {
       "titulo": "Pena",
-      "template": "🛡️ 1º Batalhão de Polícia Militar - Alta Paradise (1ºBPM-AP) 🛡️\n\n📝 Relato: Durante patrulhamento, as equipes flagraram o(s) indivíduo(s) cometendo {tipo_crime} na região do {local_inicio}. Foi realizada abordagem, resultando na prisão do(s) envolvido(s), que foi/foram conduzido(s) ao departamento policial na região do {local_prisao}.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
+      "template": "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Durante patrulhamento, as equipes flagraram o(s) indivíduo(s) cometendo {tipo_crime} na região do {local_inicio}. Foi realizada abordagem, resultando na prisão do(s) envolvido(s), que foi/foram conduzido(s) ao departamento policial na região do {local_prisao}.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
+    },
+    "corrida": {
+      "titulo": "Pena",
+      "template": "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Durante patrulhamento, as equipes identificaram uma corrida ilegal de veículos na região do {local_inicio}, envolvendo {tipo_crime}. Foi realizada operação para interceptar os participantes, resultando na apreensão do veículo {veiculo} e prisão do(s) envolvido(s) na região do {local_prisao}. O(s) indivíduo(s) foi/foram conduzido(s) ao departamento policial para as devidas providências.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses"
     }
   }
 }

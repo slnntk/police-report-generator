@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { OccurrenceForm } from "./OccurrenceForm"
+import { QuickOccurrenceForm } from "./QuickOccurrenceForm"
 import { ReportView } from "./ReportView"
 import { InteractivePenaltyView } from "./InteractivePenaltyView"
 import { StepperNavigation } from "./StepperNavigation"
@@ -61,7 +61,7 @@ export function MainContent({ activeTab, setActiveTab }: MainContentProps) {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <OccurrenceForm
+            <QuickOccurrenceForm
               onFormSubmit={handleFormSubmit}
               showResults={!!generatedReport}
               onCalculationUpdate={handleCalculationFeedback}

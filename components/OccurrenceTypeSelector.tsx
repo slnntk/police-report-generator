@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, AlertTriangle, Target, Phone, Eye } from "lucide-react"
+import { CheckCircle2, AlertTriangle, Target, Phone, Eye, Zap } from "lucide-react"
 
 interface OccurrenceTypeSelectorProps {
   selectedType: string
@@ -16,6 +16,7 @@ const typeIcons = {
   disparo: Target,
   denuncia: Phone,
   flagrante: Eye,
+  corrida: Zap,
 }
 
 const typeColors = {
@@ -24,6 +25,7 @@ const typeColors = {
   disparo: "border-red-500 bg-red-500/10 text-red-400",
   denuncia: "border-blue-500 bg-blue-500/10 text-blue-400",
   flagrante: "border-purple-500 bg-purple-500/10 text-purple-400",
+  corrida: "border-yellow-500 bg-yellow-500/10 text-yellow-400",
 }
 
 const typeSelectedColors = {
@@ -32,6 +34,7 @@ const typeSelectedColors = {
   disparo: "border-red-400 bg-red-400/20 text-red-300",
   denuncia: "border-blue-400 bg-blue-400/20 text-blue-300",
   flagrante: "border-purple-400 bg-purple-400/20 text-purple-300",
+  corrida: "border-yellow-400 bg-yellow-400/20 text-yellow-300",
 }
 
 export function OccurrenceTypeSelector({ selectedType, onTypeChange, types }: OccurrenceTypeSelectorProps) {
@@ -44,7 +47,7 @@ export function OccurrenceTypeSelector({ selectedType, onTypeChange, types }: Oc
         </p>
       </CardHeader>
       <CardContent className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {types.map((type) => {
             const Icon = typeIcons[type.id as keyof typeof typeIcons] || CheckCircle2
             const isSelected = selectedType === type.id
@@ -57,7 +60,7 @@ export function OccurrenceTypeSelector({ selectedType, onTypeChange, types }: Oc
                 key={type.id}
                 onClick={() => onTypeChange(type.id)}
                 className={`
-                  relative p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:scale-105
+                  relative p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:scale-105
                   ${colorClass}
                   ${isSelected ? "shadow-md ring-2 ring-offset-2 ring-offset-background" : "hover:border-opacity-60"}
                 `}
@@ -65,22 +68,24 @@ export function OccurrenceTypeSelector({ selectedType, onTypeChange, types }: Oc
                   ringColor: isSelected ? "#D9C38A" : "transparent",
                 }}
               >
-                <div className="flex items-start gap-3">
-                  <Icon className={`h-6 w-6 mt-0.5 ${isSelected ? "text-current" : "text-current opacity-70"}`} />
-                  <div className="flex-1 min-w-0">
-                    <h3 className={`font-semibold text-sm ${isSelected ? "text-current" : "text-current"}`}>
+                <div className="flex flex-col items-center gap-2 text-center">
+                  <Icon className={`h-5 w-5 ${isSelected ? "text-current" : "text-current opacity-70"}`} />
+                  <div className="min-w-0 w-full">
+                    <h3 className={`font-semibold text-xs ${isSelected ? "text-current" : "text-current"}`}>
                       {type.nome}
                     </h3>
-                    <p className={`text-xs mt-1 ${isSelected ? "text-current opacity-80" : "text-current opacity-60"}`}>
+                    <p
+                      className={`text-xs mt-1 leading-tight ${isSelected ? "text-current opacity-80" : "text-current opacity-60"}`}
+                    >
                       {type.descricao}
                     </p>
                   </div>
                 </div>
 
                 {isSelected && (
-                  <div className="absolute -top-2 -right-2">
-                    <Badge className="gradient-primary dark-cta-text text-xs px-2 py-1 shadow-lg font-semibold">
-                      ✓ Selecionado
+                  <div className="absolute -top-1 -right-1">
+                    <Badge className="gradient-primary dark-cta-text text-xs px-1.5 py-0.5 shadow-lg font-semibold">
+                      ✓
                     </Badge>
                   </div>
                 )}

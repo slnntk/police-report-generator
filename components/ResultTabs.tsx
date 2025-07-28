@@ -120,24 +120,22 @@ export function ResultTabs({ onEditForm }: ResultTabsProps) {
 
       {/* Abas de resultados */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2 h-14 items-center dark-secondary-bg border dark-border shadow-md">
+        <TabsList className="grid w-full grid-cols-2 h-14 dark-secondary-bg border dark-border shadow-md">
           <TabsTrigger
-              value="report"
-              className="flex items-center gap-2 text-base font-semibold data-[state=active]:gradient-primary data-[state=active]:dark-cta-text data-[state=active]:shadow-md dark-text"
+            value="report"
+            className="flex items-center gap-2 text-base font-semibold data-[state=active]:gradient-primary data-[state=active]:dark-cta-text data-[state=active]:shadow-md dark-text"
           >
             <FileText className="h-5 w-5" />
             Relatório Gerado
-            <Badge className="self-center bg-green-500/20 text-green-400 border border-green-500/30 font-semibold">
-              Pronto
-            </Badge>
+            <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 font-semibold">Pronto</Badge>
           </TabsTrigger>
           <TabsTrigger
-              value="calculation"
-              className="flex items-center gap-2 text-base font-semibold data-[state=active]:gradient-primary data-[state=active]:dark-cta-text data-[state=active]:shadow-md dark-text"
+            value="calculation"
+            className="flex items-center gap-2 text-base font-semibold data-[state=active]:gradient-primary data-[state=active]:dark-cta-text data-[state=active]:shadow-md dark-text"
           >
             <Calculator className="h-5 w-5" />
             Detalhamento da Pena
-            <Badge className="self-center bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold">
+            <Badge className="bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold">
               {penaltyCalculation.detalhes.length} item(s)
             </Badge>
           </TabsTrigger>
