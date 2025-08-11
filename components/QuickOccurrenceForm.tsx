@@ -446,7 +446,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
     }
 
     // Cleanup on unmount
-    React.useEffect(() => {
+    useEffect(() => {
       return () => {
         if (holdTimeout) clearTimeout(holdTimeout)
         if (holdInterval) clearInterval(holdInterval)
@@ -531,7 +531,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
     }
 
     // Cleanup on unmount
-    React.useEffect(() => {
+    useEffect(() => {
       return () => {
         if (holdTimeout) clearTimeout(holdTimeout)
         if (holdInterval) clearInterval(holdInterval)
