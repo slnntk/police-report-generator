@@ -413,10 +413,11 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value
-      setInputValue(value)
-      
-      const numValue = parseInt(value) || 0
-      if (!isNaN(numValue)) {
+      // Only allow numbers
+      if (/^\d*$/.test(value)) {
+        setInputValue(value)
+        
+        const numValue = parseInt(value) || 0
         setCounterValue(category, item.id, numValue)
       }
     }
@@ -450,11 +451,12 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
           </Button>
           
           <Input
-            type="number"
+            type="text"
+            inputMode="numeric" 
+            pattern="[0-9]*"
             value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
-            min="0"
             className="w-12 h-6 text-center text-sm font-bold bg-gray-800 border-gray-600 text-white px-1"
           />
           
@@ -479,6 +481,8 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
   const GenericCounter = ({ category, title, emoji }: { category: keyof typeof genericCounters; title: string; emoji: string }) => {
     const count = genericCounters[category]
     const [inputValue, setInputValue] = useState(count.toString())
+    const [holdTimeout, setHoldTimeout] = useState<NodeJS.Timeout | null>(null)
+    const [holdInterval, setHoldInterval] = useState<NodeJS.Timeout | null>(null)
 
     useEffect(() => {
       setInputValue(count.toString())
@@ -490,17 +494,31 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
       const timeout = setTimeout(() => {
         const interval = setInterval(() => {
           updateGenericCounter(category, change)
-        }, 100)
-        setTimeout(() => clearInterval(interval), 2000) // Stop after 2 seconds
-      }, 500)
+        }, 100) // Increment every 100ms when holding
+        setHoldInterval(interval)
+      }, 500) // Start rapid increment after 500ms
+      
+      setHoldTimeout(timeout)
+    }
+
+    const stopHold = () => {
+      if (holdTimeout) {
+        clearTimeout(holdTimeout)
+        setHoldTimeout(null)
+      }
+      if (holdInterval) {
+        clearInterval(holdInterval)
+        setHoldInterval(null)
+      }
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value
-      setInputValue(value)
-      
-      const numValue = parseInt(value) || 0
-      if (!isNaN(numValue)) {
+      // Only allow numbers
+      if (/^\d*$/.test(value)) {
+        setInputValue(value)
+        
+        const numValue = parseInt(value) || 0
         setGenericCounterValue(category, numValue)
       }
     }
@@ -523,6 +541,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             size="sm"
             variant="ghost"
             onMouseDown={() => startHold(-1)}
+            onMouseUp={stopHold}
+            onMouseLeave={stopHold}
+            onTouchStart={() => startHold(-1)}
+            onTouchEnd={stopHold}
             disabled={count === 0}
             className="h-7 w-7 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-colors"
           >
@@ -530,11 +552,12 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
           </Button>
           
           <Input
-            type="number"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
-            min="0"
             className="w-16 h-7 text-center text-sm font-bold bg-gray-800 border-indigo-500/50 text-white"
           />
           
@@ -543,6 +566,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             size="sm"
             variant="ghost"
             onMouseDown={() => startHold(1)}
+            onMouseUp={stopHold}
+            onMouseLeave={stopHold}
+            onTouchStart={() => startHold(1)}
+            onTouchEnd={stopHold}
             className="h-7 w-7 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/20 transition-colors"
           >
             <Plus className="h-4 w-4" />
