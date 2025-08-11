@@ -5,7 +5,6 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Slider } from "@/components/ui/slider"
@@ -13,6 +12,9 @@ import { useOccurrenceStore } from "@/lib/store"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { AlertTriangle, Wifi, WifiOff, Plus, Minus, Zap } from "lucide-react"
+import { IntelligentAutocomplete } from "@/components/IntelligentAutocomplete"
+import { FixedNumericInput } from "@/components/FixedNumericInput"
+import { PeopleCount } from "@/components/PeopleCount"
 
 interface QuickOccurrenceFormProps {
   onFormSubmit: () => void
@@ -73,6 +75,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
   const [armas, setArmas] = useState(fallbackData.armas)
   const [tiposInicio, setTiposInicio] = useState(fallbackData.tipos_inicio)
   const [isOnline, setIsOnline] = useState(true)
+  
+  // New state for autocomplete data
+  const [crimes, setCrimes] = useState<any[]>([])
+  const [locations, setLocations] = useState<any[]>([])
 
   // Estados para contadores rápidos
   const [quickCounters, setQuickCounters] = useState({
@@ -105,6 +111,8 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
           fetch("/data/produtos.json"),
           fetch("/data/armas.json"),
           fetch("/data/templates.json"),
+          fetch("/data/crimes.json"),
+          fetch("/data/locations.json"),
         ])
 
         let hasErrors = false
@@ -179,6 +187,34 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
           }
         } else {
           hasErrors = true
+        }
+
+        // Carregar crimes
+        if (responses[6].status === "fulfilled" && responses[6].value.ok) {
+          try {
+            const crimesData = await responses[6].value.json()
+            setCrimes(crimesData.crimes || [])
+          } catch {
+            hasErrors = true
+            setCrimes([])
+          }
+        } else {
+          hasErrors = true
+          setCrimes([])
+        }
+
+        // Carregar locations
+        if (responses[7].status === "fulfilled" && responses[7].value.ok) {
+          try {
+            const locationsData = await responses[7].value.json()
+            setLocations(locationsData.locations || [])
+          } catch {
+            hasErrors = true
+            setLocations([])
+          }
+        } else {
+          hasErrors = true
+          setLocations([])
         }
 
         setIsOnline(!hasErrors)
@@ -379,11 +415,6 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
     const [isHolding, setIsHolding] = useState(false)
     const [holdTimeout, setHoldTimeout] = useState<NodeJS.Timeout | null>(null)
     const [holdInterval, setHoldInterval] = useState<NodeJS.Timeout | null>(null)
-    const [inputValue, setInputValue] = useState(count.toString())
-
-    useEffect(() => {
-      setInputValue(count.toString())
-    }, [count])
 
     const startHold = (change: number) => {
       setIsHolding(true)
@@ -411,22 +442,6 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
       }
     }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value
-      setInputValue(value)
-      
-      const numValue = parseInt(value) || 0
-      if (!isNaN(numValue)) {
-        setCounterValue(category, item.id, numValue)
-      }
-    }
-
-    const handleInputBlur = () => {
-      const numValue = parseInt(inputValue) || 0
-      setCounterValue(category, item.id, numValue)
-      setInputValue(numValue.toString())
-    }
-
     return (
       <div className="flex items-center justify-between p-2 dark-secondary-bg rounded border dark-border hover:bg-gray-700/50 transition-colors">
         <div className="flex-1 min-w-0">
@@ -449,12 +464,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             <Minus className="h-3 w-3" />
           </Button>
           
-          <Input
-            type="number"
-            value={inputValue}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-            min="0"
+          <FixedNumericInput
+            value={count}
+            onChange={(value) => setCounterValue(category, item.id, value)}
+            min={0}
             className="w-12 h-6 text-center text-sm font-bold bg-gray-800 border-gray-600 text-white px-1"
           />
           
@@ -478,11 +491,6 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
 
   const GenericCounter = ({ category, title, emoji }: { category: keyof typeof genericCounters; title: string; emoji: string }) => {
     const count = genericCounters[category]
-    const [inputValue, setInputValue] = useState(count.toString())
-
-    useEffect(() => {
-      setInputValue(count.toString())
-    }, [count])
 
     const startHold = (change: number) => {
       updateGenericCounter(category, change)
@@ -493,22 +501,6 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
         }, 100)
         setTimeout(() => clearInterval(interval), 2000) // Stop after 2 seconds
       }, 500)
-    }
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value
-      setInputValue(value)
-      
-      const numValue = parseInt(value) || 0
-      if (!isNaN(numValue)) {
-        setGenericCounterValue(category, numValue)
-      }
-    }
-
-    const handleInputBlur = () => {
-      const numValue = parseInt(inputValue) || 0
-      setGenericCounterValue(category, numValue)
-      setInputValue(numValue.toString())
     }
 
     return (
@@ -529,12 +521,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             <Minus className="h-4 w-4" />
           </Button>
           
-          <Input
-            type="number"
-            value={inputValue}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-            min="0"
+          <FixedNumericInput
+            value={count}
+            onChange={(value) => setGenericCounterValue(category, value)}
+            min={0}
             className="w-16 h-7 text-center text-sm font-bold bg-gray-800 border-indigo-500/50 text-white"
           />
           
@@ -601,48 +591,65 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
               </div>
             </div>
 
-            {/* Dados básicos - Grid compacto */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label className="text-sm font-semibold dark-text">Crime</Label>
-                <Input
-                  value={formData.tipo_crime}
-                  onChange={(e) => updateFormDataWithRegeneration("tipo_crime", e.target.value)}
-                  placeholder="Ex: Tráfico"
-                  className="input-dark h-9"
-                  required
-                />
-              </div>
-              <div>
-                <Label className="text-sm font-semibold dark-text">Local Início</Label>
-                <Input
-                  value={formData.local_inicio}
-                  onChange={(e) => updateFormDataWithRegeneration("local_inicio", e.target.value)}
-                  placeholder="Ex: Rua A, 123"
-                  className="input-dark h-9"
-                  required
-                />
-              </div>
-              <div>
-                <Label className="text-sm font-semibold dark-text">Local Prisão</Label>
-                <Input
-                  value={formData.local_prisao}
-                  onChange={(e) => updateFormDataWithRegeneration("local_prisao", e.target.value)}
-                  placeholder="Ex: Av. B, 456"
-                  className="input-dark h-9"
-                  required
-                />
-              </div>
-              <div>
-                <Label className="text-sm font-semibold dark-text">Veículo</Label>
-                <Input
-                  value={formData.veiculo}
-                  onChange={(e) => updateFormDataWithRegeneration("veiculo", e.target.value)}
-                  placeholder="Ex: Civic ABC-1234"
-                  className="input-dark h-9"
-                />
-              </div>
+            {/* Dados básicos - Grid compacto com autocompletes */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <IntelligentAutocomplete
+                value={formData.tipo_crime}
+                onChange={(value) => updateFormDataWithRegeneration("tipo_crime", value)}
+                options={crimes}
+                placeholder="Ex: Tráfico de Drogas"
+                label="Crime"
+                required
+                fieldType="crime"
+                allowCustom={true}
+                emptyMessage="Nenhum crime encontrado"
+              />
+              
+              <IntelligentAutocomplete
+                value={formData.local_inicio}
+                onChange={(value) => updateFormDataWithRegeneration("local_inicio", value)}
+                options={locations}
+                placeholder="Ex: Los Santos Central"
+                label="Local de Início"
+                required
+                fieldType="location"
+                allowCustom={true}
+                emptyMessage="Nenhum local encontrado"
+              />
+              
+              <IntelligentAutocomplete
+                value={formData.local_prisao}
+                onChange={(value) => updateFormDataWithRegeneration("local_prisao", value)}
+                options={locations}
+                placeholder="Ex: Próximo a Arcadius"
+                label="Local de Prisão"
+                required
+                fieldType="location"
+                allowCustom={true}
+                emptyMessage="Nenhum local encontrado"
+              />
+              
+              <IntelligentAutocomplete
+                value={formData.veiculo}
+                onChange={(value) => updateFormDataWithRegeneration("veiculo", value)}
+                options={[]} // Empty array for now, can add vehicle data later
+                placeholder="Ex: Elegy RH5 Preto - A1BC1234"
+                label="Veículo"
+                fieldType="location"
+                allowCustom={true}
+                emptyMessage="Digite o veículo"
+              />
             </div>
+
+            {/* Número de pessoas envolvidas */}
+            <PeopleCount
+              value={formData.numero_pessoas_envolvidas}
+              onChange={(value) => updateFormDataWithRegeneration("numero_pessoas_envolvidas", value)}
+              required={true}
+              min={1}
+              max={10}
+              variant="both"
+            />
 
             {/* Desobediência - Slider */}
             <div className="space-y-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
@@ -840,39 +847,34 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
               </div>
             </div>
 
-            {/* Valores monetários - Inline */}
+            {/* Valores monetários - Inline com inputs numéricos melhorados */}
             <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label className="text-sm font-semibold dark-text">Dinheiro Ilícito (R$)</Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.dinheiro_ilicito}
-                  onChange={(e) =>
-                    updateFormDataWithRegeneration("dinheiro_ilicito", Number.parseFloat(e.target.value) || 0)
-                  }
-                  placeholder="0,00"
-                  className="input-dark h-9"
-                />
-              </div>
-              <div>
-                <Label className="text-sm font-semibold dark-text">Multas Pendentes (R$)</Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.multas_pendentes}
-                  onChange={(e) =>
-                    updateFormDataWithRegeneration("multas_pendentes", Number.parseFloat(e.target.value) || 0)
-                  }
-                  placeholder="0,00"
-                  className="input-dark h-9"
-                />
-              </div>
+              <FixedNumericInput
+                value={formData.dinheiro_ilicito}
+                onChange={(value) => updateFormDataWithRegeneration("dinheiro_ilicito", value)}
+                label="Dinheiro Ilícito"
+                placeholder="0,00"
+                prefix="R$"
+                step={0.01}
+                min={0}
+                className="h-9"
+              />
+              
+              <FixedNumericInput
+                value={formData.multas_pendentes}
+                onChange={(value) => updateFormDataWithRegeneration("multas_pendentes", value)}
+                label="Multas Pendentes"
+                placeholder="0,00"
+                prefix="R$"
+                step={0.01}
+                min={0}
+                className="h-9"
+              />
             </div>
 
             {/* Observações - Compacto */}
             <div>
-              <Label className="text-sm font-semibold dark-text">Observações</Label>
+              <label className="text-sm font-semibold dark-text">Observações</label>
               <Textarea
                 value={formData.observacoes}
                 onChange={(e) => updateFormDataWithRegeneration("observacoes", e.target.value)}
