@@ -1,0 +1,154 @@
+{
+  "crimes": [
+    {
+      "id": "trafico_drogas",
+      "crime": "Tráfico de Drogas",
+      "description": "Venda, distribuição ou posse com intenção de venda de substâncias entorpecentes"
+    },
+    {
+      "id": "porte_arma",
+      "crime": "Porte Ilegal de Arma de Fogo",
+      "description": "Portabilidade de arma de fogo sem licença ou autorização legal"
+    },
+    {
+      "id": "roubo",
+      "crime": "Roubo à Mão Armada",
+      "description": "Subtração de bem alheio mediante grave ameaça ou violência com uso de arma"
+    },
+    {
+      "id": "furto",
+      "crime": "Furto",
+      "description": "Subtração de bem alheio móvel para si ou para outrem"
+    },
+    {
+      "id": "homicidio",
+      "crime": "Homicídio",
+      "description": "Ato de matar alguém de forma dolosa ou culposa"
+    },
+    {
+      "id": "tentativa_homicidio",
+      "crime": "Tentativa de Homicídio",
+      "description": "Tentativa de praticar homicídio sem consumação"
+    },
+    {
+      "id": "sequestro",
+      "crime": "Sequestro",
+      "description": "Privação de liberdade de pessoa mediante violência ou grave ameaça"
+    },
+    {
+      "id": "extorsao",
+      "crime": "Extorsão",
+      "description": "Obter vantagem econômica indevida mediante violência ou grave ameaça"
+    },
+    {
+      "id": "lavagem_dinheiro",
+      "crime": "Lavagem de Dinheiro",
+      "description": "Ocultação ou dissimulação da natureza, origem, localização de bens de origem ilícita"
+    },
+    {
+      "id": "associacao_criminosa",
+      "crime": "Associação Criminosa",
+      "description": "Associar-se três ou mais pessoas para fim específico de cometer crimes"
+    },
+    {
+      "id": "corrupcao",
+      "crime": "Corrupção",
+      "description": "Oferecimento ou aceitação de vantagem indevida a funcionário público"
+    },
+    {
+      "id": "formacao_quadrilha",
+      "crime": "Formação de Quadrilha",
+      "description": "Organização de grupo criminoso para prática habitual de crimes"
+    },
+    {
+      "id": "contrabando",
+      "crime": "Contrabando",
+      "description": "Importação ou exportação de mercadoria proibida"
+    },
+    {
+      "id": "estelionato",
+      "crime": "Estelionato",
+      "description": "Obter vantagem ilícita em prejuízo alheio induzindo ou mantendo alguém em erro"
+    },
+    {
+      "id": "receptacao",
+      "crime": "Receptação",
+      "description": "Adquirir, receber, transportar ou ocultar coisa que sabe ser produto de crime"
+    },
+    {
+      "id": "direcao_perigosa",
+      "crime": "Direção Perigosa",
+      "description": "Conduzir veículo de forma perigosa na via pública colocando em risco a segurança"
+    },
+    {
+      "id": "fuga_abordagem",
+      "crime": "Fuga de Abordagem Policial",
+      "description": "Evadir-se ou tentar se evadir de abordagem policial legal"
+    },
+    {
+      "id": "desacato",
+      "crime": "Desacato à Autoridade",
+      "description": "Desrespeitar funcionário público no exercício da função"
+    },
+    {
+      "id": "resistencia_prisao",
+      "crime": "Resistência à Prisão",
+      "description": "Opor-se à execução de ato legal mediante violência ou ameaça"
+    },
+    {
+      "id": "perturbacao_paz",
+      "crime": "Perturbação da Paz Pública",
+      "description": "Perturbar alguém o trabalho ou sossego alheios com gritaria ou algazarra"
+    },
+    {
+      "id": "vandalismo",
+      "crime": "Vandalismo",
+      "description": "Destruir, inutilizar ou deteriorar coisa alheia"
+    },
+    {
+      "id": "invasao_propriedade",
+      "crime": "Invasão de Propriedade",
+      "description": "Invadir propriedade alheia contra vontade expressa ou tácita de quem de direito"
+    },
+    {
+      "id": "ameaca",
+      "crime": "Ameaça",
+      "description": "Ameaçar alguém por palavra, escrito ou gesto de causar-lhe mal injusto e grave"
+    },
+    {
+      "id": "lesao_corporal",
+      "crime": "Lesão Corporal",
+      "description": "Ofender a integridade corporal ou saúde de outrem"
+    },
+    {
+      "id": "injuria",
+      "crime": "Injúria",
+      "description": "Injuriar alguém ofendendo-lhe a dignidade ou decoro"
+    },
+    {
+      "id": "calúnia",
+      "crime": "Calúnia",
+      "description": "Imputar falsamente a alguém fato definido como crime"
+    },
+    {
+      "id": "difamacao",
+      "crime": "Difamação",
+      "description": "Imputar a alguém fato ofensivo à sua reputação"
+    },
+    {
+      "id": "incendio",
+      "crime": "Incêndio",
+      "description": "Causar incêndio expondo a perigo a vida, integridade física ou patrimônio"
+    },
+    {
+      "id": "explosao",
+      "crime": "Explosão",
+      "description": "Causar explosão expondo a perigo a vida, integridade física ou patrimônio"
+    },
+    {
+      "id": "sabotagem",
+      "crime": "Sabotagem",
+      "description": "Destruir, danificar ou inutilizar estabelecimento ou instalação"
+    }
+  ]
+}

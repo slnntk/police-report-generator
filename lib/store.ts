@@ -9,6 +9,7 @@ interface FormData {
   local_prisao: string
   veiculo: string
   desobediencia: boolean
+  numero_pessoas_envolvidas: number
   ferramentas_selecionadas: any[]
   entorpecentes_selecionados: any[]
   municoes_selecionadas: any[]
@@ -48,6 +49,7 @@ const initialFormData: FormData = {
   local_prisao: "",
   veiculo: "",
   desobediencia: false,
+  numero_pessoas_envolvidas: 1,
   ferramentas_selecionadas: [],
   entorpecentes_selecionados: [],
   municoes_selecionadas: [],
@@ -97,12 +99,12 @@ const fallbackData = {
       abordagem: {
         titulo: "Pena",
         template:
-          "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. Ao se deslocar para o referido local, encontramos o(s) requerente(s) cometendo o(s) referido(s) delito(s). Após aviso sonoro, luminoso e verbal, o indivíduo empreendeu fuga. Minutos depois, o mesmo ficou inoperante em seu veículo {veiculo}, na região do {local_prisao}. Iniciou tentativa de fuga a pé, porém foi capturado e conduzido até o departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses",
+          "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Recebemos uma denúncia (via central), de uma QRU de {tipo_crime} na região do {local_inicio}. Ao se deslocar para o referido local, encontramos {article} {individuo} cometendo {article} referid{article === 'os' ? 'os' : 'o'} delit{article === 'os' ? 'os' : 'o'}. Após aviso sonoro, luminoso e verbal, {article} {suspeito} {empreendeu_empreenderam} fuga. Minutos depois, {article === 'os' ? 'os mesmos ficaram' : 'o mesmo ficou'} inoperante{article === 'os' ? 's' : ''} em seu veículo {veiculo}, na região do {local_prisao}. {tentou_tentaram} tentativa de fuga a pé, porém {foi_foram} capturad{article === 'os' ? 'os' : 'o'} e {conduzido_conduzidos} até o departamento policial para prisão.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses",
       },
       corrida: {
         titulo: "Pena",
         template:
-          "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Durante patrulhamento, as equipes identificaram uma corrida ilegal de veículos na região do {local_inicio}, envolvendo {tipo_crime}. Foi realizada operação para interceptar os participantes, resultando na apreensão do veículo {veiculo} e prisão do(s) envolvido(s) na região do {local_prisao}. O(s) indivíduo(s) foi/foram conduzido(s) ao departamento policial para as devidas providências.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses",
+          "🛡️ 1º Batalhão de Polícia Militar - Cidade Alta (1ºBPM-AP) 🛡️\n\n📝 Relato: Durante patrulhamento, as equipes identificaram uma corrida ilegal de veículos na região do {local_inicio}, envolvendo {tipo_crime}. Foi realizada operação para interceptar os participantes, resultando na apreensão do veículo {veiculo} e prisão d{article} {envolvido_envolvidos} na região do {local_prisao}. {articleCap} {individuo} {foi_foram} {conduzido_conduzidos} ao departamento policial para as devidas providências.\n\n📦 Itens apreendidos: {itens_apreendidos}\n\n⚖️ Detalhamento da Pena:\n{calculo_pena}\n\nPena Total: {pena_total} meses",
       },
     },
   },
@@ -123,6 +125,47 @@ const safeFetch = async (url: string) => {
   } catch (error) {
     console.warn(`Failed to fetch ${url}:`, error)
     return null
+  }
+}
+
+// Helper function for pluralization in reports
+const pluralize = (word: string, count: number, pluralForm?: string): string => {
+  if (count === 1) return word
+  
+  if (pluralForm) return pluralForm
+  
+  // Portuguese pluralization rules (simplified)
+  const lastChar = word.slice(-1).toLowerCase()
+  const lastTwoChars = word.slice(-2).toLowerCase()
+  
+  if (lastChar === 'm') {
+    return word.slice(0, -1) + 'ns'  // homem -> homens
+  } else if (lastTwoChars === 'ão') {
+    return word.slice(0, -2) + 'ões'  // suspeição -> suspeições (rare case)
+  } else if (lastChar === 'l') {
+    return word.slice(0, -1) + 'is'   // animal -> animais
+  } else if (lastChar === 'r' || lastChar === 's' || lastChar === 'z') {
+    return word + 'es'  // suspeitor -> suspeitores
+  } else {
+    return word + 's'   // suspeito -> suspeitos
+  }
+}
+
+// Helper to get conjugated verbs based on number of people
+const getConjugatedText = (count: number) => {
+  const isPlural = count > 1
+  return {
+    article: isPlural ? 'os' : 'o',
+    articleCap: isPlural ? 'Os' : 'O',
+    suspeito: pluralize('suspeito', count),
+    individuo: pluralize('indivíduo', count),
+    foi_foram: isPlural ? 'foram' : 'foi',
+    detido_detidos: isPlural ? 'detidos' : 'detido',
+    conduzido_conduzidos: isPlural ? 'conduzidos' : 'conduzido',
+    tentou_tentaram: isPlural ? 'tentaram' : 'tentou',
+    empreendeu_empreenderam: isPlural ? 'empreenderam' : 'empreendeu',
+    fugiu_fugiram: isPlural ? 'fugiram' : 'fugiu',
+    envolvido_envolvidos: isPlural ? 'envolvidos' : 'envolvido'
   }
 }
 
@@ -156,6 +199,9 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
 
       let template = templateConfig.template
 
+      // Get pluralization helpers
+      const conjugated = getConjugatedText(formData.numero_pessoas_envolvidas)
+
       // Substituir variáveis no template
       template = template
         .replace("{tipo_crime}", formData.tipo_crime || "Não informado")
@@ -163,6 +209,18 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
         .replace(/\{local_prisao\}/g, formData.local_prisao || "Não informado")
         .replace("{veiculo}", formData.veiculo || "Não informado")
         .replace("{data_hora}", new Date().toLocaleString("pt-BR"))
+        // Pluralization replacements
+        .replace(/\{article\}/g, conjugated.article)
+        .replace(/\{articleCap\}/g, conjugated.articleCap)
+        .replace(/\{suspeito\}/g, conjugated.suspeito)
+        .replace(/\{individuo\}/g, conjugated.individuo)
+        .replace(/\{foi_foram\}/g, conjugated.foi_foram)
+        .replace(/\{detido_detidos\}/g, conjugated.detido_detidos)
+        .replace(/\{conduzido_conduzidos\}/g, conjugated.conduzido_conduzidos)
+        .replace(/\{tentou_tentaram\}/g, conjugated.tentou_tentaram)
+        .replace(/\{empreendeu_empreenderam\}/g, conjugated.empreendeu_empreenderam)
+        .replace(/\{fugiu_fugiram\}/g, conjugated.fugiu_fugiram)
+        .replace(/\{envolvido_envolvidos\}/g, conjugated.envolvido_envolvidos)
 
       // Gerar lista de itens apreendidos no formato compacto
       const itensCompactos = []
