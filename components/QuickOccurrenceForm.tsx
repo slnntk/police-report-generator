@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Slider } from "@/components/ui/slider"
 import { useOccurrenceStore } from "@/lib/store"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -81,6 +82,18 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
     produtos: {} as Record<number, number>,
     armas: {} as Record<number, number>,
   })
+
+  // Estados para categorias genéricas
+  const [genericCounters, setGenericCounters] = useState({
+    entorpecentes_genericos: 0,
+    ferramentas_genericas: 0,
+    municoes_genericas: 0,
+    produtos_genericos: 0,
+    armas_genericas: 0,
+  })
+
+  // Estado para slider de desobediência
+  const [desobedienciaPenalty, setDesobedienciaPenalty] = useState([30])
 
   useEffect(() => {
     const loadData = async () => {
@@ -197,13 +210,116 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
         })
     }
 
+    // Converter contadores genéricos para itens
+    const convertGenericCountersToItems = () => {
+      const genericItems = []
+      
+      if (genericCounters.entorpecentes_genericos > 0) {
+        genericItems.push({
+          id: 'generic_entorpecentes',
+          nome: 'Entorpecentes (genérico)',
+          quantidade: genericCounters.entorpecentes_genericos,
+          unidade: 'un',
+          categoria: 'Genérico',
+        })
+      }
+      
+      if (genericCounters.ferramentas_genericas > 0) {
+        genericItems.push({
+          id: 'generic_ferramentas',
+          nome: 'Ferramentas (genérico)',
+          quantidade: genericCounters.ferramentas_genericas,
+          unidade: 'un',
+          categoria: 'Genérico',
+        })
+      }
+      
+      if (genericCounters.municoes_genericas > 0) {
+        genericItems.push({
+          id: 'generic_municoes',
+          nome: 'Munições (genérico)',
+          quantidade: genericCounters.municoes_genericas,
+          unidade: 'un',
+          categoria: 'Genérico',
+        })
+      }
+      
+      if (genericCounters.produtos_genericos > 0) {
+        genericItems.push({
+          id: 'generic_produtos',
+          nome: 'Produtos (genérico)',
+          quantidade: genericCounters.produtos_genericos,
+          unidade: 'un',
+          categoria: 'Genérico',
+        })
+      }
+      
+      if (genericCounters.armas_genericas > 0) {
+        genericItems.push({
+          id: 'generic_armas',
+          nome: 'Armas (genérico)',
+          quantidade: genericCounters.armas_genericas,
+          unidade: 'un',
+          categoria: 'Genérico',
+        })
+      }
+      
+      return genericItems
+    }
+
     const updatedFormData = {
       ...formData,
-      ferramentas_selecionadas: convertCountersToItems(quickCounters.ferramentas, ferramentas),
-      entorpecentes_selecionados: convertCountersToItems(quickCounters.entorpecentes, entorpecentes),
-      municoes_selecionadas: convertCountersToItems(quickCounters.municoes, municoes),
-      produtos_selecionados: convertCountersToItems(quickCounters.produtos, produtos),
-      armas_selecionadas: convertCountersToItems(quickCounters.armas, armas),
+      ferramentas_selecionadas: [
+        ...convertCountersToItems(quickCounters.ferramentas, ferramentas),
+        ...(genericCounters.ferramentas_genericas > 0 ? [{
+          id: 'generic_ferramentas',
+          nome: 'Ferramentas (genérico)',
+          quantidade: genericCounters.ferramentas_genericas,
+          unidade: 'un',
+          categoria: 'Genérico',
+        }] : [])
+      ],
+      entorpecentes_selecionados: [
+        ...convertCountersToItems(quickCounters.entorpecentes, entorpecentes),
+        ...(genericCounters.entorpecentes_genericos > 0 ? [{
+          id: 'generic_entorpecentes',
+          nome: 'Entorpecentes (genérico)',
+          quantidade: genericCounters.entorpecentes_genericos,
+          unidade: 'un',
+          categoria: 'Genérico',
+        }] : [])
+      ],
+      municoes_selecionadas: [
+        ...convertCountersToItems(quickCounters.municoes, municoes),
+        ...(genericCounters.municoes_genericas > 0 ? [{
+          id: 'generic_municoes',
+          nome: 'Munições (genérico)',
+          quantidade: genericCounters.municoes_genericas,
+          unidade: 'un',
+          categoria: 'Genérico',
+        }] : [])
+      ],
+      produtos_selecionados: [
+        ...convertCountersToItems(quickCounters.produtos, produtos),
+        ...(genericCounters.produtos_genericos > 0 ? [{
+          id: 'generic_produtos',
+          nome: 'Produtos (genérico)',
+          quantidade: genericCounters.produtos_genericos,
+          unidade: 'un',
+          categoria: 'Genérico',
+        }] : [])
+      ],
+      armas_selecionadas: [
+        ...convertCountersToItems(quickCounters.armas, armas),
+        ...(genericCounters.armas_genericas > 0 ? [{
+          id: 'generic_armas',
+          nome: 'Armas (genérico)',
+          quantidade: genericCounters.armas_genericas,
+          unidade: 'un',
+          categoria: 'Genérico',
+        }] : [])
+      ],
+      desobediencia_penalidade: formData.desobediencia ? desobedienciaPenalty[0] : 0,
     }
 
     setFormData(updatedFormData)
@@ -222,6 +338,30 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
     }))
   }
 
+  const setCounterValue = (category: keyof typeof quickCounters, itemId: number, value: number) => {
+    setQuickCounters((prev) => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [itemId]: Math.max(0, value),
+      },
+    }))
+  }
+
+  const updateGenericCounter = (category: keyof typeof genericCounters, change: number) => {
+    setGenericCounters((prev) => ({
+      ...prev,
+      [category]: Math.max(0, prev[category] + change),
+    }))
+  }
+
+  const setGenericCounterValue = (category: keyof typeof genericCounters, value: number) => {
+    setGenericCounters((prev) => ({
+      ...prev,
+      [category]: Math.max(0, value),
+    }))
+  }
+
   const updateFormDataWithRegeneration = (field: string, value: any) => {
     setFormData({ ...formData, [field]: value })
 
@@ -236,6 +376,56 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
 
   const QuickCounter = ({ category, item }: { category: keyof typeof quickCounters; item: any }) => {
     const count = quickCounters[category][item.id] || 0
+    const [isHolding, setIsHolding] = useState(false)
+    const [holdTimeout, setHoldTimeout] = useState<NodeJS.Timeout | null>(null)
+    const [holdInterval, setHoldInterval] = useState<NodeJS.Timeout | null>(null)
+    const [inputValue, setInputValue] = useState(count.toString())
+
+    useEffect(() => {
+      setInputValue(count.toString())
+    }, [count])
+
+    const startHold = (change: number) => {
+      setIsHolding(true)
+      updateCounter(category, item.id, change)
+      
+      const timeout = setTimeout(() => {
+        const interval = setInterval(() => {
+          updateCounter(category, item.id, change)
+        }, 100) // Increment every 100ms when holding
+        setHoldInterval(interval)
+      }, 500) // Start rapid increment after 500ms
+      
+      setHoldTimeout(timeout)
+    }
+
+    const stopHold = () => {
+      setIsHolding(false)
+      if (holdTimeout) {
+        clearTimeout(holdTimeout)
+        setHoldTimeout(null)
+      }
+      if (holdInterval) {
+        clearInterval(holdInterval)
+        setHoldInterval(null)
+      }
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value
+      setInputValue(value)
+      
+      const numValue = parseInt(value) || 0
+      if (!isNaN(numValue)) {
+        setCounterValue(category, item.id, numValue)
+      }
+    }
+
+    const handleInputBlur = () => {
+      const numValue = parseInt(inputValue) || 0
+      setCounterValue(category, item.id, numValue)
+      setInputValue(numValue.toString())
+    }
 
     return (
       <div className="flex items-center justify-between p-2 dark-secondary-bg rounded border dark-border hover:bg-gray-700/50 transition-colors">
@@ -248,21 +438,114 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             type="button"
             size="sm"
             variant="ghost"
-            onClick={() => updateCounter(category, item.id, -1)}
+            onMouseDown={() => startHold(-1)}
+            onMouseUp={stopHold}
+            onMouseLeave={stopHold}
+            onTouchStart={() => startHold(-1)}
+            onTouchEnd={stopHold}
             disabled={count === 0}
             className="h-6 w-6 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
           >
             <Minus className="h-3 w-3" />
           </Button>
-          <span className="w-8 text-center text-sm font-bold dark-highlight">{count}</span>
+          
+          <Input
+            type="number"
+            value={inputValue}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            min="0"
+            className="w-12 h-6 text-center text-sm font-bold bg-gray-800 border-gray-600 text-white px-1"
+          />
+          
           <Button
             type="button"
             size="sm"
             variant="ghost"
-            onClick={() => updateCounter(category, item.id, 1)}
+            onMouseDown={() => startHold(1)}
+            onMouseUp={stopHold}
+            onMouseLeave={stopHold}
+            onTouchStart={() => startHold(1)}
+            onTouchEnd={stopHold}
             className="h-6 w-6 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/10 transition-colors"
           >
             <Plus className="h-3 w-3" />
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  const GenericCounter = ({ category, title, emoji }: { category: keyof typeof genericCounters; title: string; emoji: string }) => {
+    const count = genericCounters[category]
+    const [inputValue, setInputValue] = useState(count.toString())
+
+    useEffect(() => {
+      setInputValue(count.toString())
+    }, [count])
+
+    const startHold = (change: number) => {
+      updateGenericCounter(category, change)
+      
+      const timeout = setTimeout(() => {
+        const interval = setInterval(() => {
+          updateGenericCounter(category, change)
+        }, 100)
+        setTimeout(() => clearInterval(interval), 2000) // Stop after 2 seconds
+      }, 500)
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value
+      setInputValue(value)
+      
+      const numValue = parseInt(value) || 0
+      if (!isNaN(numValue)) {
+        setGenericCounterValue(category, numValue)
+      }
+    }
+
+    const handleInputBlur = () => {
+      const numValue = parseInt(inputValue) || 0
+      setGenericCounterValue(category, numValue)
+      setInputValue(numValue.toString())
+    }
+
+    return (
+      <div className="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-lg border border-indigo-500/30">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">{emoji}</span>
+          <span className="text-sm font-semibold text-indigo-300">{title}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            onMouseDown={() => startHold(-1)}
+            disabled={count === 0}
+            className="h-7 w-7 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-colors"
+          >
+            <Minus className="h-4 w-4" />
+          </Button>
+          
+          <Input
+            type="number"
+            value={inputValue}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            min="0"
+            className="w-16 h-7 text-center text-sm font-bold bg-gray-800 border-indigo-500/50 text-white"
+          />
+          
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            onMouseDown={() => startHold(1)}
+            className="h-7 w-7 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/20 transition-colors"
+          >
+            <Plus className="h-4 w-4" />
           </Button>
         </div>
       </div>
@@ -361,24 +644,95 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
               </div>
             </div>
 
-            {/* Desobediência - Inline */}
-            <div className="flex items-center gap-3 p-3 bg-red-500/10 border border-red-500/30 rounded">
-              <Checkbox
-                checked={formData.desobediencia}
-                onCheckedChange={(checked) => updateFormDataWithRegeneration("desobediencia", checked)}
-                className="border-red-400"
-              />
-              <AlertTriangle className="h-4 w-4 text-red-400" />
-              <div className="flex-1">
-                <span className="text-sm font-semibold text-red-300">Desobediência (+30 meses)</span>
+            {/* Desobediência - Slider */}
+            <div className="space-y-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  checked={formData.desobediencia}
+                  onCheckedChange={(checked) => {
+                    updateFormDataWithRegeneration("desobediencia", checked)
+                    if (!checked) {
+                      setDesobedienciaPenalty([30]) // Reset to default when unchecked
+                    }
+                  }}
+                  className="border-red-400"
+                />
+                <AlertTriangle className="h-5 w-5 text-red-400" />
+                <div className="flex-1">
+                  <span className="text-sm font-semibold text-red-300">Desobediência</span>
+                </div>
+                {formData.desobediencia && (
+                  <Badge className="bg-red-500 text-white text-xs">+{desobedienciaPenalty[0]} meses</Badge>
+                )}
               </div>
-              {formData.desobediencia && <Badge className="bg-red-500 text-white text-xs">+30</Badge>}
+              
+              {formData.desobediencia && (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs text-red-300">
+                    <span>Penalidade: {desobedienciaPenalty[0]} meses</span>
+                    <div className="flex gap-4">
+                      <span>Min: 25</span>
+                      <span>Max: 50</span>
+                    </div>
+                  </div>
+                  <Slider
+                    value={desobedienciaPenalty}
+                    onValueChange={setDesobedienciaPenalty}
+                    max={50}
+                    min={25}
+                    step={1}
+                    className="w-full"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Quantidades Genéricas - Seção rápida para especificar apenas totais */}
+            <div className="space-y-3">
+              <h3 className="text-lg font-bold dark-highlight flex items-center gap-2">
+                🔢 Quantidades Genéricas
+                <Badge className="bg-indigo-500/20 text-indigo-400 text-xs">Opcional</Badge>
+              </h3>
+              <p className="text-xs dark-text-soft">
+                💡 Use esta seção quando não precisar especificar itens exatos. Ex: "30 entorpecentes" em vez de "10 maconha + 10 cocaína + 10 crack"
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <GenericCounter 
+                  category="entorpecentes_genericos" 
+                  title="Entorpecentes Genéricos"
+                  emoji="💊"
+                />
+                <GenericCounter 
+                  category="ferramentas_genericas" 
+                  title="Ferramentas Genéricas"
+                  emoji="🔧"
+                />
+                <GenericCounter 
+                  category="municoes_genericas" 
+                  title="Munições Genéricas"
+                  emoji="🔫"
+                />
+                <GenericCounter 
+                  category="produtos_genericos" 
+                  title="Produtos Genéricos"
+                  emoji="📱"
+                />
+                <GenericCounter 
+                  category="armas_genericas" 
+                  title="Armas Genéricas"
+                  emoji="🎯"
+                />
+              </div>
             </div>
 
             {/* Itens Apreendidos - Contadores Rápidos com Scroll */}
             <div className="space-y-3">
-              <h3 className="text-lg font-bold dark-highlight">Itens Apreendidos (clique +/-)</h3>
-              <p className="text-xs dark-text-soft">💡 Role dentro dos cards para ver mais opções</p>
+              <h3 className="text-lg font-bold dark-highlight flex items-center gap-2">
+                📋 Itens Específicos (clique +/- ou digite)
+                <Badge className="bg-gray-500/20 text-gray-400 text-xs">Detalhado</Badge>
+              </h3>
+              <p className="text-xs dark-text-soft">💡 Role dentro dos cards para ver mais opções. Use apenas se precisar especificar itens exatos.</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Ferramentas */}
