@@ -250,7 +250,7 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
   }
 
   return (
-    <div className="w-full max-w-5xl mx-auto space-y-4 p-4">
+    <div className="w-full max-w-7xl mx-auto space-y-3 p-3 min-h-[90vh] flex flex-col">
       {/* Indicador de status */}
       {!isOnline && (
         <Card className="bg-yellow-500/10 border-2 border-yellow-500/30">
@@ -281,8 +281,8 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
             </p>
           )}
         </CardHeader>
-        <CardContent className="p-4 sm:p-6">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <CardContent className="p-3 sm:p-4">
+          <form onSubmit={handleSubmit} className="space-y-3 flex-1">
             {/* Tipo de início da ocorrência */}
             <OccurrenceTypeSelector
               selectedType={formData.tipo_inicio}
@@ -295,8 +295,8 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg dark-highlight">Dados da Ocorrência</CardTitle>
               </CardHeader>
-              <CardContent className="p-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <CardContent className="p-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
                   <div>
                     <Label htmlFor="tipo_crime" className="dark-text font-semibold">
                       Tipo de Crime *
@@ -402,7 +402,7 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
                 Clique nos cards abaixo para expandir e selecionar os itens apreendidos em cada categoria:
               </p>
 
-              <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 mb-4">
                 <CollapsibleItemCard
                   title="Ferramentas Ilícitas"
                   items={ferramentas}
@@ -453,11 +453,11 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
 
             {/* Valores monetários */}
             <Card className="dark-secondary-bg border dark-border">
-              <CardHeader className="pb-3">
+              <CardHeader className="pb-2">
                 <CardTitle className="text-lg dark-highlight">Valores Monetários</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 p-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <CardContent className="space-y-3 p-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="space-y-1">
                     <Label htmlFor="dinheiro_ilicito" className="text-sm font-bold dark-text">
                       Dinheiro Ilícito (R$)
@@ -503,14 +503,14 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
                 value={formData.observacoes}
                 onChange={(e) => updateFormDataWithRegeneration("observacoes", e.target.value)}
                 placeholder="Informações adicionais sobre a ocorrência..."
-                rows={4}
+                rows={3}
                 className="textarea-dark"
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full btn-primary-dark py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg"
+              className="w-full btn-primary-dark py-3 text-lg font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg"
             >
               {showResults ? "🔄 Atualizar Relatório e Cálculo" : "📋 Gerar Relatório e Calcular Pena"}
             </Button>
