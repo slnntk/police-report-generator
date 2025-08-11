@@ -416,15 +416,18 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
     const [holdTimeout, setHoldTimeout] = useState<NodeJS.Timeout | null>(null)
     const [holdInterval, setHoldInterval] = useState<NodeJS.Timeout | null>(null)
 
-    const startHold = (change: number) => {
+    const startHold = (change: number, event: React.MouseEvent | React.TouchEvent) => {
+      event.preventDefault()
       setIsHolding(true)
       updateCounter(category, item.id, change)
       
       const timeout = setTimeout(() => {
-        const interval = setInterval(() => {
-          updateCounter(category, item.id, change)
-        }, 100) // Increment every 100ms when holding
-        setHoldInterval(interval)
+        if (isHolding) { // Check if still holding before starting interval
+          const interval = setInterval(() => {
+            updateCounter(category, item.id, change)
+          }, 100) // Increment every 100ms when holding
+          setHoldInterval(interval)
+        }
       }, 500) // Start rapid increment after 500ms
       
       setHoldTimeout(timeout)
@@ -442,6 +445,14 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
       }
     }
 
+    // Cleanup on unmount
+    React.useEffect(() => {
+      return () => {
+        if (holdTimeout) clearTimeout(holdTimeout)
+        if (holdInterval) clearInterval(holdInterval)
+      }
+    }, [holdTimeout, holdInterval])
+
     return (
       <div className="flex items-center justify-between p-2 dark-secondary-bg rounded border dark-border hover:bg-gray-700/50 transition-colors">
         <div className="flex-1 min-w-0">
@@ -453,10 +464,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             type="button"
             size="sm"
             variant="ghost"
-            onMouseDown={() => startHold(-1)}
+            onMouseDown={(e) => startHold(-1, e)}
             onMouseUp={stopHold}
             onMouseLeave={stopHold}
-            onTouchStart={() => startHold(-1)}
+            onTouchStart={(e) => startHold(-1, e)}
             onTouchEnd={stopHold}
             disabled={count === 0}
             className="h-6 w-6 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
@@ -475,10 +486,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             type="button"
             size="sm"
             variant="ghost"
-            onMouseDown={() => startHold(1)}
+            onMouseDown={(e) => startHold(1, e)}
             onMouseUp={stopHold}
             onMouseLeave={stopHold}
-            onTouchStart={() => startHold(1)}
+            onTouchStart={(e) => startHold(1, e)}
             onTouchEnd={stopHold}
             className="h-6 w-6 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/10 transition-colors"
           >
@@ -491,17 +502,41 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
 
   const GenericCounter = ({ category, title, emoji }: { category: keyof typeof genericCounters; title: string; emoji: string }) => {
     const count = genericCounters[category]
+    const [holdTimeout, setHoldTimeout] = useState<NodeJS.Timeout | null>(null)
+    const [holdInterval, setHoldInterval] = useState<NodeJS.Timeout | null>(null)
 
-    const startHold = (change: number) => {
+    const startHold = (change: number, event: React.MouseEvent | React.TouchEvent) => {
+      event.preventDefault()
       updateGenericCounter(category, change)
       
       const timeout = setTimeout(() => {
         const interval = setInterval(() => {
           updateGenericCounter(category, change)
         }, 100)
-        setTimeout(() => clearInterval(interval), 2000) // Stop after 2 seconds
+        setHoldInterval(interval)
       }, 500)
+      
+      setHoldTimeout(timeout)
     }
+    
+    const stopHold = () => {
+      if (holdTimeout) {
+        clearTimeout(holdTimeout)
+        setHoldTimeout(null)
+      }
+      if (holdInterval) {
+        clearInterval(holdInterval)
+        setHoldInterval(null)
+      }
+    }
+
+    // Cleanup on unmount
+    React.useEffect(() => {
+      return () => {
+        if (holdTimeout) clearTimeout(holdTimeout)
+        if (holdInterval) clearInterval(holdInterval)
+      }
+    }, [holdTimeout, holdInterval])
 
     return (
       <div className="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-lg border border-indigo-500/30">
@@ -514,7 +549,11 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             type="button"
             size="sm"
             variant="ghost"
-            onMouseDown={() => startHold(-1)}
+            onMouseDown={(e) => startHold(-1, e)}
+            onMouseUp={stopHold}
+            onMouseLeave={stopHold}
+            onTouchStart={(e) => startHold(-1, e)}
+            onTouchEnd={stopHold}
             disabled={count === 0}
             className="h-7 w-7 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-colors"
           >
@@ -532,7 +571,11 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             type="button"
             size="sm"
             variant="ghost"
-            onMouseDown={() => startHold(1)}
+            onMouseDown={(e) => startHold(1, e)}
+            onMouseUp={stopHold}
+            onMouseLeave={stopHold}
+            onTouchStart={(e) => startHold(1, e)}
+            onTouchEnd={stopHold}
             className="h-7 w-7 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/20 transition-colors"
           >
             <Plus className="h-4 w-4" />
@@ -543,10 +586,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-4">
+    <div className="max-w-4xl mx-auto space-y-4 flex-1 flex flex-col min-h-0">
       {/* Indicador de status */}
       {!isOnline && (
-        <Card className="bg-yellow-500/10 border border-yellow-500/30">
+        <Card className="bg-yellow-500/10 border border-yellow-500/30 flex-shrink-0">
           <CardContent className="p-3">
             <div className="flex items-center gap-2">
               <WifiOff className="h-4 w-4 text-yellow-400" />
@@ -556,8 +599,8 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
         </Card>
       )}
 
-      <Card className="police-card-dark">
-        <CardHeader className="pb-4">
+      <Card className="police-card-dark flex-1 flex flex-col min-h-0">
+        <CardHeader className="pb-4 flex-shrink-0">
           <CardTitle className="text-xl dark-highlight font-bold flex items-center gap-2">
             <Zap className="h-5 w-5" />
             {showResults ? "Editar Ocorrência" : "Nova Ocorrência"}
@@ -565,10 +608,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             {isOnline && <Wifi className="h-4 w-4 text-green-400" />}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <CardContent className="space-y-4 flex-1 min-h-0 overflow-y-auto">
+          <form onSubmit={handleSubmit} className="space-y-4 h-full flex flex-col">
             {/* Tipo de início - Grid de 6 colunas para acomodar todos os tipos */}
-            <div className="space-y-2">
+            <div className="space-y-2 flex-shrink-0">
               <Label className="text-sm font-semibold dark-text">Como iniciou?</Label>
               <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
                 {tiposInicio.map((tipo) => (
@@ -592,7 +635,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             </div>
 
             {/* Dados básicos - Grid compacto com autocompletes */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 flex-shrink-0">
               <IntelligentAutocomplete
                 value={formData.tipo_crime}
                 onChange={(value) => updateFormDataWithRegeneration("tipo_crime", value)}
@@ -642,17 +685,19 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             </div>
 
             {/* Número de pessoas envolvidas */}
-            <PeopleCount
-              value={formData.numero_pessoas_envolvidas}
-              onChange={(value) => updateFormDataWithRegeneration("numero_pessoas_envolvidas", value)}
-              required={true}
-              min={1}
-              max={10}
-              variant="both"
-            />
+            <div className="flex-shrink-0">
+              <PeopleCount
+                value={formData.numero_pessoas_envolvidas}
+                onChange={(value) => updateFormDataWithRegeneration("numero_pessoas_envolvidas", value)}
+                required={true}
+                min={1}
+                max={10}
+                variant="both"
+              />
+            </div>
 
             {/* Desobediência - Slider */}
-            <div className="space-y-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+            <div className="space-y-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex-shrink-0">
               <div className="flex items-center gap-3">
                 <Checkbox
                   checked={formData.desobediencia}
@@ -695,7 +740,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             </div>
 
             {/* Quantidades Genéricas - Seção rápida para especificar apenas totais */}
-            <div className="space-y-3">
+            <div className="space-y-3 flex-shrink-0">
               <h3 className="text-lg font-bold dark-highlight flex items-center gap-2">
                 🔢 Quantidades Genéricas
                 <Badge className="bg-indigo-500/20 text-indigo-400 text-xs">Opcional</Badge>
@@ -704,7 +749,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                 💡 Use esta seção quando não precisar especificar itens exatos. Ex: "30 entorpecentes" em vez de "10 maconha + 10 cocaína + 10 crack"
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 <GenericCounter 
                   category="entorpecentes_genericos" 
                   title="Entorpecentes Genéricos"
@@ -733,25 +778,25 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
               </div>
             </div>
 
-            {/* Itens Apreendidos - Contadores Rápidos com Scroll */}
-            <div className="space-y-3">
+            {/* Itens Apreendidos - Contadores Rápidos com Scroll - Esta seção pode crescer */}
+            <div className="space-y-3 flex-1 min-h-0">
               <h3 className="text-lg font-bold dark-highlight flex items-center gap-2">
                 📋 Itens Específicos (clique +/- ou digite)
                 <Badge className="bg-gray-500/20 text-gray-400 text-xs">Detalhado</Badge>
               </h3>
               <p className="text-xs dark-text-soft">💡 Role dentro dos cards para ver mais opções. Use apenas se precisar especificar itens exatos.</p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 flex-1 min-h-0">
                 {/* Ferramentas */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
+                <Card className="police-card-compact flex flex-col min-h-0">
+                  <CardHeader className="pb-2 flex-shrink-0">
                     <CardTitle className="text-sm dark-text flex items-center gap-2">
                       🔧 Ferramentas
                       <span className="text-xs dark-text-soft">(10 + itens×10)</span>
                       <Badge className="bg-blue-500/20 text-blue-400 text-xs">{ferramentas.length} opções</Badge>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-0">
+                  <CardContent className="p-0 flex-1 min-h-0">
                     <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
                       <div className="space-y-1">
                         {ferramentas.map((item) => (
@@ -763,15 +808,15 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                 </Card>
 
                 {/* Entorpecentes */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
+                <Card className="police-card-compact flex flex-col min-h-0">
+                  <CardHeader className="pb-2 flex-shrink-0">
                     <CardTitle className="text-sm dark-text flex items-center gap-2">
                       💊 Entorpecentes
                       <span className="text-xs dark-text-soft">(15 + itens÷2)</span>
                       <Badge className="bg-purple-500/20 text-purple-400 text-xs">{entorpecentes.length} opções</Badge>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-0">
+                  <CardContent className="p-0 flex-1 min-h-0">
                     <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
                       <div className="space-y-1">
                         {entorpecentes.map((item) => (
@@ -783,15 +828,15 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                 </Card>
 
                 {/* Munições */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
+                <Card className="police-card-compact flex flex-col min-h-0">
+                  <CardHeader className="pb-2 flex-shrink-0">
                     <CardTitle className="text-sm dark-text flex items-center gap-2">
                       🔫 Munições
                       <span className="text-xs dark-text-soft">(15 + grupos/20×5)</span>
                       <Badge className="bg-yellow-500/20 text-yellow-400 text-xs">{municoes.length} opções</Badge>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-0">
+                  <CardContent className="p-0 flex-1 min-h-0">
                     <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
                       <div className="space-y-1">
                         {municoes.map((item) => (
@@ -803,15 +848,15 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                 </Card>
 
                 {/* Armas */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
+                <Card className="police-card-compact flex flex-col min-h-0">
+                  <CardHeader className="pb-2 flex-shrink-0">
                     <CardTitle className="text-sm dark-text flex items-center gap-2">
                       🎯 Armas
                       <span className="text-xs dark-text-soft">(20 + armas×15)</span>
                       <Badge className="bg-red-500/20 text-red-400 text-xs">{armas.length} opções</Badge>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-0">
+                  <CardContent className="p-0 flex-1 min-h-0">
                     <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
                       <div className="space-y-1">
                         {armas.map((item) => (
@@ -823,15 +868,15 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                 </Card>
 
                 {/* Produtos */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
+                <Card className="police-card-compact flex flex-col min-h-0">
+                  <CardHeader className="pb-2 flex-shrink-0">
                     <CardTitle className="text-sm dark-text flex items-center gap-2">
                       📱 Produtos
                       <span className="text-xs dark-text-soft">(10 + itens×2)</span>
                       <Badge className="bg-green-500/20 text-green-400 text-xs">{produtos.length} opções</Badge>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-0">
+                  <CardContent className="p-0 flex-1 min-h-0">
                     <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
                       <div className="space-y-1">
                         {produtos.map((item) => (
@@ -841,14 +886,11 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                     </div>
                   </CardContent>
                 </Card>
-
-                {/* Card placeholder para layout balanceado quando necessário */}
-                <div className="md:block hidden"></div>
               </div>
             </div>
 
             {/* Valores monetários - Inline com inputs numéricos melhorados */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 flex-shrink-0">
               <FixedNumericInput
                 value={formData.dinheiro_ilicito}
                 onChange={(value) => updateFormDataWithRegeneration("dinheiro_ilicito", value)}
@@ -873,7 +915,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             </div>
 
             {/* Observações - Compacto */}
-            <div>
+            <div className="flex-shrink-0">
               <label className="text-sm font-semibold dark-text">Observações</label>
               <Textarea
                 value={formData.observacoes}
@@ -886,7 +928,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
 
             <Button
               type="submit"
-              className="w-full btn-primary-dark py-3 text-base font-bold transition-all duration-300 transform hover:scale-105"
+              className="w-full btn-primary-dark py-3 text-base font-bold transition-all duration-300 transform hover:scale-105 flex-shrink-0"
             >
               {showResults ? "🔄 Atualizar" : "⚡ Gerar Relatório"}
             </Button>

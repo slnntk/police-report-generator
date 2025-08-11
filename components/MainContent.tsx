@@ -100,13 +100,15 @@ export function MainContent({ activeTab, setActiveTab }: MainContentProps) {
   }
 
   return (
-    <div className="ml-64 flex-1 p-6 gradient-background min-h-screen">
-      <div className="max-w-6xl mx-auto">
+    <div className="ml-64 flex-1 p-6 gradient-background min-h-screen h-screen flex flex-col">
+      <div className="max-w-6xl mx-auto flex-1 flex flex-col">
         {/* Navegação por etapas */}
         <StepperNavigation currentStep={currentStep} onStepChange={handleStepChange} hasReport={!!generatedReport} />
 
         {/* Conteúdo da etapa atual */}
-        <AnimatePresence mode="wait">{renderCurrentStep()}</AnimatePresence>
+        <div className="flex-1 flex flex-col min-h-0">
+          <AnimatePresence mode="wait">{renderCurrentStep()}</AnimatePresence>
+        </div>
 
         {/* Feedback de ações */}
         <ActionFeedback action={feedbackAction} onComplete={() => setFeedbackAction(null)} />

@@ -1,154 +1,370 @@
 {
   "crimes": [
     {
-      "id": "trafico_drogas",
-      "crime": "Tráfico de Drogas",
-      "description": "Venda, distribuição ou posse com intenção de venda de substâncias entorpecentes"
+      "id": "homicidio_doloso_qualificado",
+      "crime": "Homicidio Doloso Qualificado",
+      "description": "Quando uma pessoa toma qualquer ação premeditada para causar intencionalmente a morte de outra pessoa.",
+      "category": "Homicídio"
     },
     {
-      "id": "porte_arma",
-      "crime": "Porte Ilegal de Arma de Fogo",
-      "description": "Portabilidade de arma de fogo sem licença ou autorização legal"
-    },
-    {
-      "id": "roubo",
-      "crime": "Roubo à Mão Armada",
-      "description": "Subtração de bem alheio mediante grave ameaça ou violência com uso de arma"
-    },
-    {
-      "id": "furto",
-      "crime": "Furto",
-      "description": "Subtração de bem alheio móvel para si ou para outrem"
-    },
-    {
-      "id": "homicidio",
-      "crime": "Homicídio",
-      "description": "Ato de matar alguém de forma dolosa ou culposa"
+      "id": "homicidio_doloso",
+      "crime": "Homicidio Doloso",
+      "description": "Quando uma pessoa toma qualquer ação não planejada ou deliberada e maliciosamente escolhida não agir, intencionalmente para causar a morte de outra pessoa.",
+      "category": "Homicídio"
     },
     {
       "id": "tentativa_homicidio",
-      "crime": "Tentativa de Homicídio",
-      "description": "Tentativa de praticar homicídio sem consumação"
+      "crime": "Tentativa de Homicidio",
+      "description": "Quando uma pessoa toma alguma ação.",
+      "category": "Homicídio"
+    },
+    {
+      "id": "homicidio_culposo",
+      "crime": "Homicidio Culposo",
+      "description": "Sem querer, causando a morte de uma pessoa sem premeditação. Resultados quando a morte ocorre devido um uso indevido de cuidados ou habilidades razoáveis (imprudência ou negligência).",
+      "category": "Homicídio"
+    },
+    {
+      "id": "homicidio_culposo_transito",
+      "crime": "Homicidio Culposo no Transito",
+      "description": "Quando a pessoa operando o veiculo com um motor se reportar a negligencia para relatar o incidente dentro de um periodo de tempo razoavel.",
+      "category": "Homicídio"
+    },
+    {
+      "id": "roubo",
+      "crime": "Roubo",
+      "description": "Subtrair coisa movel alheia, para si ou para outrem, mediante grave ameaça ou violencia a pessoa, ou depois de have-la, por qualquer",
+      "category": "Patrimônio"
+    },
+    {
+      "id": "roubo_banco",
+      "crime": "Roubo a Banco",
+      "description": "Roubar um banco.",
+      "category": "Patrimônio"
+    },
+    {
+      "id": "roubo_loja",
+      "crime": "Roubo a loja",
+      "description": "Roubo a estabelecimento comercial.",
+      "category": "Patrimônio"
+    },
+    {
+      "id": "furto_caixa_eletronico",
+      "crime": "Furto a caixa eletronico",
+      "description": "Furtar um caixa eletronico / Registradora",
+      "category": "Patrimônio"
     },
     {
       "id": "sequestro",
       "crime": "Sequestro",
-      "description": "Privação de liberdade de pessoa mediante violência ou grave ameaça"
+      "description": "Apreender e levar ilegalmente uma pessoa pela força ou fraude, ou apreender e deter uma pessoa contra a sua vontade com a intençao de levar essa pessoa embora mais tarde.",
+      "category": "Liberdade"
     },
     {
-      "id": "extorsao",
-      "crime": "Extorsão",
-      "description": "Obter vantagem econômica indevida mediante violência ou grave ameaça"
+      "id": "carcere_privado",
+      "crime": "Carcere Privado",
+      "description": "Quando uma pessoa é restringida em seu movimento pessoal dentro de qualquer area sem justificação ou consentimento. A contenção fisica real não é necessaria para um caso de prisao falsa.",
+      "category": "Liberdade"
     },
     {
-      "id": "lavagem_dinheiro",
-      "crime": "Lavagem de Dinheiro",
-      "description": "Ocultação ou dissimulação da natureza, origem, localização de bens de origem ilícita"
+      "id": "agressao",
+      "crime": "Agressão",
+      "description": "Causar danos significativos a outra pessoa através de toque intencional ofensivo ou prejudicial a essa pessoa sem o seu consentimento.",
+      "category": "Integridade Física"
     },
     {
-      "id": "associacao_criminosa",
-      "crime": "Associação Criminosa",
-      "description": "Associar-se três ou mais pessoas para fim específico de cometer crimes"
+      "id": "furto_residencia",
+      "crime": "Furto De Residencia",
+      "description": "Subtrair, para si ou para outrem, mas por circunstancias não previstas pelo agente, não se consuma o pretendido.",
+      "category": "Patrimônio"
     },
     {
-      "id": "corrupcao",
-      "crime": "Corrupção",
-      "description": "Oferecimento ou aceitação de vantagem indevida a funcionário público"
+      "id": "terrorismo",
+      "crime": "Terrorismo",
+      "description": "o uso ilegal da força e da violencia contra pessoas ou bens para intimidar ou coagir um governo, a população civil ou qualquer segmento dos mesmos, na promoção de objetivos políticos ou sociais.",
+      "category": "Segurança Nacional"
+    },
+    {
+      "id": "trafico_armas",
+      "crime": "Trafico de Armas*",
+      "description": "Posse de 3 ou mais armas ilegais.",
+      "category": "Armamento"
+    },
+    {
+      "id": "porte_arma_alto_calibre",
+      "crime": "Porte ilegal de arma (Alto Calibre)",
+      "description": "Porte de Thompson, MTAR, AK-47",
+      "category": "Armamento"
+    },
+    {
+      "id": "porte_arma_baixo_calibre",
+      "crime": "Porte ilegal de arma (Baixo Calibre)",
+      "description": "Porte de Five-seven, 1911, 1911 HK e Calibres semelhantes.",
+      "category": "Armamento"
+    },
+    {
+      "id": "disparo_arma",
+      "crime": "Disparo de Arma",
+      "description": "Disparar arma em publico.",
+      "category": "Armamento"
+    },
+    {
+      "id": "posse_municao_ilegal",
+      "crime": "Posse de munição ilegal",
+      "description": "Posse de munição",
+      "category": "Armamento"
+    },
+    {
+      "id": "trafico_coletes",
+      "crime": "Trafico de coletes balisticos",
+      "description": "Fabricação de coletes balisticos",
+      "category": "Armamento"
+    },
+    {
+      "id": "posse_colete",
+      "crime": "Posse de colete balistico",
+      "description": "Posse de colete balistico",
+      "category": "Armamento"
+    },
+    {
+      "id": "trafico_entorpecente",
+      "crime": "Trafico de Entorpecente",
+      "description": "Posse de 3 ou mais unidades da droga ou materia prima.",
+      "category": "Entorpecentes"
+    },
+    {
+      "id": "posse_entorpecente",
+      "crime": "Posse de Entorpecente",
+      "description": "Posse de 2 ( gramas) ou menos.",
+      "category": "Entorpecentes"
+    },
+    {
+      "id": "receptacao_veiculos",
+      "crime": "Receptação de Veiculos",
+      "description": "Estar posse de qualquer veiculo roubado",
+      "category": "Veículos"
+    },
+    {
+      "id": "roubo_veiculos",
+      "crime": "Roubo de Veiculos",
+      "description": "Subtrair veiculo alheio, para si ou para outrem, mediante grave ameaça ou violencia a pessoa, ou por qualquer",
+      "category": "Veículos"
+    },
+    {
+      "id": "furto_veiculo",
+      "crime": "Furto de Veiculo",
+      "description": "Subtrair, para si ou para outrem, coisa alheia movel sem grave ameaça ou violencia a pessoa.",
+      "category": "Veículos"
+    },
+    {
+      "id": "dinheiro_sujo",
+      "crime": "Dinheiro Sujo Marcado",
+      "description": "Pena base mais a cada 1000 de dinheiro sujo se adiciona 1 minuto a pena do individuo.",
+      "category": "Financeiro"
+    },
+    {
+      "id": "dirigir_entorpecente",
+      "crime": "Dirigir sob efeito entorpecente",
+      "description": "Conduzir veiculo Automotor ou de tração Humana/Bicicletas sob efeito entorpecente que o faça tornar-se potencialmente perigoso",
+      "category": "Trânsito"
+    },
+    {
+      "id": "evasao_acidente",
+      "crime": "Evasão de Acidente",
+      "description": "Afastar-se do veiculo ou condutor do mesmo, no veiculo local do acidente, para fugir à responsabilidade penal ou civil que lhe",
+      "category": "Trânsito"
+    },
+    {
+      "id": "posse_arma_publica",
+      "crime": "Posse de uma arma publica",
+      "description": "Qualquer pessoa que carregue abertamente uma arma carregada em publico. Incluso impressas, exceto",
+      "category": "Armamento"
     },
     {
       "id": "formacao_quadrilha",
       "crime": "Formação de Quadrilha",
-      "description": "Organização de grupo criminoso para prática habitual de crimes"
+      "description": "Participar abertamente de um crime, contribuindo direta ou indiretamente. Todos responsáveis pelo maior crime cometido no para",
+      "category": "Associação Criminosa"
     },
     {
-      "id": "contrabando",
-      "crime": "Contrabando",
-      "description": "Importação ou exportação de mercadoria proibida"
+      "id": "falsa_identidade",
+      "crime": "Falsa Identidade",
+      "description": "Se passar por outra pessoa ou usar documento falso / Falsificação de documento",
+      "category": "Documentos"
     },
     {
-      "id": "estelionato",
-      "crime": "Estelionato",
-      "description": "Obter vantagem ilícita em prejuízo alheio induzindo ou mantendo alguém em erro"
+      "id": "receptacao_produtos",
+      "crime": "Receptação de Produtos Roubados",
+      "description": "Estar posse de qualquer produto Roubado",
+      "category": "Patrimônio"
     },
     {
-      "id": "receptacao",
-      "crime": "Receptação",
-      "description": "Adquirir, receber, transportar ou ocultar coisa que sabe ser produto de crime"
+      "id": "multas_pendentes",
+      "crime": "Multas Pendentes",
+      "description": "Para cada R$100 de multas pendentes agrava-se penalmente em um mes de reclusão.",
+      "category": "Administrativo"
     },
     {
-      "id": "direcao_perigosa",
-      "crime": "Direção Perigosa",
-      "description": "Conduzir veículo de forma perigosa na via pública colocando em risco a segurança"
+      "id": "perturbacao_ordem",
+      "crime": "Perturbação da Ordem",
+      "description": "Pessoa esta se comportando de maneira disruptiva, mas não apresenta sério perigo publico.",
+      "category": "Ordem Pública"
     },
     {
-      "id": "fuga_abordagem",
-      "crime": "Fuga de Abordagem Policial",
-      "description": "Evadir-se ou tentar se evadir de abordagem policial legal"
+      "id": "ameacas_criminosas",
+      "crime": "Ameaças Criminosas",
+      "description": "Intencionalmente conscientemente colocando outra pessoa com medo de lesões corporais",
+      "category": "Integridade Física"
+    },
+    {
+      "id": "comunicacao_fraudulenta",
+      "crime": "Comunicação Fraudulenta",
+      "description": "Uso de acertos de fato descrito alem da vantagem ilicita para a ou outrem, instaurando por consequencia do mesmo a",
+      "category": "Fraudes"
+    },
+    {
+      "id": "uso_indevido_canais",
+      "crime": "Uso Indevido de Canais publicos (190/112)",
+      "description": "Utilizar, com desordem ou leviandade os canais publicos",
+      "category": "Ordem Pública"
+    },
+    {
+      "id": "desobediencia",
+      "crime": "Desobediencia",
+      "description": "Nenhuma pessoa poderá dexar de cumprir qualquer ordem legal ou direção de qualquer policial",
+      "category": "Autoridade"
+    },
+    {
+      "id": "posse_ferramentas_roubo",
+      "crime": "Posse de ferramentas de roubo / Lockpick",
+      "description": "Posse de qualquer ferramenta usada para invadir qualquer veiculo ou propriedade",
+      "category": "Patrimônio"
+    },
+    {
+      "id": "oposicao_ato_legal",
+      "crime": "Oposição a execução de ato legal",
+      "description": "Impedir, embaracar, retardar ou de qualquer forma obstruir cumprimento de ordem judicial ou ação do autoridade policial.",
+      "category": "Autoridade"
+    },
+    {
+      "id": "abuso_autoridade",
+      "crime": "Abuso de Autoridade",
+      "description": "Quando o Agente usa das suas atribuições do cargo para constranger, ameaçar, agredir ou qualquer outro ato que atinja um",
+      "category": "Autoridade"
+    },
+    {
+      "id": "ocultacao_facial",
+      "crime": "Ocultação Facial",
+      "description": "Cobrir totalmente ou parcialmente a face, afim de impossibilitar reconhecimento.",
+      "category": "Identificação"
+    },
+    {
+      "id": "omissao_socorro",
+      "crime": "Omissão de socorro",
+      "description": "Deixar de prestar assistencia, quando possivel faze-lo sem risco pessoal, a pessoa invalida ou ferida",
+      "category": "Socorro"
+    },
+    {
+      "id": "uso_equipamento_restrito",
+      "crime": "Uso de equipamento restrito",
+      "description": "Utilizar em publico qualquer equipamento da policia ou tipo de colete",
+      "category": "Equipamentos"
     },
     {
       "id": "desacato",
-      "crime": "Desacato à Autoridade",
-      "description": "Desrespeitar funcionário público no exercício da função"
+      "crime": "Desacato",
+      "description": "Desacato, desobediencia ou desrespeito perante um tribunal ou Agente da seguranca Publica/Saude na forma de comportamento que opõe ou desafia a autoridade, a justica e a dignidade do tribunal. Um tribunal poder ele considerado posto. Se o infrator continuar a criar um perturbacao",
+      "category": "Autoridade"
     },
     {
-      "id": "resistencia_prisao",
-      "crime": "Resistência à Prisão",
-      "description": "Opor-se à execução de ato legal mediante violência ou ameaça"
+      "id": "conducao_imprudente",
+      "crime": "Condução imprudente",
+      "description": "Conducao descuidada, conducao inadequada ou conducao sem o devido cuidado e atencao com o provocar dano em propriedade alheia.",
+      "category": "Trânsito"
     },
     {
-      "id": "perturbacao_paz",
-      "crime": "Perturbação da Paz Pública",
-      "description": "Perturbar alguém o trabalho ou sossego alheios com gritaria ou algazarra"
+      "id": "passagem_ilegal",
+      "crime": "Passagem Ilegal",
+      "description": "Forçar ultrapassagem ou ultrapassar em local proibido",
+      "category": "Trânsito"
     },
     {
-      "id": "vandalismo",
-      "crime": "Vandalismo",
-      "description": "Destruir, inutilizar ou deteriorar coisa alheia"
+      "id": "retorno_ilegal",
+      "crime": "Retorno Ilegal",
+      "description": "Retornar em local proibido por placa ou sinalizacao",
+      "category": "Trânsito"
     },
     {
-      "id": "invasao_propriedade",
-      "crime": "Invasão de Propriedade",
-      "description": "Invadir propriedade alheia contra vontade expressa ou tácita de quem de direito"
+      "id": "dirigir_sentido_contrario",
+      "crime": "Dirigir em sentido Contrário",
+      "description": "Conduzir Veiculo automotor ou de tração humana em sentido contrário ao fluxo de tráfego.",
+      "category": "Trânsito"
     },
     {
-      "id": "ameaca",
-      "crime": "Ameaça",
-      "description": "Ameaçar alguém por palavra, escrito ou gesto de causar-lhe mal injusto e grave"
+      "id": "iluminacao_negligente",
+      "crime": "Iluminação negligente",
+      "description": "Conduzir veiculo automotor ou de tração humana com iluminação irregular.",
+      "category": "Trânsito"
     },
     {
-      "id": "lesao_corporal",
-      "crime": "Lesão Corporal",
-      "description": "Ofender a integridade corporal ou saúde de outrem"
+      "id": "excesso_velocidade",
+      "crime": "Excesso de Velocidade",
+      "description": "Taxa basica de R$50 a cada 10kmh de velocidade registrada em radar acima do limite permitido na via.",
+      "category": "Trânsito"
     },
     {
-      "id": "injuria",
-      "crime": "Injúria",
-      "description": "Injuriar alguém ofendendo-lhe a dignidade ou decoro"
+      "id": "nao_ceder_passagem",
+      "crime": "Não ceder passagem a viaturas",
+      "description": "Deixar de ceder à direta para um veiculo de emergência com suas luzes e / ou sirenes ativadas.",
+      "category": "Trânsito"
     },
     {
-      "id": "calúnia",
-      "crime": "Calúnia",
-      "description": "Imputar falsamente a alguém fato definido como crime"
+      "id": "ruido_excessivo",
+      "crime": "Ruido Excessivo de Veiculo",
+      "description": "Buzinas, buzinar de musica ou motores de aceleração que causam um incomodo publico.",
+      "category": "Trânsito"
     },
     {
-      "id": "difamacao",
-      "crime": "Difamação",
-      "description": "Imputar a alguém fato ofensivo à sua reputação"
+      "id": "corrida_ilegal",
+      "crime": "Corrida Ilegal",
+      "description": "Participar ou organizar de corridas ilegais. Condução imprudente sobre vias publicas e zonas rurais.",
+      "category": "Trânsito"
     },
     {
-      "id": "incendio",
-      "crime": "Incêndio",
-      "description": "Causar incêndio expondo a perigo a vida, integridade física ou patrimônio"
+      "id": "uso_excessivo_insulfilm",
+      "crime": "Uso excessivo de insulim",
+      "description": "Utilizar insulim, excessivamente escuro afim de impossibilitar identificação do condutor ou passageiros.",
+      "category": "Trânsito"
     },
     {
-      "id": "explosao",
-      "crime": "Explosão",
-      "description": "Causar explosão expondo a perigo a vida, integridade física ou patrimônio"
+      "id": "parabrisa_danificado",
+      "crime": "Para-Brisas/Vidros Danificados",
+      "description": "Conduzir veiculo automotor com Para-brisas ou vidros danificados.",
+      "category": "Trânsito"
     },
     {
-      "id": "sabotagem",
-      "crime": "Sabotagem",
-      "description": "Destruir, danificar ou inutilizar estabelecimento ou instalação"
+      "id": "lanternas_danificadas",
+      "crime": "Lanternas danificadas",
+      "description": "Conduzir veiculo automotor com lanternas traseiras ou dianteiras danificadas.",
+      "category": "Trânsito"
+    },
+    {
+      "id": "veiculo_avariado",
+      "crime": "Veiculo Gravemente Avariado",
+      "description": "Conduzir veiculo Automotor gravemente avariado em danos.",
+      "category": "Trânsito"
+    },
+    {
+      "id": "veiculo_estacionado_ilegal",
+      "crime": "Veiculo ilegalmente estacionado",
+      "description": "Estacionar em um lugar que não seja uma vaga de estacionamento, em uma pista de incêndio, bloqueando uma pista alada ou a",
+      "category": "Trânsito"
+    },
+    {
+      "id": "impedimento_fluxo",
+      "crime": "Impedimento de fluxo de tráfego",
+      "description": "Dexando um veiculo parado ou estacionado em uma area onde isso afeta o fluxo de tráfego.",
+      "category": "Trânsito"
     }
   ]
 }
