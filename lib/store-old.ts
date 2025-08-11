@@ -6,8 +6,7 @@ import type {
   PenaltyCalculation, 
   OccurrenceStore, 
   OccurrenceStartType, 
-  FallbackData,
-  PenaltyDetail
+  FallbackData 
 } from "./types"
 
 const initialFormData: FormData = {
@@ -119,20 +118,21 @@ const pluralize = (word: string, count: number, pluralForm?: string): string => 
   }
 }
 
-// Helper function to get conjugated text based on person count
+// Helper to get conjugated verbs based on number of people
 const getConjugatedText = (count: number) => {
   const isPlural = count > 1
-  
   return {
-    article: isPlural ? "os" : "o",
-    articleCap: isPlural ? "Os" : "O",
-    individuo: isPlural ? pluralize("indivíduo") : "indivíduo",
-    suspeito: isPlural ? pluralize("suspeito") : "suspeito",
-    envolvido_envolvidos: isPlural ? "envolvidos" : "envolvido", 
-    empreendeu_empreenderam: isPlural ? "empreenderam" : "empreendeu",
-    tentou_tentaram: isPlural ? "Tentaram" : "Tentou",
-    foi_foram: isPlural ? "foram" : "foi",
-    conduzido_conduzidos: isPlural ? "conduzidos" : "conduzido",
+    article: isPlural ? 'os' : 'o',
+    articleCap: isPlural ? 'Os' : 'O',
+    suspeito: pluralize('suspeito', count),
+    individuo: pluralize('indivíduo', count),
+    foi_foram: isPlural ? 'foram' : 'foi',
+    detido_detidos: isPlural ? 'detidos' : 'detido',
+    conduzido_conduzidos: isPlural ? 'conduzidos' : 'conduzido',
+    tentou_tentaram: isPlural ? 'tentaram' : 'tentou',
+    empreendeu_empreenderam: isPlural ? 'empreenderam' : 'empreendeu',
+    fugiu_fugiram: isPlural ? 'fugiram' : 'fugiu',
+    envolvido_envolvidos: isPlural ? 'envolvidos' : 'envolvido'
   }
 }
 
@@ -169,11 +169,11 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
     set({ isLoading: true, error: null })
 
     try {
-      // Tentar carregar dados dos templates
-      let templateData
-      try {
-        templateData = await safeFetch("/data/templates.json")
-      } catch {
+
+    try {
+      // Tentar carregar template, usar fallback se falhar
+      let templateData = await safeFetch("/data/templates.json")
+      if (!templateData) {
         console.warn("Using fallback template data")
         templateData = fallbackData.templates
       }
@@ -197,24 +197,28 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
         .replace(/\{local_inicio\}/g, formData.local_inicio || "Não informado")
         .replace(/\{local_prisao\}/g, formData.local_prisao || "Não informado")
         .replace("{veiculo}", formData.veiculo || "Não informado")
+        .replace("{data_hora}", new Date().toLocaleString("pt-BR"))
+        // Pluralization replacements
         .replace(/\{article\}/g, conjugated.article)
         .replace(/\{articleCap\}/g, conjugated.articleCap)
-        .replace("{individuo}", conjugated.individuo)
-        .replace("{suspeito}", conjugated.suspeito)
-        .replace("{envolvido_envolvidos}", conjugated.envolvido_envolvidos)
-        .replace("{empreendeu_empreenderam}", conjugated.empreendeu_empreenderam)
-        .replace("{tentou_tentaram}", conjugated.tentou_tentaram)
-        .replace("{foi_foram}", conjugated.foi_foram)
-        .replace("{conduzido_conduzidos}", conjugated.conduzido_conduzidos)
+        .replace(/\{suspeito\}/g, conjugated.suspeito)
+        .replace(/\{individuo\}/g, conjugated.individuo)
+        .replace(/\{foi_foram\}/g, conjugated.foi_foram)
+        .replace(/\{detido_detidos\}/g, conjugated.detido_detidos)
+        .replace(/\{conduzido_conduzidos\}/g, conjugated.conduzido_conduzidos)
+        .replace(/\{tentou_tentaram\}/g, conjugated.tentou_tentaram)
+        .replace(/\{empreendeu_empreenderam\}/g, conjugated.empreendeu_empreenderam)
+        .replace(/\{fugiu_fugiram\}/g, conjugated.fugiu_fugiram)
+        .replace(/\{envolvido_envolvidos\}/g, conjugated.envolvido_envolvidos)
 
-      // Montar lista de itens apreendidos de forma compacta
-      const itensCompactos: string[] = []
+      // Gerar lista de itens apreendidos no formato compacto
+      const itensCompactos = []
 
       // Ferramentas - formato: Nome(quantidade)
       if (formData.ferramentas_selecionadas.length > 0) {
         formData.ferramentas_selecionadas.forEach((item) => {
-          const nomeItem = item.nome || "Ferramenta não identificada"
-          itensCompactos.push(`${nomeItem}(${item.quantidade || 1})`)
+          const nomeItem = item.nome || "Item não identificado"
+          itensCompactos.push(`${nomeItem}(${item.quantidade})`)
         })
       }
 
@@ -222,7 +226,7 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
       if (formData.entorpecentes_selecionados.length > 0) {
         formData.entorpecentes_selecionados.forEach((item) => {
           const nomeItem = item.nome || "Item não identificado"
-          itensCompactos.push(`${nomeItem}(${item.quantidade || 1})`)
+          itensCompactos.push(`${nomeItem}(${item.quantidade})`)
         })
       }
 
@@ -230,7 +234,7 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
       if (formData.municoes_selecionadas.length > 0) {
         formData.municoes_selecionadas.forEach((item) => {
           const nomeItem = item.nome || "Item não identificado"
-          itensCompactos.push(`${nomeItem}(${item.quantidade || 1})`)
+          itensCompactos.push(`${nomeItem}(${item.quantidade})`)
         })
       }
 
@@ -238,7 +242,7 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
       if (formData.armas_selecionadas.length > 0) {
         formData.armas_selecionadas.forEach((item) => {
           const nomeItem = item.nome || "Item não identificado"
-          itensCompactos.push(`${nomeItem}(${item.quantidade || 1})`)
+          itensCompactos.push(`${nomeItem}(${item.quantidade})`)
         })
       }
 
@@ -246,7 +250,7 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
       if (formData.produtos_selecionados.length > 0) {
         formData.produtos_selecionados.forEach((item) => {
           const nomeItem = item.nome || "Item não identificado"
-          itensCompactos.push(`${nomeItem}(${item.quantidade || 1})`)
+          itensCompactos.push(`${nomeItem}(${item.quantidade})`)
         })
       }
 
@@ -304,7 +308,7 @@ Pena Total: 0 meses
     const { formData } = get()
     set({ isLoading: true, error: null })
     
-    const detalhes: PenaltyDetail[] = []
+    const detalhes = []
     let total = 0
 
     try {
@@ -321,13 +325,14 @@ Pena Total: 0 meses
       // Calcular pena para ferramentas (10 + ferramentas * 10)
       if (formData.ferramentas_selecionadas.length > 0) {
         let totalFerramentas = 0
-        formData.ferramentas_selecionadas.forEach((ferramenta) => {
-          totalFerramentas += ferramenta.quantidade || 1
+        formData.ferramentas_selecionadas.forEach((item) => {
+          totalFerramentas += item.quantidade
         })
+
         const mesesFerramentas = 10 + totalFerramentas * 10
         detalhes.push({
           categoria: "Ferramentas Ilícitas",
-          descricao: `10 meses base + ${totalFerramentas} itens × 10 meses`,
+          descricao: `10 meses base + ${totalFerramentas} × 10 meses`,
           meses: mesesFerramentas,
         })
         total += mesesFerramentas
@@ -336,31 +341,31 @@ Pena Total: 0 meses
       // Calcular pena para entorpecentes (15 + entorpecentes / 2)
       if (formData.entorpecentes_selecionados.length > 0) {
         let totalEntorpecentes = 0
-        formData.entorpecentes_selecionados.forEach((entorpecente) => {
-          totalEntorpecentes += entorpecente.quantidade || 1
+        formData.entorpecentes_selecionados.forEach((item) => {
+          totalEntorpecentes += item.quantidade
         })
-        const adicionalEntorpecentes = Math.floor(totalEntorpecentes / 2)
-        const mesesEntorpecentes = 15 + adicionalEntorpecentes
+
+        const mesesEntorpecentes = 15 + totalEntorpecentes / 2
         detalhes.push({
           categoria: "Entorpecentes",
-          descricao: `15 meses base + ${adicionalEntorpecentes} (quantidade ÷ 2)`,
+          descricao: `15 meses base + ${totalEntorpecentes} ÷ 2`,
           meses: mesesEntorpecentes,
         })
         total += mesesEntorpecentes
       }
 
-      // Calcular pena para munições (15 + (grupos / 20) * 5)
+      // Calcular pena para munições (15 + Math.floor(municao / 20) * 5)
       if (formData.municoes_selecionadas.length > 0) {
         let totalMunicoes = 0
-        formData.municoes_selecionadas.forEach((municao) => {
-          totalMunicoes += municao.quantidade || 1
+        formData.municoes_selecionadas.forEach((item) => {
+          totalMunicoes += item.quantidade
         })
-        const grupos = Math.floor(totalMunicoes / 20)
-        const adicionalMunicoes = grupos * 5
+
+        const adicionalMunicoes = Math.floor(totalMunicoes / 20) * 5
         const mesesMunicoes = 15 + adicionalMunicoes
         detalhes.push({
           categoria: "Munição Ilegal",
-          descricao: `15 meses base + ${grupos} grupos de 20 × 5 meses`,
+          descricao: `15 meses base + ${Math.floor(totalMunicoes / 20)} grupos de 20 × 5 meses`,
           meses: mesesMunicoes,
         })
         total += mesesMunicoes
@@ -369,28 +374,30 @@ Pena Total: 0 meses
       // Calcular pena para armas (20 + armas * 15)
       if (formData.armas_selecionadas.length > 0) {
         let totalArmas = 0
-        formData.armas_selecionadas.forEach((arma) => {
-          totalArmas += arma.quantidade || 1
+        formData.armas_selecionadas.forEach((item) => {
+          totalArmas += item.quantidade
         })
+
         const mesesArmas = 20 + totalArmas * 15
         detalhes.push({
-          categoria: "Armas Ilegais",
-          descricao: `20 meses base + ${totalArmas} armas × 15 meses`,
+          categoria: "Porte Ilegal de Arma",
+          descricao: `20 meses base + ${totalArmas} × 15 meses`,
           meses: mesesArmas,
         })
         total += mesesArmas
       }
 
-      // Calcular pena para produtos (10 + produtos * 2)
+      // Calcular pena para produtos roubados (10 + produtos * 2)
       if (formData.produtos_selecionados.length > 0) {
         let totalProdutos = 0
-        formData.produtos_selecionados.forEach((produto) => {
-          totalProdutos += produto.quantidade || 1
+        formData.produtos_selecionados.forEach((item) => {
+          totalProdutos += item.quantidade
         })
+
         const mesesProdutos = 10 + totalProdutos * 2
         detalhes.push({
-          categoria: "Produtos Ilícitos",
-          descricao: `10 meses base + ${totalProdutos} itens × 2 meses`,
+          categoria: "Produtos Roubados",
+          descricao: `10 meses base + ${totalProdutos} × 2 meses`,
           meses: mesesProdutos,
         })
         total += mesesProdutos
