@@ -155,7 +155,22 @@ export function IntelligentAutocomplete({
     setSearchQuery(newValue)
     if (newValue.length >= 2) {
       setOpen(true)
+    } else if (newValue.length === 0) {
+      setOpen(false)
     }
+  }
+
+  const handleInputFocus = () => {
+    if (value.length >= 2 || searchQuery.length >= 2) {
+      setOpen(true)
+    }
+  }
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    // Delay closing to allow for option selection
+    setTimeout(() => {
+      setOpen(false)
+    }, 200)
   }
 
   const displayName = fieldType === 'crime' ? 'crime' : 'name'
@@ -180,9 +195,8 @@ export function IntelligentAutocomplete({
                 placeholder={placeholder}
                 className={cn("input-dark pr-10", className)}
                 required={required}
-                onFocus={() => {
-                  if (value.length >= 2) setOpen(true)
-                }}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 {value && selectedOption ? (
