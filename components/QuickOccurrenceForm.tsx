@@ -15,6 +15,7 @@ import { AlertTriangle, Wifi, WifiOff, Plus, Minus, Zap } from "lucide-react"
 import { IntelligentAutocomplete } from "@/components/IntelligentAutocomplete"
 import { FixedNumericInput } from "@/components/FixedNumericInput"
 import { PeopleCount } from "@/components/PeopleCount"
+import { CRIMES_LIST, QTH_LIST } from "@/lib/autocomplete-data"
 
 interface QuickOccurrenceFormProps {
   onFormSubmit: () => void
@@ -77,8 +78,9 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
   const [isOnline, setIsOnline] = useState(true)
   
   // New state for autocomplete data
-  const [crimes, setCrimes] = useState<any[]>([])
-  const [locations, setLocations] = useState<any[]>([])
+  // Use the exact data lists provided
+  const crimes = CRIMES_LIST
+  const locations = QTH_LIST
 
   // Estados para contadores rápidos
   const [quickCounters, setQuickCounters] = useState({
@@ -111,8 +113,6 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
           fetch("/data/produtos.json"),
           fetch("/data/armas.json"),
           fetch("/data/templates.json"),
-          fetch("/data/crimes.json"),
-          fetch("/data/locations.json"),
         ])
 
         let hasErrors = false
@@ -187,34 +187,6 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
           }
         } else {
           hasErrors = true
-        }
-
-        // Carregar crimes
-        if (responses[6].status === "fulfilled" && responses[6].value.ok) {
-          try {
-            const crimesData = await responses[6].value.json()
-            setCrimes(crimesData.crimes || [])
-          } catch {
-            hasErrors = true
-            setCrimes([])
-          }
-        } else {
-          hasErrors = true
-          setCrimes([])
-        }
-
-        // Carregar locations
-        if (responses[7].status === "fulfilled" && responses[7].value.ok) {
-          try {
-            const locationsData = await responses[7].value.json()
-            setLocations(locationsData.locations || [])
-          } catch {
-            hasErrors = true
-            setLocations([])
-          }
-        } else {
-          hasErrors = true
-          setLocations([])
         }
 
         setIsOnline(!hasErrors)
