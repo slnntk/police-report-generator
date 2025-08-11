@@ -1,316 +1,658 @@
 {
   "locations": [
     {
-      "id": "los_santos_central",
-      "name": "Los Santos Central",
-      "category": "Distrito Central",
-      "description": "Área central da cidade com alta movimentação"
+      "id": "maze_bank_arena",
+      "name": "Maze Bank Arena",
+      "description": "Arena esportiva localizada no centro da cidade",
+      "category": "Entretenimento"
     },
     {
-      "id": "vinewood",
-      "name": "Vinewood",
-      "category": "Distrito Norte",
-      "description": "Área residencial nobre com estúdios e mansões"
+      "id": "porto",
+      "name": "Porto",
+      "description": "Área portuária da cidade",
+      "category": "Industrial"
     },
     {
-      "id": "downtown_vinewood",
-      "name": "Downtown Vinewood",
-      "category": "Distrito Norte",
-      "description": "Centro comercial de Vinewood"
+      "id": "docas",
+      "name": "Docas",
+      "description": "Área das docas do porto",
+      "category": "Industrial"
     },
     {
-      "id": "humane_labs",
-      "name": "Humane Labs",
-      "category": "Industrial",
-      "description": "Complexo laboratorial e de pesquisa"
+      "id": "ponte_pqd",
+      "name": "Ponte PQD",
+      "description": "Ponte que conecta diferentes áreas da cidade",
+      "category": "Transporte"
     },
     {
-      "id": "ammunation",
-      "name": "Ammunation",
-      "category": "Comércio",
-      "description": "Loja de armas e munições"
+      "id": "acougue",
+      "name": "Açougue",
+      "description": "Estabelecimento comercial de carnes",
+      "category": "Comercial"
     },
     {
-      "id": "banco_central",
-      "name": "Banco Central",
-      "category": "Distrito Central",
-      "description": "Principal instituição bancária da cidade"
+      "id": "ceramica",
+      "name": "Cerâmica",
+      "description": "Fábrica de cerâmica",
+      "category": "Industrial"
     },
     {
-      "id": "hospital_central",
-      "name": "Hospital Central",
-      "category": "Serviços Públicos",
-      "description": "Principal unidade hospitalar"
+      "id": "ferro_velho_maze",
+      "name": "Ferro Velho do Maze Bank Arena",
+      "description": "Ferro velho próximo ao arena",
+      "category": "Industrial"
     },
     {
-      "id": "delegacia_central",
-      "name": "Delegacia Central",
-      "category": "Segurança Pública",
-      "description": "Sede da polícia civil"
+      "id": "ferro_velho_dp_praca",
+      "name": "Ferro Velho da DP da praça",
+      "description": "Ferro velho próximo à delegacia da praça",
+      "category": "Industrial"
     },
     {
-      "id": "prefeitura",
-      "name": "Prefeitura",
-      "category": "Distrito Central",
-      "description": "Sede do governo municipal"
+      "id": "dp_praca",
+      "name": "DP da praça",
+      "description": "Delegacia de polícia localizada na praça",
+      "category": "Segurança"
     },
     {
-      "id": "porto_ls",
-      "name": "Porto de Los Santos",
-      "category": "Industrial",
-      "description": "Complexo portuário da cidade"
+      "id": "tijolinho",
+      "name": "Tijolinho",
+      "description": "Área residencial conhecida como Tijolinho",
+      "category": "Residencial"
     },
     {
-      "id": "aeroporto_ls",
-      "name": "Aeroporto de Los Santos",
-      "category": "Transporte",
-      "description": "Principal aeroporto da região"
+      "id": "vagos",
+      "name": "Vagos",
+      "description": "Território da gang Vagos",
+      "category": "Gang"
     },
     {
-      "id": "groove_street",
-      "name": "Groove Street",
-      "category": "Distrito Sul",
-      "description": "Rua residencial no sul da cidade"
+      "id": "rua_sem_saida_groove",
+      "name": "Rua sem saída da GROOVE",
+      "description": "Beco sem saída no território Grove",
+      "category": "Gang"
     },
     {
-      "id": "ballas_territory",
-      "name": "Território dos Ballas",
-      "category": "Distrito Sul",
-      "description": "Área de domínio da gangue Ballas"
+      "id": "megamall_sul",
+      "name": "Megamall do sul",
+      "description": "Shopping center na zona sul",
+      "category": "Comercial"
     },
     {
-      "id": "families_territory",
-      "name": "Território das Families",
-      "category": "Distrito Sul",
-      "description": "Área de domínio da gangue Families"
+      "id": "bombeiros",
+      "name": "Bombeiros",
+      "description": "Estação de bombeiros",
+      "category": "Segurança"
     },
     {
-      "id": "beach_area",
-      "name": "Área da Praia",
-      "category": "Lazer",
-      "description": "Região litorânea com praias e comércio"
+      "id": "estacionamento_marrom",
+      "name": "Estacionamento marrom",
+      "description": "Estacionamento público marrom",
+      "category": "Estacionamento"
     },
     {
-      "id": "pier",
-      "name": "Píer",
-      "category": "Lazer",
-      "description": "Píer turístico com parque de diversões"
+      "id": "suburbios_groove",
+      "name": "Subúrbios da GROOVE / Forum Drive",
+      "description": "Área suburbana do território Grove",
+      "category": "Gang"
     },
     {
-      "id": "shopping_center",
-      "name": "Centro Comercial",
-      "category": "Comércio",
-      "description": "Principal shopping center da cidade"
+      "id": "igreja_groove",
+      "name": "Igreja da Groove",
+      "description": "Igreja localizada no território Grove",
+      "category": "Religioso"
     },
     {
-      "id": "universidad",
-      "name": "Universidade",
-      "category": "Educação",
-      "description": "Campus universitário principal"
+      "id": "posto_bennys",
+      "name": "Posto da Bennys",
+      "description": "Posto de gasolina da Bennys",
+      "category": "Combustível"
     },
     {
-      "id": "estadio",
-      "name": "Estádio",
-      "category": "Esporte",
-      "description": "Grande estádio esportivo"
+      "id": "lava_jato",
+      "name": "Lava-Jato",
+      "description": "Estabelecimento de lavagem de veículos",
+      "category": "Serviços"
     },
     {
-      "id": "corrida_underground",
-      "name": "Pista de Corrida Underground",
-      "category": "Clandestino",
-      "description": "Local de corridas ilegais"
+      "id": "eletrica",
+      "name": "Elétrica",
+      "description": "Usina elétrica da cidade",
+      "category": "Utilities"
     },
     {
-      "id": "cassino",
-      "name": "Cassino",
-      "category": "Entretenimento",
-      "description": "Casa de jogos e apostas"
+      "id": "hospital_mortos",
+      "name": "Hospital dos Mortos",
+      "description": "Hospital abandonado",
+      "category": "Médico"
     },
     {
-      "id": "boate_vanilla",
-      "name": "Boate Vanilla Unicorn",
-      "category": "Entretenimento",
-      "description": "Casa noturna de entretenimento adulto"
+      "id": "los_santos_shopping",
+      "name": "Los Santos do Shopping",
+      "description": "Área comercial de Los Santos",
+      "category": "Comercial"
     },
     {
-      "id": "bar_hookies",
-      "name": "Bar Hookies",
-      "category": "Entretenimento",
-      "description": "Bar popular da região"
+      "id": "estacionamento_colorido",
+      "name": "Estacionamento Colorido",
+      "description": "Estacionamento público colorido",
+      "category": "Estacionamento"
     },
     {
-      "id": "loja_roupas",
-      "name": "Loja de Roupas",
-      "category": "Comércio",
-      "description": "Estabelecimento comercial de vestuário"
+      "id": "veneza",
+      "name": "Veneza",
+      "description": "Bairro de Veneza",
+      "category": "Residencial"
     },
     {
-      "id": "concessionaria",
-      "name": "Concessionária",
-      "category": "Comércio",
-      "description": "Loja de veículos automotores"
+      "id": "construcao_weazel",
+      "name": "Construção Weazel-News",
+      "description": "Obra em andamento da Weazel News",
+      "category": "Construção"
     },
     {
-      "id": "oficina_mecanica",
-      "name": "Oficina Mecânica",
-      "category": "Serviços",
-      "description": "Prestação de serviços automotivos"
+      "id": "construcao_praca",
+      "name": "Construção da Praça",
+      "description": "Obra em andamento na praça",
+      "category": "Construção"
     },
     {
-      "id": "posto_gasolina",
-      "name": "Posto de Gasolina",
-      "category": "Serviços",
-      "description": "Posto de combustível e conveniência"
+      "id": "construcao_arcadius",
+      "name": "Construção da Arcadius",
+      "description": "Obra em andamento do prédio Arcadius",
+      "category": "Construção"
     },
     {
-      "id": "loja_conveniencia",
-      "name": "Loja de Conveniência",
-      "category": "Comércio",
-      "description": "Estabelecimento de produtos básicos"
+      "id": "rockford_plaza",
+      "name": "Rockford Plaza / Shopping",
+      "description": "Shopping center Rockford Plaza",
+      "category": "Comercial"
     },
     {
-      "id": "supermercado",
-      "name": "Supermercado",
-      "category": "Comércio",
-      "description": "Grande estabelecimento alimentício"
+      "id": "vila_chaves",
+      "name": "Vila do Chaves",
+      "description": "Área residencial Vila do Chaves",
+      "category": "Residencial"
     },
     {
-      "id": "farmacia",
-      "name": "Farmácia",
-      "category": "Serviços",
-      "description": "Estabelecimento farmacêutico"
+      "id": "hospital_pillbox",
+      "name": "Hospital da Pillbox / Hospital Desativado",
+      "description": "Hospital principal ou abandonado",
+      "category": "Médico"
     },
     {
-      "id": "laboratorio_drogas",
-      "name": "Laboratório de Drogas",
-      "category": "Clandestino",
-      "description": "Local clandestino de produção de entorpecentes"
+      "id": "guetos",
+      "name": "Guetos",
+      "description": "Área dos guetos da cidade",
+      "category": "Residencial"
     },
     {
-      "id": "deposito_armas",
-      "name": "Depósito de Armas",
-      "category": "Clandestino",
-      "description": "Armazém ilegal de armamentos"
+      "id": "estacionamento_laranja",
+      "name": "Estacionamento Laranja / Branco",
+      "description": "Estacionamento público laranja/branco",
+      "category": "Estacionamento"
     },
     {
-      "id": "beco_escuro",
-      "name": "Beco Escuro",
-      "category": "Clandestino",
-      "description": "Via secundária com pouca iluminação"
+      "id": "estacionamento_vermelho",
+      "name": "Estacionamento Vermelho",
+      "description": "Estacionamento público vermelho",
+      "category": "Estacionamento"
     },
     {
-      "id": "estacionamento_abandonado",
-      "name": "Estacionamento Abandonado",
-      "category": "Clandestino",
-      "description": "Área abandonada usada para atividades ilícitas"
+      "id": "heliponto",
+      "name": "Heliponto",
+      "description": "Local para pouso de helicópteros",
+      "category": "Transporte"
     },
     {
-      "id": "ponte_cidade",
-      "name": "Ponte da Cidade",
-      "category": "Via Pública",
-      "description": "Principal ponte de ligação urbana"
+      "id": "marinas",
+      "name": "Marinas",
+      "description": "Porto de barcos e yates",
+      "category": "Náutico"
     },
     {
-      "id": "tunel_principal",
-      "name": "Túnel Principal",
-      "category": "Via Pública",
-      "description": "Túnel de passagem sob a cidade"
+      "id": "orla_praia",
+      "name": "Orla da Praia",
+      "description": "Área da orla marítima",
+      "category": "Lazer"
     },
     {
-      "id": "rodovia_principal",
-      "name": "Rodovia Principal",
-      "category": "Via Pública",
-      "description": "Principal via de acesso à cidade"
-    },
-    {
-      "id": "rua_comercial",
-      "name": "Rua Comercial",
-      "category": "Via Pública",
-      "description": "Via com intensa atividade comercial"
-    },
-    {
-      "id": "avenida_central",
-      "name": "Avenida Central",
-      "category": "Via Pública",
-      "description": "Principal avenida da cidade"
-    },
-    {
-      "id": "praca_central",
-      "name": "Praça Central",
-      "category": "Área Pública",
-      "description": "Principal praça pública da cidade"
-    },
-    {
-      "id": "parque_municipal",
-      "name": "Parque Municipal",
-      "category": "Área Pública",
-      "description": "Área verde de lazer público"
+      "id": "calcadao_praia",
+      "name": "Calçadão da Praia",
+      "description": "Calçadão junto à praia",
+      "category": "Lazer"
     },
     {
       "id": "cemiterio",
       "name": "Cemitério",
-      "category": "Área Pública",
-      "description": "Necrópole municipal"
+      "description": "Cemitério da cidade",
+      "category": "Cemitério"
     },
     {
-      "id": "igreja_principal",
-      "name": "Igreja Principal",
-      "category": "Religioso",
-      "description": "Principal templo religioso da cidade"
+      "id": "faculdade",
+      "name": "Faculdade",
+      "description": "Universidade da cidade",
+      "category": "Educação"
     },
     {
-      "id": "escola_publica",
-      "name": "Escola Pública",
-      "category": "Educação",
-      "description": "Instituição de ensino básico"
+      "id": "campo_golfe",
+      "name": "Campo de Golfe",
+      "description": "Campo de golfe exclusivo",
+      "category": "Lazer"
     },
     {
-      "id": "biblioteca",
-      "name": "Biblioteca",
-      "category": "Educação",
-      "description": "Acervo bibliográfico público"
+      "id": "tequila_la",
+      "name": "Tequila-la",
+      "description": "Clube noturno Tequi-la-la",
+      "category": "Entretenimento"
     },
     {
-      "id": "centro_cultural",
-      "name": "Centro Cultural",
-      "category": "Cultura",
-      "description": "Espaço para manifestações culturais"
+      "id": "eclipse_tower",
+      "name": "Eclipse Tower",
+      "description": "Prédio residencial de luxo",
+      "category": "Residencial"
     },
     {
-      "id": "teatro_municipal",
-      "name": "Teatro Municipal",
-      "category": "Cultura",
-      "description": "Principal casa de espetáculos"
+      "id": "life_invader",
+      "name": "Life Invader",
+      "description": "Escritório da Life Invader",
+      "category": "Tecnologia"
     },
     {
-      "id": "museu_cidade",
-      "name": "Museu da Cidade",
-      "category": "Cultura",
-      "description": "Acervo histórico municipal"
+      "id": "cinema",
+      "name": "Cinema",
+      "description": "Cinema da cidade",
+      "category": "Entretenimento"
     },
     {
-      "id": "quartel_bombeiros",
-      "name": "Quartel dos Bombeiros",
-      "category": "Segurança Pública",
-      "description": "Corpo de bombeiros militar"
+      "id": "estudio_cinema",
+      "name": "Estúdio de Cinema",
+      "description": "Estúdio cinematográfico",
+      "category": "Entretenimento"
     },
     {
-      "id": "batalhao_policial",
-      "name": "Batalhão Policial",
-      "category": "Segurança Pública",
-      "description": "Sede da polícia militar"
+      "id": "ovni",
+      "name": "Ovni",
+      "description": "Local misterioso do OVNI",
+      "category": "Misterioso"
     },
     {
-      "id": "penitenciaria",
-      "name": "Penitenciária",
-      "category": "Sistema Prisional",
-      "description": "Complexo penitenciário"
+      "id": "estacionamento_azul",
+      "name": "Estacionamento Azul",
+      "description": "Estacionamento público azul",
+      "category": "Estacionamento"
     },
     {
-      "id": "forum_comarca",
-      "name": "Fórum da Comarca",
-      "category": "Justiça",
-      "description": "Sede do poder judiciário"
+      "id": "dp_vinewood",
+      "name": "DP de Vinewood",
+      "description": "Delegacia de polícia de Vinewood",
+      "category": "Segurança"
+    },
+    {
+      "id": "observatorio",
+      "name": "Observatório",
+      "description": "Observatório astronômico",
+      "category": "Ciência"
+    },
+    {
+      "id": "fazenda",
+      "name": "Fazenda",
+      "description": "Propriedade rural",
+      "category": "Rural"
+    },
+    {
+      "id": "museu",
+      "name": "Museu",
+      "description": "Museu da cidade",
+      "category": "Cultural"
+    },
+    {
+      "id": "teatro",
+      "name": "Teatro",
+      "description": "Teatro municipal",
+      "category": "Cultural"
+    },
+    {
+      "id": "anfiteatro",
+      "name": "Anfiteatro",
+      "description": "Anfiteatro ao ar livre",
+      "category": "Cultural"
+    },
+    {
+      "id": "petrolifera",
+      "name": "Petrolífera",
+      "description": "Refinaria de petróleo",
+      "category": "Industrial"
+    },
+    {
+      "id": "moto_clube",
+      "name": "Moto Clube",
+      "description": "Sede do clube de motociclistas",
+      "category": "Gang"
+    },
+    {
+      "id": "yellow_jack",
+      "name": "Yellow Jack",
+      "description": "Bar Yellow Jack",
+      "category": "Entretenimento"
+    },
+    {
+      "id": "campinho",
+      "name": "Campinho",
+      "description": "Campo de futebol amador",
+      "category": "Lazer"
+    },
+    {
+      "id": "mirror_park",
+      "name": "Mirror Park / Samir",
+      "description": "Bairro residencial Mirror Park",
+      "category": "Residencial"
+    },
+    {
+      "id": "galeria",
+      "name": "Galeria",
+      "description": "Galeria de arte",
+      "category": "Cultural"
+    },
+    {
+      "id": "arcadius",
+      "name": "Arcadius",
+      "description": "Prédio comercial Arcadius",
+      "category": "Comercial"
+    },
+    {
+      "id": "aeroporto_trevor",
+      "name": "Aeroporto Trevor",
+      "description": "Pequeno aeroporto rural",
+      "category": "Transporte"
+    },
+    {
+      "id": "aeroporto_sandy",
+      "name": "Aeroporto de Sandy Shores",
+      "description": "Aeroporto de Sandy Shores",
+      "category": "Transporte"
+    },
+    {
+      "id": "trailers",
+      "name": "Trailers",
+      "description": "Parque de trailers",
+      "category": "Residencial"
+    },
+    {
+      "id": "silos_grape",
+      "name": "Silos de Grape Seed",
+      "description": "Silos agrícolas de Grape Seed",
+      "category": "Rural"
+    },
+    {
+      "id": "niobio",
+      "name": "Nióbio",
+      "description": "Mina de nióbio",
+      "category": "Mineração"
+    },
+    {
+      "id": "cemiterio_aviao",
+      "name": "Cemitério Avião",
+      "description": "Cemitério de aviões abandonados",
+      "category": "Abandono"
+    },
+    {
+      "id": "ponte_verde",
+      "name": "Ponte Verde",
+      "description": "Ponte verde da cidade",
+      "category": "Transporte"
+    },
+    {
+      "id": "pier",
+      "name": "Pier",
+      "description": "Píer da cidade",
+      "category": "Náutico"
+    },
+    {
+      "id": "garagem_antiga",
+      "name": "Garagem antiga",
+      "description": "Garagem abandonada",
+      "category": "Abandono"
+    },
+    {
+      "id": "monumento_chines",
+      "name": "Monumento Chinês",
+      "description": "Monumento de arquitetura chinesa",
+      "category": "Cultural"
+    },
+    {
+      "id": "banco_central",
+      "name": "Banco Central",
+      "description": "Sede do banco central",
+      "category": "Financeiro"
+    },
+    {
+      "id": "parque_eolico",
+      "name": "Parque Eólico",
+      "description": "Parque de energia eólica",
+      "category": "Energia"
+    },
+    {
+      "id": "dp_rodovia",
+      "name": "DP da Rodovia",
+      "description": "Delegacia da polícia rodoviária",
+      "category": "Segurança"
+    },
+    {
+      "id": "dp_praia",
+      "name": "DP da Praia",
+      "description": "Delegacia da praia",
+      "category": "Segurança"
+    },
+    {
+      "id": "pedreira",
+      "name": "Pedreira",
+      "description": "Pedreira de extração de pedras",
+      "category": "Mineração"
+    },
+    {
+      "id": "bahamas",
+      "name": "Bahamas",
+      "description": "Clube Bahamas",
+      "category": "Entretenimento"
+    },
+    {
+      "id": "weazel_news",
+      "name": "Weazel News",
+      "description": "Sede da Weazel News",
+      "category": "Mídia"
+    },
+    {
+      "id": "burger_shot",
+      "name": "Burger Shot",
+      "description": "Restaurante fast-food",
+      "category": "Alimentação"
+    },
+    {
+      "id": "barragem_mansoes",
+      "name": "Barragem das mansões",
+      "description": "Barragem próxima às mansões",
+      "category": "Utilities"
+    },
+    {
+      "id": "madeireira",
+      "name": "Madeireira",
+      "description": "Serraria e madeireira",
+      "category": "Industrial"
+    },
+    {
+      "id": "pelados",
+      "name": "Pelados",
+      "description": "Clube de nudismo",
+      "category": "Entretenimento"
+    },
+    {
+      "id": "torre_radio",
+      "name": "Torre de rádio",
+      "description": "Torre de transmissão de rádio",
+      "category": "Comunicação"
+    },
+    {
+      "id": "galinheiro",
+      "name": "Galinheiro",
+      "description": "Criação de galinhas",
+      "category": "Rural"
+    },
+    {
+      "id": "hp_paleto",
+      "name": "HP de Paleto",
+      "description": "Hospital de Paleto Bay",
+      "category": "Médico"
+    },
+    {
+      "id": "bombeiros_paleto",
+      "name": "Bombeiros de Paleto",
+      "description": "Estação de bombeiros de Paleto Bay",
+      "category": "Segurança"
+    },
+    {
+      "id": "igreja_paleto",
+      "name": "Igreja Paleto",
+      "description": "Igreja de Paleto Bay",
+      "category": "Religioso"
+    },
+    {
+      "id": "dp_paleto",
+      "name": "DP de Paleto",
+      "description": "Delegacia de Paleto Bay",
+      "category": "Segurança"
+    },
+    {
+      "id": "estacao_energia",
+      "name": "Estação de energia / Mergulhador",
+      "description": "Estação de energia subaquática",
+      "category": "Utilities"
+    },
+    {
+      "id": "hp_antigo",
+      "name": "HP Antigo / HP Joalheria",
+      "description": "Hospital antigo ou próximo à joalheria",
+      "category": "Médico"
+    },
+    {
+      "id": "motel_sandy",
+      "name": "Motel abandonado de Sandy Shores",
+      "description": "Motel abandonado em Sandy Shores",
+      "category": "Abandono"
+    },
+    {
+      "id": "jockey",
+      "name": "Jockey",
+      "description": "Hipódromo",
+      "category": "Entretenimento"
+    },
+    {
+      "id": "barragem",
+      "name": "Barragem",
+      "description": "Grande barragem da região",
+      "category": "Utilities"
+    },
+    {
+      "id": "dinossauro",
+      "name": "Dinossauro",
+      "description": "Estátua do dinossauro",
+      "category": "Cultural"
+    },
+    {
+      "id": "prefeitura",
+      "name": "Prefeitura",
+      "description": "Sede da prefeitura",
+      "category": "Governo"
+    },
+    {
+      "id": "carteiro",
+      "name": "Carteiro",
+      "description": "Agência dos correios",
+      "category": "Serviços"
+    },
+    {
+      "id": "vanilla",
+      "name": "Vanilla",
+      "description": "Clube de strip Vanilla Unicorn",
+      "category": "Entretenimento"
+    },
+    {
+      "id": "maze_bank",
+      "name": "Maze Bank",
+      "description": "Sede do Maze Bank",
+      "category": "Financeiro"
+    },
+    {
+      "id": "estacionamento_branco",
+      "name": "Estacionamento branco",
+      "description": "Estacionamento público branco",
+      "category": "Estacionamento"
+    },
+    {
+      "id": "monumento_groove",
+      "name": "Monumento da groove",
+      "description": "Monumento no território Grove",
+      "category": "Cultural"
+    },
+    {
+      "id": "highway_praia",
+      "name": "Highway da Praia",
+      "description": "Rodovia costeira",
+      "category": "Rodovia"
+    },
+    {
+      "id": "senora_freeway",
+      "name": "Senora Freeway",
+      "description": "Rodovia Senora",
+      "category": "Rodovia"
+    },
+    {
+      "id": "los_santos_freeway",
+      "name": "Los Santos Freeway",
+      "description": "Rodovia de Los Santos",
+      "category": "Rodovia"
+    },
+    {
+      "id": "palomino_freeway",
+      "name": "Palomino Freeway",
+      "description": "Rodovia Palomino",
+      "category": "Rodovia"
+    },
+    {
+      "id": "olimpic_freeway",
+      "name": "Olimpic Freeway",
+      "description": "Rodovia Olímpica",
+      "category": "Rodovia"
+    },
+    {
+      "id": "la_puerta_freeway",
+      "name": "La Puerta Freeway",
+      "description": "Rodovia La Puerta",
+      "category": "Rodovia"
+    },
+    {
+      "id": "del_perro_freeway",
+      "name": "Del Perro Freeway",
+      "description": "Rodovia Del Perro",
+      "category": "Rodovia"
+    },
+    {
+      "id": "estrada_fazenda",
+      "name": "Estrada da Fazenda",
+      "description": "Estrada rural para fazendas",
+      "category": "Estrada"
+    },
+    {
+      "id": "rota_68",
+      "name": "Rota 68",
+      "description": "Rodovia Rota 68",
+      "category": "Rodovia"
+    },
+    {
+      "id": "estrada_faculdade",
+      "name": "Estrada da Faculdade",
+      "description": "Estrada de acesso à faculdade",
+      "category": "Estrada"
     }
   ]
 }
