@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { QuickOccurrenceForm } from "./QuickOccurrenceForm"
+import { ValidatedOccurrenceForm } from "./ValidatedOccurrenceForm"
 import { ReportView } from "./ReportView"
 import { InteractivePenaltyView } from "./InteractivePenaltyView"
 import { StepperNavigation } from "./StepperNavigation"
@@ -18,6 +19,7 @@ export function MainContent({ activeTab, setActiveTab }: MainContentProps) {
   const { generatedReport } = useOccurrenceStore()
   const [currentStep, setCurrentStep] = useState("form")
   const [feedbackAction, setFeedbackAction] = useState<"generated" | "copied" | "calculated" | null>(null)
+  const [useValidatedForm, setUseValidatedForm] = useState(true) // Feature flag for new form
 
   const handleFormSubmit = () => {
     setFeedbackAction("generated")
@@ -61,11 +63,19 @@ export function MainContent({ activeTab, setActiveTab }: MainContentProps) {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <QuickOccurrenceForm
-              onFormSubmit={handleFormSubmit}
-              showResults={!!generatedReport}
-              onCalculationUpdate={handleCalculationFeedback}
-            />
+            {useValidatedForm ? (
+              <ValidatedOccurrenceForm
+                onFormSubmit={handleFormSubmit}
+                showResults={!!generatedReport}
+                onCalculationUpdate={handleCalculationFeedback}
+              />
+            ) : (
+              <QuickOccurrenceForm
+                onFormSubmit={handleFormSubmit}
+                showResults={!!generatedReport}
+                onCalculationUpdate={handleCalculationFeedback}
+              />
+            )}
           </motion.div>
         )
       case "report":
