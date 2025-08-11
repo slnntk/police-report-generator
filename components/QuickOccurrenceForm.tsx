@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -384,46 +384,57 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
 
   const QuickCounter = ({ category, item }: { category: keyof typeof quickCounters; item: any }) => {
     const count = quickCounters[category][item.id] || 0
-    const [isHolding, setIsHolding] = useState(false)
-    const [holdTimeout, setHoldTimeout] = useState<NodeJS.Timeout | null>(null)
-    const [holdInterval, setHoldInterval] = useState<NodeJS.Timeout | null>(null)
+    const isHoldingRef = useRef(false)
+    const holdTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+    const holdIntervalRef = useRef<NodeJS.Timeout | null>(null)
+    const lastClickTimeRef = useRef<number>(0)
 
     const startHold = (change: number, event: React.MouseEvent | React.TouchEvent) => {
       event.preventDefault()
-      setIsHolding(true)
+      
+      // Prevent multiple simultaneous holds
+      if (isHoldingRef.current) return
+      
+      // Debounce rapid clicks (minimum 50ms between actions)
+      const now = Date.now()
+      if (now - lastClickTimeRef.current < 50) return
+      lastClickTimeRef.current = now
+      
+      isHoldingRef.current = true
       updateCounter(category, item.id, change)
       
-      const timeout = setTimeout(() => {
-        if (isHolding) { // Check if still holding before starting interval
-          const interval = setInterval(() => {
-            updateCounter(category, item.id, change)
-          }, 100) // Increment every 100ms when holding
-          setHoldInterval(interval)
+      holdTimeoutRef.current = setTimeout(() => {
+        // Only start interval if still holding (using ref which has current value)
+        if (isHoldingRef.current) {
+          holdIntervalRef.current = setInterval(() => {
+            // Double-check we're still holding before each increment
+            if (isHoldingRef.current) {
+              updateCounter(category, item.id, change)
+            }
+          }, 150) // Slightly slower for better control
         }
       }, 500) // Start rapid increment after 500ms
-      
-      setHoldTimeout(timeout)
     }
 
     const stopHold = () => {
-      setIsHolding(false)
-      if (holdTimeout) {
-        clearTimeout(holdTimeout)
-        setHoldTimeout(null)
+      isHoldingRef.current = false
+      
+      if (holdTimeoutRef.current) {
+        clearTimeout(holdTimeoutRef.current)
+        holdTimeoutRef.current = null
       }
-      if (holdInterval) {
-        clearInterval(holdInterval)
-        setHoldInterval(null)
+      if (holdIntervalRef.current) {
+        clearInterval(holdIntervalRef.current)
+        holdIntervalRef.current = null
       }
     }
 
     // Cleanup on unmount
     useEffect(() => {
       return () => {
-        if (holdTimeout) clearTimeout(holdTimeout)
-        if (holdInterval) clearInterval(holdInterval)
+        stopHold()
       }
-    }, [holdTimeout, holdInterval])
+    }, [])
 
     return (
       <div className="flex items-center justify-between p-2 dark-secondary-bg rounded border dark-border hover:bg-gray-700/50 transition-colors">
@@ -431,7 +442,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
           <span className="text-sm font-medium dark-text truncate">{item.nome}</span>
           {item.categoria && <span className="text-xs dark-text-soft ml-2">({item.categoria})</span>}
         </div>
-        <div className="flex items-center gap-1 ml-2">
+        <div className="flex items-center gap-2 ml-2">
           <Button
             type="button"
             size="sm"
@@ -442,16 +453,17 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             onTouchStart={(e) => startHold(-1, e)}
             onTouchEnd={stopHold}
             disabled={count === 0}
-            className="h-6 w-6 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
+            className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/20 active:bg-red-500/30 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            title="Diminuir quantidade"
           >
-            <Minus className="h-3 w-3" />
+            <Minus className="h-4 w-4" />
           </Button>
           
           <FixedNumericInput
             value={count}
             onChange={(value) => setCounterValue(category, item.id, value)}
             min={0}
-            className="w-12 h-6 text-center text-sm font-bold bg-gray-800 border-gray-600 text-white px-1"
+            className="w-16 h-8 text-center text-sm font-bold bg-gray-800 border-gray-600 text-white focus:ring-2 focus:ring-blue-500/50 transition-all"
           />
           
           <Button
@@ -463,9 +475,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             onMouseLeave={stopHold}
             onTouchStart={(e) => startHold(1, e)}
             onTouchEnd={stopHold}
-            className="h-6 w-6 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/10 transition-colors"
+            className="h-8 w-8 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/20 active:bg-green-500/30 transition-all duration-150"
+            title="Aumentar quantidade"
           >
-            <Plus className="h-3 w-3" />
+            <Plus className="h-4 w-4" />
           </Button>
         </div>
       </div>
@@ -474,41 +487,57 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
 
   const GenericCounter = ({ category, title, emoji }: { category: keyof typeof genericCounters; title: string; emoji: string }) => {
     const count = genericCounters[category]
-    const [holdTimeout, setHoldTimeout] = useState<NodeJS.Timeout | null>(null)
-    const [holdInterval, setHoldInterval] = useState<NodeJS.Timeout | null>(null)
+    const isHoldingRef = useRef(false)
+    const holdTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+    const holdIntervalRef = useRef<NodeJS.Timeout | null>(null)
+    const lastClickTimeRef = useRef<number>(0)
 
     const startHold = (change: number, event: React.MouseEvent | React.TouchEvent) => {
       event.preventDefault()
+      
+      // Prevent multiple simultaneous holds
+      if (isHoldingRef.current) return
+      
+      // Debounce rapid clicks (minimum 50ms between actions)
+      const now = Date.now()
+      if (now - lastClickTimeRef.current < 50) return
+      lastClickTimeRef.current = now
+      
+      isHoldingRef.current = true
       updateGenericCounter(category, change)
       
-      const timeout = setTimeout(() => {
-        const interval = setInterval(() => {
-          updateGenericCounter(category, change)
-        }, 100)
-        setHoldInterval(interval)
+      holdTimeoutRef.current = setTimeout(() => {
+        // Only start interval if still holding
+        if (isHoldingRef.current) {
+          holdIntervalRef.current = setInterval(() => {
+            // Double-check we're still holding before each increment
+            if (isHoldingRef.current) {
+              updateGenericCounter(category, change)
+            }
+          }, 150) // Slightly slower for better control
+        }
       }, 500)
-      
-      setHoldTimeout(timeout)
     }
     
     const stopHold = () => {
-      if (holdTimeout) {
-        clearTimeout(holdTimeout)
-        setHoldTimeout(null)
+      isHoldingRef.current = false
+      
+      if (holdTimeoutRef.current) {
+        clearTimeout(holdTimeoutRef.current)
+        holdTimeoutRef.current = null
       }
-      if (holdInterval) {
-        clearInterval(holdInterval)
-        setHoldInterval(null)
+      if (holdIntervalRef.current) {
+        clearInterval(holdIntervalRef.current)
+        holdIntervalRef.current = null
       }
     }
 
     // Cleanup on unmount
     useEffect(() => {
       return () => {
-        if (holdTimeout) clearTimeout(holdTimeout)
-        if (holdInterval) clearInterval(holdInterval)
+        stopHold()
       }
-    }, [holdTimeout, holdInterval])
+    }, [])
 
     return (
       <div className="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-lg border border-indigo-500/30">
@@ -516,7 +545,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
           <span className="text-lg">{emoji}</span>
           <span className="text-sm font-semibold text-indigo-300">{title}</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Button
             type="button"
             size="sm"
@@ -527,16 +556,17 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             onTouchStart={(e) => startHold(-1, e)}
             onTouchEnd={stopHold}
             disabled={count === 0}
-            className="h-7 w-7 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-colors"
+            className="h-9 w-9 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/25 active:bg-red-500/35 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            title="Diminuir quantidade"
           >
-            <Minus className="h-4 w-4" />
+            <Minus className="h-5 w-5" />
           </Button>
           
           <FixedNumericInput
             value={count}
             onChange={(value) => setGenericCounterValue(category, value)}
             min={0}
-            className="w-16 h-7 text-center text-sm font-bold bg-gray-800 border-indigo-500/50 text-white"
+            className="w-20 h-9 text-center text-sm font-bold bg-gray-800 border-indigo-500/50 text-white focus:ring-2 focus:ring-indigo-500/50 transition-all"
           />
           
           <Button
@@ -548,9 +578,10 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             onMouseLeave={stopHold}
             onTouchStart={(e) => startHold(1, e)}
             onTouchEnd={stopHold}
-            className="h-7 w-7 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/20 transition-colors"
+            className="h-9 w-9 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/25 active:bg-green-500/35 transition-all duration-150"
+            title="Aumentar quantidade"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-5 w-5" />
           </Button>
         </div>
       </div>
@@ -769,8 +800,8 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-0 flex-1 min-h-0">
-                    <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
-                      <div className="space-y-1">
+                    <div className="max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
+                      <div className="space-y-2">
                         {ferramentas.map((item) => (
                           <QuickCounter key={item.id} category="ferramentas" item={item} />
                         ))}
@@ -789,8 +820,8 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-0 flex-1 min-h-0">
-                    <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
-                      <div className="space-y-1">
+                    <div className="max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
+                      <div className="space-y-2">
                         {entorpecentes.map((item) => (
                           <QuickCounter key={item.id} category="entorpecentes" item={item} />
                         ))}
@@ -809,8 +840,8 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-0 flex-1 min-h-0">
-                    <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
-                      <div className="space-y-1">
+                    <div className="max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
+                      <div className="space-y-2">
                         {municoes.map((item) => (
                           <QuickCounter key={item.id} category="municoes" item={item} />
                         ))}
@@ -829,8 +860,8 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-0 flex-1 min-h-0">
-                    <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
-                      <div className="space-y-1">
+                    <div className="max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
+                      <div className="space-y-2">
                         {armas.map((item) => (
                           <QuickCounter key={item.id} category="armas" item={item} />
                         ))}
@@ -849,8 +880,8 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-0 flex-1 min-h-0">
-                    <div className="max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
-                      <div className="space-y-1">
+                    <div className="max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 px-3 pb-3">
+                      <div className="space-y-2">
                         {produtos.map((item) => (
                           <QuickCounter key={item.id} category="produtos" item={item} />
                         ))}

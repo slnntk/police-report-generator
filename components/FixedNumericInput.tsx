@@ -38,7 +38,6 @@ export function FixedNumericInput({
 }: FixedNumericInputProps) {
   const [inputValue, setInputValue] = useState(value.toString())
   const [isFocused, setIsFocused] = useState(false)
-  const [hasBeenFocused, setHasBeenFocused] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   // Update input value when prop value changes (external updates)
@@ -51,21 +50,17 @@ export function FixedNumericInput({
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setIsFocused(true)
     
-    // Only select all text on the first focus, not during continuous editing
-    if (!hasBeenFocused) {
-      setHasBeenFocused(true)
-      // Use setTimeout to ensure selection happens after focus
-      setTimeout(() => {
-        e.target.select()
-      }, 0)
-    }
+    // Select all text on focus for easier editing
+    // Use setTimeout to ensure selection happens after focus event completes
+    setTimeout(() => {
+      e.target.select()
+    }, 0)
     
     onFocus?.()
   }
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setIsFocused(false)
-    setHasBeenFocused(false)
     
     // Parse and validate the final value
     const numValue = parseFloat(inputValue) || 0
