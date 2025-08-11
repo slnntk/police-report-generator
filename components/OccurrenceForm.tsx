@@ -13,6 +13,9 @@ import { useOccurrenceStore } from "@/lib/store"
 import { Badge } from "@/components/ui/badge"
 import { OccurrenceTypeSelector } from "./OccurrenceTypeSelector"
 import { Checkbox } from "@/components/ui/checkbox"
+import { IntelligentAutocomplete } from "./IntelligentAutocomplete"
+import { NumericInput } from "./NumericInput"
+import { CRIMES_LIST, QTH_LIST } from "@/lib/autocomplete-data"
 import { AlertTriangle, Wifi, WifiOff, Wrench, Pill, Zap, Smartphone, Target, Package2 } from "lucide-react"
 
 interface OccurrenceFormProps {
@@ -247,7 +250,7 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="w-full max-w-5xl mx-auto space-y-4 p-4">
       {/* Indicador de status */}
       {!isOnline && (
         <Card className="bg-yellow-500/10 border-2 border-yellow-500/30">
@@ -278,8 +281,8 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
             </p>
           )}
         </CardHeader>
-        <CardContent className="p-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <CardContent className="p-4 sm:p-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Tipo de início da ocorrência */}
             <OccurrenceTypeSelector
               selectedType={formData.tipo_inicio}
@@ -292,45 +295,51 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg dark-highlight">Dados da Ocorrência</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <CardContent className="p-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="tipo_crime" className="dark-text font-semibold">
-                      Tipo de Crime
+                      Tipo de Crime *
                     </Label>
-                    <Input
-                      id="tipo_crime"
+                    <IntelligentAutocomplete
                       value={formData.tipo_crime}
-                      onChange={(e) => updateFormDataWithRegeneration("tipo_crime", e.target.value)}
-                      placeholder="Ex: Tráfico de drogas"
+                      onChange={(value) => updateFormDataWithRegeneration("tipo_crime", value)}
+                      options={CRIMES_LIST}
+                      placeholder="Digite para buscar crimes..."
                       required
-                      className="input-dark"
+                      fieldType="crime"
+                      label=""
+                      className="input-dark mt-1"
                     />
                   </div>
                   <div>
                     <Label htmlFor="local_inicio" className="dark-text font-semibold">
-                      Local de Início
+                      Local de Início *
                     </Label>
-                    <Input
-                      id="local_inicio"
+                    <IntelligentAutocomplete
                       value={formData.local_inicio}
-                      onChange={(e) => updateFormDataWithRegeneration("local_inicio", e.target.value)}
-                      placeholder="Ex: Lojinha do Banco central"
+                      onChange={(value) => updateFormDataWithRegeneration("local_inicio", value)}
+                      options={QTH_LIST}
+                      placeholder="Digite para buscar locais..."
                       required
-                      className="input-dark"
+                      fieldType="location"
+                      label=""
+                      className="input-dark mt-1"
                     />
                   </div>
                   <div>
                     <Label htmlFor="local_prisao" className="dark-text font-semibold">
-                      Local de Prisão
+                      Local de Prisão *
                     </Label>
-                    <Input
-                      id="local_prisao"
+                    <IntelligentAutocomplete
                       value={formData.local_prisao}
-                      onChange={(e) => updateFormDataWithRegeneration("local_prisao", e.target.value)}
-                      placeholder="Ex: próximo a Arcadius"
+                      onChange={(value) => updateFormDataWithRegeneration("local_prisao", value)}
+                      options={QTH_LIST}
+                      placeholder="Digite para buscar locais..."
                       required
-                      className="input-dark"
+                      fieldType="location"
+                      label=""
+                      className="input-dark mt-1"
                     />
                   </div>
                   <div>
@@ -342,7 +351,7 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
                       value={formData.veiculo}
                       onChange={(e) => updateFormDataWithRegeneration("veiculo", e.target.value)}
                       placeholder="Ex: Elegy RH5 Preto - A1BC1234"
-                      className="input-dark"
+                      className="input-dark mt-1"
                     />
                   </div>
                 </div>
@@ -393,7 +402,7 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
                 Clique nos cards abaixo para expandir e selecionar os itens apreendidos em cada categoria:
               </p>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-3 sm:gap-4">
                 <CollapsibleItemCard
                   title="Ferramentas Ilícitas"
                   items={ferramentas}
@@ -439,9 +448,6 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
                   penaltyFormula="10 + (itens × 2)"
                   icon={Smartphone}
                 />
-
-                {/* Card placeholder para manter o layout balanceado quando há número ímpar */}
-                <div className="lg:block hidden"></div>
               </div>
             </div>
 
@@ -450,22 +456,21 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg dark-highlight">Valores Monetários</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-3 p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <Label htmlFor="dinheiro_ilicito" className="text-sm font-bold dark-text">
                       Dinheiro Ilícito (R$)
                     </Label>
-                    <Input
+                    <NumericInput
                       id="dinheiro_ilicito"
-                      type="number"
-                      step="0.01"
                       value={formData.dinheiro_ilicito}
-                      onChange={(e) =>
-                        updateFormDataWithRegeneration("dinheiro_ilicito", Number.parseFloat(e.target.value) || 0)
-                      }
+                      onChange={(value) => updateFormDataWithRegeneration("dinheiro_ilicito", value)}
                       placeholder="0,00"
                       className="input-dark"
+                      min={0}
+                      step={0.01}
+                      decimalPlaces={2}
                     />
                     <p className="text-xs dark-highlight font-medium">+10 meses, +1 a cada R$1.000</p>
                   </div>
@@ -473,16 +478,15 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
                     <Label htmlFor="multas_pendentes" className="text-sm font-bold dark-text">
                       Multas Pendentes (R$)
                     </Label>
-                    <Input
+                    <NumericInput
                       id="multas_pendentes"
-                      type="number"
-                      step="0.01"
                       value={formData.multas_pendentes}
-                      onChange={(e) =>
-                        updateFormDataWithRegeneration("multas_pendentes", Number.parseFloat(e.target.value) || 0)
-                      }
+                      onChange={(value) => updateFormDataWithRegeneration("multas_pendentes", value)}
                       placeholder="0,00"
                       className="input-dark"
+                      min={0}
+                      step={0.01}
+                      decimalPlaces={2}
                     />
                     <p className="text-xs dark-highlight font-medium">+10 meses, +1 a cada R$1.000</p>
                   </div>
@@ -490,7 +494,7 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
               </CardContent>
             </Card>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="observacoes" className="dark-text font-bold text-lg">
                 Observações
               </Label>
@@ -500,13 +504,13 @@ export function OccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate 
                 onChange={(e) => updateFormDataWithRegeneration("observacoes", e.target.value)}
                 placeholder="Informações adicionais sobre a ocorrência..."
                 rows={4}
-                className="textarea-dark mt-2"
+                className="textarea-dark"
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full btn-primary-dark py-4 text-lg transition-all duration-300 transform hover:scale-105"
+              className="w-full btn-primary-dark py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg"
             >
               {showResults ? "🔄 Atualizar Relatório e Cálculo" : "📋 Gerar Relatório e Calcular Pena"}
             </Button>
