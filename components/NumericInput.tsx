@@ -42,27 +42,32 @@ export function NumericInput({
   }
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(false)
-    
-    // Parse and validate the input
-    const numericValue = parseFloat(displayValue)
-    let finalValue = isNaN(numericValue) ? 0 : numericValue
+    // Prevent losing focus during normal interaction
+    const relatedTarget = e.relatedTarget as HTMLElement
+    if (relatedTarget && relatedTarget.closest('form')) {
+      // If focusing another form element, process normally
+      setIsFocused(false)
+      
+      // Parse and validate the input
+      const numericValue = parseFloat(displayValue)
+      let finalValue = isNaN(numericValue) ? 0 : numericValue
 
-    // Apply constraints
-    if (typeof min === 'number') {
-      finalValue = Math.max(finalValue, min)
+      // Apply constraints
+      if (typeof min === 'number') {
+        finalValue = Math.max(finalValue, min)
+      }
+      if (typeof max === 'number') {
+        finalValue = Math.min(finalValue, max)
+      }
+
+      // Round to specified decimal places
+      finalValue = Math.round(finalValue * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces)
+
+      setDisplayValue(finalValue.toString())
+      onChange(finalValue)
+      
+      onBlur?.(e)
     }
-    if (typeof max === 'number') {
-      finalValue = Math.min(finalValue, max)
-    }
-
-    // Round to specified decimal places
-    finalValue = Math.round(finalValue * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces)
-
-    setDisplayValue(finalValue.toString())
-    onChange(finalValue)
-    
-    onBlur?.(e)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

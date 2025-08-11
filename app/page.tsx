@@ -11,9 +11,9 @@ export default function Home() {
 
   return (
     <ClientWrapper>
-      <div className="h-screen bg-slate-50 flex overflow-hidden">
+      <div className="min-h-screen h-screen bg-slate-50 flex overflow-hidden">
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden min-h-0">
           <MainContent activeTab={activeTab} setActiveTab={setActiveTab} />
           <Footer />
         </div>

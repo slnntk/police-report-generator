@@ -153,24 +153,25 @@ export function IntelligentAutocomplete({
   const handleInputChange = (newValue: string) => {
     onChange(newValue)
     setSearchQuery(newValue)
-    if (newValue.length >= 2) {
+    // Always keep dropdown open when typing
+    if (!open) {
       setOpen(true)
-    } else if (newValue.length === 0) {
-      setOpen(false)
     }
   }
 
   const handleInputFocus = () => {
-    if (value.length >= 2 || searchQuery.length >= 2) {
-      setOpen(true)
-    }
+    // Open dropdown when focusing to improve UX
+    setOpen(true)
   }
 
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    // Delay closing to allow for option selection
-    setTimeout(() => {
-      setOpen(false)
-    }, 200)
+    // Only close if we're not clicking within the popover content
+    const relatedTarget = e.relatedTarget as HTMLElement
+    if (!relatedTarget || !relatedTarget.closest('[cmdk-root]')) {
+      setTimeout(() => {
+        setOpen(false)
+      }, 150)
+    }
   }
 
   const displayName = fieldType === 'crime' ? 'crime' : 'name'
