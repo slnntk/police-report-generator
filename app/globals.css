@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* Dark Theme Policial */
+    /* Dark Theme Policial - CSS Variables for consistency */
     --background: 18 18 18; /* #121212 */
     --foreground: 234 234 234; /* #EAEAEA */
     --card: 30 30 30; /* #1E1E1E */
@@ -12,8 +12,8 @@
     --popover: 30 30 30;
     --popover-foreground: 234 234 234;
 
-    /* Highlight color como primary */
-    --primary: 217 195 138; /* #D9C38A */
+    /* Police theme highlight color */
+    --primary: 217 195 138; /* #D9C38A - Police gold */
     --primary-foreground: 26 22 10; /* #1A160A */
 
     /* Secondary colors */
@@ -28,14 +28,15 @@
     --accent: 42 42 42; /* #2A2A2A */
     --accent-foreground: 234 234 234;
 
+    /* State colors */
     --destructive: 248 113 113;
     --destructive-foreground: 234 234 234;
 
-    /* Borders */
+    /* Borders and inputs */
     --border: 51 51 51; /* #333333 */
     --input: 51 51 51;
 
-    /* Ring color */
+    /* Focus ring color */
     --ring: 217 195 138; /* #D9C38A */
     --radius: 0.5rem;
   }
@@ -58,9 +59,11 @@
   }
 }
 
-/* Classes customizadas com nova paleta dark */
+/* =================================================================== */
+/* UTILITY CLASSES - Dark Theme Components                            */
+/* =================================================================== */
 @layer components {
-  /* Backgrounds */
+  /* ================= Background Classes ================= */
   .dark-bg {
     background-color: #121212;
   }
@@ -77,7 +80,7 @@
     background-color: #333333;
   }
 
-  /* Textos */
+  /* ================= Text Classes ================= */
   .dark-text {
     color: #eaeaea;
   }
@@ -86,20 +89,15 @@
     color: #a0a0a0;
   }
 
-  /* Highlight */
   .dark-highlight {
     color: #d9c38a;
-  }
-
-  .dark-highlight-bg {
-    background-color: #d9c38a;
   }
 
   .dark-cta-text {
     color: #1a160a;
   }
 
-  /* Hover states */
+  /* ================= Interactive States ================= */
   .dark-hover {
     background-color: #2a2a2a;
   }
@@ -108,12 +106,12 @@
     background-color: #404040;
   }
 
-  /* Borders */
+  /* ================= Border Classes ================= */
   .dark-border {
     border-color: #333333;
   }
 
-  /* Gradientes */
+  /* ================= Gradient Classes ================= */
   .gradient-primary {
     background: linear-gradient(135deg, #d9c38a 0%, #b8a572 100%);
   }
@@ -129,20 +127,40 @@
   .gradient-background {
     background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
   }
+}
 
-  /* Cards especiais */
+/* =================================================================== */
+/* COMPONENT-SPECIFIC CLASSES                                         */
+/* =================================================================== */
+@layer components {
+  /* ================= Card Components ================= */
   .police-card-dark {
     background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
     border: 1px solid #333333;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
   }
 
   .police-card-dark:hover {
     border-color: #404040;
     box-shadow: 0 8px 25px -5px rgba(217, 195, 138, 0.1);
+    transform: translateY(-1px);
   }
 
-  /* Botões */
+  .police-card-compact {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    border: 1px solid #333333;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .police-card-compact:hover {
+    border-color: #404040;
+    box-shadow: 0 4px 12px -2px rgba(217, 195, 138, 0.1);
+    transform: translateY(-1px);
+  }
+
+  /* ================= Button Components ================= */
   .btn-primary-dark {
     background: linear-gradient(135deg, #d9c38a 0%, #b8a572 100%);
     color: #1a160a;
@@ -160,13 +178,19 @@
     background: linear-gradient(135deg, #333333 0%, #404040 100%);
     color: #eaeaea;
     border: 1px solid #404040;
+    transition: all 0.3s ease;
   }
 
   .btn-secondary-dark:hover {
     background: linear-gradient(135deg, #404040 0%, #4a4a4a 100%);
   }
+}
 
-  /* Layout otimizado para cards em duas colunas */
+/* =================================================================== */
+/* LAYOUT AND RESPONSIVE CLASSES                                      */
+/* =================================================================== */
+@layer components {
+  /* ================= Grid Layouts ================= */
   .collapsible-card-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -180,21 +204,13 @@
     }
   }
 
-  /* Cards mais compactos para layout de duas colunas */
-  .police-card-compact {
-    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
-    border: 1px solid #333333;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
+  @media (min-width: 1280px) {
+    .collapsible-card-grid {
+      gap: 2rem;
+    }
   }
 
-  .police-card-compact:hover {
-    border-color: #404040;
-    box-shadow: 0 4px 12px -2px rgba(217, 195, 138, 0.1);
-    transform: translateY(-1px);
-  }
-
-  /* Otimização para texto em cards menores */
+  /* ================= Typography Responsive ================= */
   .compact-text {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -205,35 +221,22 @@
     padding: 0.125rem 0.375rem;
   }
 
-  /* Responsividade melhorada */
+  /* ================= Responsive Breakpoint Overrides ================= */
   @media (max-width: 1023px) {
     .collapsible-card-grid {
       grid-template-columns: 1fr;
     }
   }
+}
 
-  @media (min-width: 1280px) {
-    .collapsible-card-grid {
-      gap: 2rem;
-    }
-  }
-
-  /* Scrollbar customizada para cards de itens - Paleta Policial */
+/* =================================================================== */
+/* SCROLLBAR STYLING - Police Theme                                   */
+/* =================================================================== */
+@layer components {
+  /* ================= Custom Scrollbars ================= */
   .scrollbar-thin {
     scrollbar-width: thin;
     scrollbar-color: #d9c38a #1e1e1e;
-  }
-
-  .scrollbar-thumb-gray-600::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #d9c38a 0%, #b8a572 100%);
-    border-radius: 6px;
-    border: 1px solid #333333;
-  }
-
-  .scrollbar-track-gray-800::-webkit-scrollbar-track {
-    background-color: #1e1e1e;
-    border-radius: 6px;
-    border: 1px solid #333333;
   }
 
   .scrollbar-thin::-webkit-scrollbar {
@@ -245,13 +248,13 @@
     border-radius: 6px;
     border: 1px solid #333333;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, #e6d49b 0%, #c9b583 100%);
     box-shadow: 0 4px 8px rgba(217, 195, 138, 0.2);
     transform: scale(1.05);
-    transition: all 0.2s ease;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb:active {
@@ -273,7 +276,165 @@
     background-color: #1e1e1e;
   }
 
-  /* Indicador visual de scroll */
+  /* ================= Global Scrollbar Styling ================= */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 6px;
+    border: 1px solid #333333;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #d9c38a 0%, #b8a572 100%);
+    border-radius: 6px;
+    border: 1px solid #333333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #e6d49b 0%, #c9b583 100%);
+    box-shadow: 0 4px 8px rgba(217, 195, 138, 0.2);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(135deg, #b8a572 0%, #a69461 100%);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: #1a1a1a;
+  }
+}
+
+/* =================================================================== */
+/* FORM INPUT STYLING - Dark Theme                                    */
+/* =================================================================== */
+@layer components {
+  /* ================= Input Elements ================= */
+  .input-dark,
+  input.input-dark,
+  input[type="text"].input-dark,
+  input[type="email"].input-dark,
+  input[type="password"].input-dark,
+  input[type="number"].input-dark,
+  input[type="search"].input-dark,
+  input[type="tel"].input-dark,
+  input[type="url"].input-dark {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333333 !important;
+    color: #eaeaea !important;
+    transition: all 0.3s ease;
+  }
+
+  .input-dark:focus,
+  input.input-dark:focus,
+  input[type="text"].input-dark:focus,
+  input[type="email"].input-dark:focus,
+  input[type="password"].input-dark:focus,
+  input[type="number"].input-dark:focus,
+  input[type="search"].input-dark:focus,
+  input[type="tel"].input-dark:focus,
+  input[type="url"].input-dark:focus {
+    background-color: #1e1e1e !important;
+    border-color: #d9c38a !important;
+    box-shadow: 0 0 0 2px rgba(217, 195, 138, 0.2) !important;
+    outline: none !important;
+  }
+
+  .input-dark::placeholder,
+  input.input-dark::placeholder,
+  input[type="text"].input-dark::placeholder,
+  input[type="email"].input-dark::placeholder,
+  input[type="password"].input-dark::placeholder,
+  input[type="number"].input-dark::placeholder,
+  input[type="search"].input-dark::placeholder,
+  input[type="tel"].input-dark::placeholder,
+  input[type="url"].input-dark::placeholder {
+    color: #a0a0a0 !important;
+  }
+
+  /* ================= Select Elements ================= */
+  .select-dark {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333333 !important;
+    color: #eaeaea !important;
+    transition: all 0.3s ease;
+  }
+
+  .select-dark:focus {
+    background-color: #1e1e1e !important;
+    border-color: #d9c38a !important;
+    box-shadow: 0 0 0 2px rgba(217, 195, 138, 0.2) !important;
+  }
+
+  /* ================= Textarea Elements ================= */
+  .textarea-dark,
+  textarea.textarea-dark {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333333 !important;
+    color: #eaeaea !important;
+    resize: vertical;
+    transition: all 0.3s ease;
+  }
+
+  .textarea-dark:focus,
+  textarea.textarea-dark:focus {
+    background-color: #1e1e1e !important;
+    border-color: #d9c38a !important;
+    box-shadow: 0 0 0 2px rgba(217, 195, 138, 0.2) !important;
+    outline: none !important;
+  }
+
+  .textarea-dark::placeholder,
+  textarea.textarea-dark::placeholder {
+    color: #a0a0a0 !important;
+  }
+
+  /* ================= Checkbox Elements ================= */
+  .checkbox-dark {
+    background-color: #1e1e1e !important;
+    border: 2px solid #333333 !important;
+    transition: all 0.3s ease;
+  }
+
+  .checkbox-dark:checked {
+    background-color: #d9c38a !important;
+    border-color: #d9c38a !important;
+  }
+
+  .checkbox-dark:focus {
+    box-shadow: 0 0 0 2px rgba(217, 195, 138, 0.2) !important;
+  }
+}
+
+/* =================================================================== */
+/* ANIMATION AND INTERACTION CLASSES                                  */
+/* =================================================================== */
+@layer components {
+  /* ================= Focus States ================= */
+  .focus-dark {
+    @apply focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
+    --tw-ring-color: #d9c38a;
+  }
+
+  /* ================= Loading and Transition States ================= */
+  .no-flash {
+    visibility: hidden;
+  }
+
+  .no-flash.loaded {
+    visibility: visible;
+  }
+
+  /* ================= Hover Effects ================= */
+  .item-counter-row:hover {
+    transform: translateX(2px);
+    transition: transform 0.2s ease;
+  }
+
+  /* ================= Scroll Indicators ================= */
   .scroll-indicator {
     position: relative;
   }
@@ -288,13 +449,6 @@
     pointer-events: none;
   }
 
-  /* Hover effects para melhor UX */
-  .item-counter-row:hover {
-    transform: translateX(2px);
-    transition: transform 0.2s ease;
-  }
-
-  /* Gradiente sutil no final do scroll para indicar mais conteúdo */
   .scroll-fade::after {
     content: "";
     position: absolute;
@@ -307,178 +461,45 @@
   }
 }
 
-/* Scrollbar dark theme - Paleta Policial Global */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #1a1a1a;
-  border-radius: 6px;
-  border: 1px solid #333333;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #d9c38a 0%, #b8a572 100%);
-  border-radius: 6px;
-  border: 1px solid #333333;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #e6d49b 0%, #c9b583 100%);
-  box-shadow: 0 4px 8px rgba(217, 195, 138, 0.2);
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: linear-gradient(135deg, #b8a572 0%, #a69461 100%);
-}
-
-::-webkit-scrollbar-corner {
-  background-color: #1a1a1a;
-}
-
-/* Animações do Accordion */
-@keyframes accordion-down {
-  from {
-    height: 0;
+/* =================================================================== */
+/* ANIMATION KEYFRAMES                                                */
+/* =================================================================== */
+@layer components {
+  /* ================= Accordion Animations ================= */
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
   }
-  to {
-    height: var(--radix-accordion-content-height);
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
   }
-}
 
-@keyframes accordion-up {
-  from {
-    height: var(--radix-accordion-content-height);
+  .animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
   }
-  to {
-    height: 0;
+
+  .animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
   }
-}
 
-.animate-accordion-down {
-  animation: accordion-down 0.2s ease-out;
-}
-
-.animate-accordion-up {
-  animation: accordion-up 0.2s ease-out;
-}
-
-/* Estados de foco */
-.focus-dark {
-  @apply focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
-  --tw-ring-color: #d9c38a;
-}
-
-/* Inputs dark theme - versão otimizada sem conflitos */
-.input-dark,
-input.input-dark,
-input[type="text"].input-dark,
-input[type="email"].input-dark,
-input[type="password"].input-dark,
-input[type="number"].input-dark,
-input[type="search"].input-dark,
-input[type="tel"].input-dark,
-input[type="url"].input-dark {
-  background-color: #1e1e1e !important;
-  border: 1px solid #333333 !important;
-  color: #eaeaea !important;
-}
-
-.input-dark:focus,
-input.input-dark:focus,
-input[type="text"].input-dark:focus,
-input[type="email"].input-dark:focus,
-input[type="password"].input-dark:focus,
-input[type="number"].input-dark:focus,
-input[type="search"].input-dark:focus,
-input[type="tel"].input-dark:focus,
-input[type="url"].input-dark:focus {
-  background-color: #1e1e1e !important;
-  border-color: #d9c38a !important;
-  box-shadow: 0 0 0 2px rgba(217, 195, 138, 0.2) !important;
-  outline: none !important;
-}
-
-.input-dark::placeholder,
-input.input-dark::placeholder,
-input[type="text"].input-dark::placeholder,
-input[type="email"].input-dark::placeholder,
-input[type="password"].input-dark::placeholder,
-input[type="number"].input-dark::placeholder,
-input[type="search"].input-dark::placeholder,
-input[type="tel"].input-dark::placeholder,
-input[type="url"].input-dark::placeholder {
-  color: #a0a0a0 !important;
-}
-
-/* Select dark theme */
-.select-dark {
-  background-color: #1e1e1e !important;
-  border: 1px solid #333333 !important;
-  color: #eaeaea !important;
-}
-
-.select-dark:focus {
-  background-color: #1e1e1e !important;
-  border-color: #d9c38a !important;
-  box-shadow: 0 0 0 2px rgba(217, 195, 138, 0.2) !important;
-}
-
-/* Textarea dark theme */
-.textarea-dark,
-textarea.textarea-dark {
-  background-color: #1e1e1e !important;
-  border: 1px solid #333333 !important;
-  color: #eaeaea !important;
-  resize: vertical;
-}
-
-.textarea-dark:focus,
-textarea.textarea-dark:focus {
-  background-color: #1e1e1e !important;
-  border-color: #d9c38a !important;
-  box-shadow: 0 0 0 2px rgba(217, 195, 138, 0.2) !important;
-  outline: none !important;
-}
-
-.textarea-dark::placeholder,
-textarea.textarea-dark::placeholder {
-  color: #a0a0a0 !important;
-}
-
-/* Checkbox dark theme */
-.checkbox-dark {
-  background-color: #1e1e1e !important;
-  border: 2px solid #333333 !important;
-}
-
-.checkbox-dark:checked {
-  background-color: #d9c38a !important;
-  border-color: #d9c38a !important;
-}
-
-.checkbox-dark:focus {
-  box-shadow: 0 0 0 2px rgba(217, 195, 138, 0.2) !important;
-}
-
-/* Prevenção de flash de conteúdo não estilizado */
-.no-flash {
-  visibility: hidden;
-}
-
-.no-flash.loaded {
-  visibility: visible;
-}
-
-/* Loading spinner */
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+  /* ================= Spinner Animation ================= */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
-}
 
-.animate-spin {
-  animation: spin 1s linear infinite;
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
 }

@@ -13,12 +13,8 @@ export function ClientWrapper({ children }: ClientWrapperProps) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Smaller delay for faster load
-    const timer = setTimeout(() => {
-      setMounted(true)
-    }, 50)
-
-    return () => clearTimeout(timer)
+    // Immediate mount for better performance
+    setMounted(true)
   }, [])
 
   if (!mounted) {
