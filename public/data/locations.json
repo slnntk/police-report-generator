@@ -1,0 +1,316 @@
+{
+  "locations": [
+    {
+      "id": "los_santos_central",
+      "name": "Los Santos Central",
+      "category": "Distrito Central",
+      "description": "Área central da cidade com alta movimentação"
+    },
+    {
+      "id": "vinewood",
+      "name": "Vinewood",
+      "category": "Distrito Norte",
+      "description": "Área residencial nobre com estúdios e mansões"
+    },
+    {
+      "id": "downtown_vinewood",
+      "name": "Downtown Vinewood",
+      "category": "Distrito Norte",
+      "description": "Centro comercial de Vinewood"
+    },
+    {
+      "id": "humane_labs",
+      "name": "Humane Labs",
+      "category": "Industrial",
+      "description": "Complexo laboratorial e de pesquisa"
+    },
+    {
+      "id": "ammunation",
+      "name": "Ammunation",
+      "category": "Comércio",
+      "description": "Loja de armas e munições"
+    },
+    {
+      "id": "banco_central",
+      "name": "Banco Central",
+      "category": "Distrito Central",
+      "description": "Principal instituição bancária da cidade"
+    },
+    {
+      "id": "hospital_central",
+      "name": "Hospital Central",
+      "category": "Serviços Públicos",
+      "description": "Principal unidade hospitalar"
+    },
+    {
+      "id": "delegacia_central",
+      "name": "Delegacia Central",
+      "category": "Segurança Pública",
+      "description": "Sede da polícia civil"
+    },
+    {
+      "id": "prefeitura",
+      "name": "Prefeitura",
+      "category": "Distrito Central",
+      "description": "Sede do governo municipal"
+    },
+    {
+      "id": "porto_ls",
+      "name": "Porto de Los Santos",
+      "category": "Industrial",
+      "description": "Complexo portuário da cidade"
+    },
+    {
+      "id": "aeroporto_ls",
+      "name": "Aeroporto de Los Santos",
+      "category": "Transporte",
+      "description": "Principal aeroporto da região"
+    },
+    {
+      "id": "groove_street",
+      "name": "Groove Street",
+      "category": "Distrito Sul",
+      "description": "Rua residencial no sul da cidade"
+    },
+    {
+      "id": "ballas_territory",
+      "name": "Território dos Ballas",
+      "category": "Distrito Sul",
+      "description": "Área de domínio da gangue Ballas"
+    },
+    {
+      "id": "families_territory",
+      "name": "Território das Families",
+      "category": "Distrito Sul",
+      "description": "Área de domínio da gangue Families"
+    },
+    {
+      "id": "beach_area",
+      "name": "Área da Praia",
+      "category": "Lazer",
+      "description": "Região litorânea com praias e comércio"
+    },
+    {
+      "id": "pier",
+      "name": "Píer",
+      "category": "Lazer",
+      "description": "Píer turístico com parque de diversões"
+    },
+    {
+      "id": "shopping_center",
+      "name": "Centro Comercial",
+      "category": "Comércio",
+      "description": "Principal shopping center da cidade"
+    },
+    {
+      "id": "universidad",
+      "name": "Universidade",
+      "category": "Educação",
+      "description": "Campus universitário principal"
+    },
+    {
+      "id": "estadio",
+      "name": "Estádio",
+      "category": "Esporte",
+      "description": "Grande estádio esportivo"
+    },
+    {
+      "id": "corrida_underground",
+      "name": "Pista de Corrida Underground",
+      "category": "Clandestino",
+      "description": "Local de corridas ilegais"
+    },
+    {
+      "id": "cassino",
+      "name": "Cassino",
+      "category": "Entretenimento",
+      "description": "Casa de jogos e apostas"
+    },
+    {
+      "id": "boate_vanilla",
+      "name": "Boate Vanilla Unicorn",
+      "category": "Entretenimento",
+      "description": "Casa noturna de entretenimento adulto"
+    },
+    {
+      "id": "bar_hookies",
+      "name": "Bar Hookies",
+      "category": "Entretenimento",
+      "description": "Bar popular da região"
+    },
+    {
+      "id": "loja_roupas",
+      "name": "Loja de Roupas",
+      "category": "Comércio",
+      "description": "Estabelecimento comercial de vestuário"
+    },
+    {
+      "id": "concessionaria",
+      "name": "Concessionária",
+      "category": "Comércio",
+      "description": "Loja de veículos automotores"
+    },
+    {
+      "id": "oficina_mecanica",
+      "name": "Oficina Mecânica",
+      "category": "Serviços",
+      "description": "Prestação de serviços automotivos"
+    },
+    {
+      "id": "posto_gasolina",
+      "name": "Posto de Gasolina",
+      "category": "Serviços",
+      "description": "Posto de combustível e conveniência"
+    },
+    {
+      "id": "loja_conveniencia",
+      "name": "Loja de Conveniência",
+      "category": "Comércio",
+      "description": "Estabelecimento de produtos básicos"
+    },
+    {
+      "id": "supermercado",
+      "name": "Supermercado",
+      "category": "Comércio",
+      "description": "Grande estabelecimento alimentício"
+    },
+    {
+      "id": "farmacia",
+      "name": "Farmácia",
+      "category": "Serviços",
+      "description": "Estabelecimento farmacêutico"
+    },
+    {
+      "id": "laboratorio_drogas",
+      "name": "Laboratório de Drogas",
+      "category": "Clandestino",
+      "description": "Local clandestino de produção de entorpecentes"
+    },
+    {
+      "id": "deposito_armas",
+      "name": "Depósito de Armas",
+      "category": "Clandestino",
+      "description": "Armazém ilegal de armamentos"
+    },
+    {
+      "id": "beco_escuro",
+      "name": "Beco Escuro",
+      "category": "Clandestino",
+      "description": "Via secundária com pouca iluminação"
+    },
+    {
+      "id": "estacionamento_abandonado",
+      "name": "Estacionamento Abandonado",
+      "category": "Clandestino",
+      "description": "Área abandonada usada para atividades ilícitas"
+    },
+    {
+      "id": "ponte_cidade",
+      "name": "Ponte da Cidade",
+      "category": "Via Pública",
+      "description": "Principal ponte de ligação urbana"
+    },
+    {
+      "id": "tunel_principal",
+      "name": "Túnel Principal",
+      "category": "Via Pública",
+      "description": "Túnel de passagem sob a cidade"
+    },
+    {
+      "id": "rodovia_principal",
+      "name": "Rodovia Principal",
+      "category": "Via Pública",
+      "description": "Principal via de acesso à cidade"
+    },
+    {
+      "id": "rua_comercial",
+      "name": "Rua Comercial",
+      "category": "Via Pública",
+      "description": "Via com intensa atividade comercial"
+    },
+    {
+      "id": "avenida_central",
+      "name": "Avenida Central",
+      "category": "Via Pública",
+      "description": "Principal avenida da cidade"
+    },
+    {
+      "id": "praca_central",
+      "name": "Praça Central",
+      "category": "Área Pública",
+      "description": "Principal praça pública da cidade"
+    },
+    {
+      "id": "parque_municipal",
+      "name": "Parque Municipal",
+      "category": "Área Pública",
+      "description": "Área verde de lazer público"
+    },
+    {
+      "id": "cemiterio",
+      "name": "Cemitério",
+      "category": "Área Pública",
+      "description": "Necrópole municipal"
+    },
+    {
+      "id": "igreja_principal",
+      "name": "Igreja Principal",
+      "category": "Religioso",
+      "description": "Principal templo religioso da cidade"
+    },
+    {
+      "id": "escola_publica",
+      "name": "Escola Pública",
+      "category": "Educação",
+      "description": "Instituição de ensino básico"
+    },
+    {
+      "id": "biblioteca",
+      "name": "Biblioteca",
+      "category": "Educação",
+      "description": "Acervo bibliográfico público"
+    },
+    {
+      "id": "centro_cultural",
+      "name": "Centro Cultural",
+      "category": "Cultura",
+      "description": "Espaço para manifestações culturais"
+    },
+    {
+      "id": "teatro_municipal",
+      "name": "Teatro Municipal",
+      "category": "Cultura",
+      "description": "Principal casa de espetáculos"
+    },
+    {
+      "id": "museu_cidade",
+      "name": "Museu da Cidade",
+      "category": "Cultura",
+      "description": "Acervo histórico municipal"
+    },
+    {
+      "id": "quartel_bombeiros",
+      "name": "Quartel dos Bombeiros",
+      "category": "Segurança Pública",
+      "description": "Corpo de bombeiros militar"
+    },
+    {
+      "id": "batalhao_policial",
+      "name": "Batalhão Policial",
+      "category": "Segurança Pública",
+      "description": "Sede da polícia militar"
+    },
+    {
+      "id": "penitenciaria",
+      "name": "Penitenciária",
+      "category": "Sistema Prisional",
+      "description": "Complexo penitenciário"
+    },
+    {
+      "id": "forum_comarca",
+      "name": "Fórum da Comarca",
+      "category": "Justiça",
+      "description": "Sede do poder judiciário"
+    }
+  ]
+}
