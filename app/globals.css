@@ -139,6 +139,7 @@
     border: 1px solid #333333;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
+    border-radius: 0.5rem;
   }
 
   .police-card-dark:hover {
@@ -152,12 +153,33 @@
     border: 1px solid #333333;
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
+    border-radius: 0.5rem;
+    min-height: 280px;
   }
 
   .police-card-compact:hover {
     border-color: #404040;
     box-shadow: 0 4px 12px -2px rgba(217, 195, 138, 0.1);
     transform: translateY(-1px);
+  }
+
+  .police-card-compact .card-header {
+    padding: 1rem;
+  }
+
+  .police-card-compact .card-content {
+    padding: 0 1rem 1rem;
+  }
+
+  /* Better spacing for item cards */
+  .item-card-spacing {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .item-card-content {
+    padding: 0.75rem;
+    min-height: 200px;
   }
 
   /* ================= Button Components ================= */
@@ -197,6 +219,13 @@
     gap: 1rem;
   }
 
+  @media (min-width: 768px) {
+    .collapsible-card-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+  }
+
   @media (min-width: 1024px) {
     .collapsible-card-grid {
       grid-template-columns: 1fr 1fr;
@@ -206,7 +235,36 @@
 
   @media (min-width: 1280px) {
     .collapsible-card-grid {
+      grid-template-columns: 1fr 1fr;
       gap: 2rem;
+    }
+  }
+
+  /* Better responsive grid for item cards */
+  .items-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .items-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .items-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .items-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
     }
   }
 
@@ -221,10 +279,27 @@
     padding: 0.125rem 0.375rem;
   }
 
+  /* ================= Better Text Sizing ================= */
+  .readable-text {
+    font-size: 0.95rem;
+    line-height: 1.4rem;
+  }
+
+  .readable-small {
+    font-size: 0.85rem;
+    line-height: 1.3rem;
+  }
+
   /* ================= Responsive Breakpoint Overrides ================= */
-  @media (max-width: 1023px) {
+  @media (max-width: 767px) {
     .collapsible-card-grid {
       grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    
+    .items-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
     }
   }
 }

@@ -20,26 +20,67 @@ interface PeopleCountProps {
   variant?: 'select' | 'slider' | 'both'
 }
 
-// Helper function for pluralization
+// Enhanced helper function for Portuguese pluralization
 export function pluralize(word: string, count: number, pluralForm?: string): string {
   if (count === 1) return word
   
   if (pluralForm) return pluralForm
   
-  // Portuguese pluralization rules (simplified)
+  // Portuguese pluralization rules (more comprehensive)
   const lastChar = word.slice(-1).toLowerCase()
   const lastTwoChars = word.slice(-2).toLowerCase()
+  const lastThreeChars = word.slice(-3).toLowerCase()
   
+  // Special cases for common police terms
+  const specialCases: { [key: string]: string } = {
+    'suspeito': 'suspeitos',
+    'pessoa': 'pessoas',
+    'homem': 'homens',
+    'mulher': 'mulheres',
+    'item': 'itens',
+    'real': 'reais',
+    'animal': 'animais',
+    'capital': 'capitais',
+    'hospital': 'hospitais',
+    'coronel': 'coronéis',
+    'papel': 'papéis'
+  }
+  
+  const lowerWord = word.toLowerCase()
+  if (specialCases[lowerWord]) {
+    // Preserve original case
+    if (word[0] === word[0].toUpperCase()) {
+      return specialCases[lowerWord].charAt(0).toUpperCase() + specialCases[lowerWord].slice(1)
+    }
+    return specialCases[lowerWord]
+  }
+  
+  // Standard Portuguese pluralization rules
   if (lastChar === 'm') {
     return word.slice(0, -1) + 'ns'  // homem -> homens
   } else if (lastTwoChars === 'ão') {
-    return word.slice(0, -2) + 'ões'  // suspeição -> suspeições (rare case)
+    // Different rules for words ending in -ão
+    const commonOes = ['capitão', 'alemão', 'cidadão', 'irmão', 'órfão', 'anão', 'cirurgião']
+    const commonAos = ['mão', 'irmão', 'cristão', 'pagão', 'órfão', 'sótão', 'corrimão']
+    const commonAes = ['pão', 'cão', 'alemão', 'capitão', 'tabelião', 'escrivão']
+    
+    if (commonOes.some(w => lowerWord.endsWith(w.slice(-6)))) {
+      return word.slice(0, -2) + 'ões'  // capitão -> capitães
+    } else if (commonAos.some(w => lowerWord.endsWith(w.slice(-6)))) {
+      return word.slice(0, -2) + 'ãos'  // mão -> mãos  
+    } else {
+      return word.slice(0, -2) + 'ões'  // padrão -> padrões (default)
+    }
   } else if (lastChar === 'l') {
     return word.slice(0, -1) + 'is'   // animal -> animais
   } else if (lastChar === 'r' || lastChar === 's' || lastChar === 'z') {
-    return word + 'es'  // suspeitor -> suspeitores
+    return word + 'es'  // suspeitor -> suspeitores, país -> países
+  } else if (lastChar === 'x') {
+    return word  // tórax -> tórax (invariant)
+  } else if (lastThreeChars === 'il') {
+    return word.slice(0, -2) + 'eis'  // fuzil -> fuzis
   } else {
-    return word + 's'   // suspeito -> suspeitos
+    return word + 's'   // suspeito -> suspeitos, casa -> casas
   }
 }
 

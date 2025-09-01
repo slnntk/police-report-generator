@@ -789,7 +789,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
               </h3>
               <p className="text-xs dark-text-soft">💡 Role dentro dos cards para ver mais opções. Use apenas se precisar especificar itens exatos.</p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+              <div className="items-grid">
                 {/* Ferramentas */}
                 <Card className="police-card-compact flex flex-col min-h-0">
                   <CardHeader className="pb-2 flex-shrink-0">

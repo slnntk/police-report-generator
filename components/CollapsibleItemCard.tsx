@@ -76,28 +76,26 @@ export function CollapsibleItemCard({
   }
 
   const updateQuantity = (index: number, quantidade: number, e?: React.ChangeEvent<HTMLInputElement>) => {
-    // Prevenir propagação do evento
+    // Prevent propagation and stop bubbling
     if (e) {
+      e.preventDefault()
       e.stopPropagation()
     }
 
+    // Ensure quantity is valid
+    const validQuantity = Math.max(1, Math.floor(quantidade) || 1)
     const newItems = [...selectedItems]
-    newItems[index] = { ...newItems[index], quantidade: Math.max(1, quantidade) }
+    newItems[index] = { ...newItems[index], quantidade: validQuantity }
     onItemsChange(newItems)
   }
 
   const handleToggleExpanded = (e: React.MouseEvent) => {
-    // Prevenir propagação apenas se necessário
+    // Only prevent default, don't stop propagation as it might affect parent handlers
     e.preventDefault()
     setIsExpanded(!isExpanded)
   }
 
-  const handleSelectChange = (value: string, e?: any) => {
-    // Prevenir propagação do evento de select
-    if (e) {
-      e.stopPropagation()
-    }
-
+  const handleSelectChange = (value: string) => {
     const selectedItemData = items.find((item) => item.id.toString() === value)
     setNewItem({
       id: value,
@@ -108,11 +106,14 @@ export function CollapsibleItemCard({
   }
 
   const handleQuantityChange = (value: number, e?: React.ChangeEvent<HTMLInputElement>) => {
-    // Prevenir propagação do evento
+    // Prevent propagation but allow the input to function
     if (e) {
       e.stopPropagation()
     }
-    setNewItem({ ...newItem, quantidade: value })
+    
+    // Ensure value is valid
+    const validValue = Math.max(1, Math.floor(value) || 1)
+    setNewItem({ ...newItem, quantidade: validValue })
   }
 
   const getTotalQuantity = () => {
@@ -164,7 +165,7 @@ export function CollapsibleItemCard({
               {Icon && <Icon className="h-4 w-4 dark-highlight flex-shrink-0" />}
 
               <div className="flex items-center gap-2 min-w-0">
-                <span className="font-semibold dark-text text-sm truncate">{title}</span>
+                <span className="font-semibold dark-text readable-text truncate">{title}</span>
                 <span className="text-base flex-shrink-0">{getStatusIcon()}</span>
               </div>
             </div>
@@ -222,7 +223,7 @@ export function CollapsibleItemCard({
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium dark-text text-sm truncate">{selectedItem.nome}</span>
+                          <span className="font-medium dark-text readable-small truncate">{selectedItem.nome}</span>
                           {selectedItem.categoria && (
                             <Badge variant="outline" className="text-xs dark-text-soft border-gray-600 compact-badge">
                               {selectedItem.categoria}
@@ -234,10 +235,12 @@ export function CollapsibleItemCard({
                         <Input
                           type="number"
                           min="1"
+                          max="999"
                           value={selectedItem.quantidade}
                           onChange={(e) => updateQuantity(index, Number.parseInt(e.target.value) || 1, e)}
+                          onFocus={(e) => e.target.select()}
                           onClick={(e) => e.stopPropagation()}
-                          className="w-14 h-7 text-center text-xs input-dark"
+                          className="w-16 h-8 text-center text-sm input-dark border-gray-600 focus:border-blue-500"
                         />
                         {showUnit && selectedItem.unidade && (
                           <span className="text-xs dark-text-soft w-10 text-center truncate">
@@ -269,29 +272,39 @@ export function CollapsibleItemCard({
                 <div className="flex gap-2 items-end p-3 bg-gray-800/30 rounded-lg border border-dashed dark-border">
                   <div className="flex-1">
                     <Select value={newItem.id} onValueChange={handleSelectChange}>
-                      <SelectTrigger className="h-9 text-sm input-dark" onClick={(e) => e.stopPropagation()}>
+                      <SelectTrigger 
+                        className="h-9 text-sm input-dark border-gray-600 focus:border-blue-500" 
+                        onClick={(e) => e.stopPropagation()}
+                        onFocus={(e) => e.stopPropagation()}
+                      >
                         <SelectValue placeholder="Selecionar item..." />
                       </SelectTrigger>
-                      <SelectContent className="dark-box-bg border dark-border">
+                      <SelectContent className="dark-box-bg border dark-border max-h-48 overflow-y-auto">
                         {items.map((item) => (
-                          <SelectItem key={item.id} value={item.id.toString()} className="dark-text hover:dark-hover">
+                          <SelectItem 
+                            key={item.id} 
+                            value={item.id.toString()} 
+                            className="dark-text hover:dark-hover cursor-pointer"
+                          >
                             <div className="flex flex-col">
-                              <span className="font-medium">{item.nome}</span>
-                              {item.categoria && <span className="text-xs dark-text-soft">{item.categoria}</span>}
+                              <span className="font-medium readable-text">{item.nome}</span>
+                              {item.categoria && <span className="text-xs dark-text-soft readable-small">{item.categoria}</span>}
                             </div>
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="w-20">
+                  <div className="w-24">
                     <Input
                       type="number"
                       min="1"
+                      max="999"
                       value={newItem.quantidade}
                       onChange={(e) => handleQuantityChange(Number.parseInt(e.target.value) || 1, e)}
+                      onFocus={(e) => e.target.select()}
                       onClick={(e) => e.stopPropagation()}
-                      className="h-9 text-center text-sm input-dark"
+                      className="h-9 text-center text-sm input-dark border-gray-600 focus:border-blue-500"
                       placeholder="Qtd"
                     />
                   </div>
