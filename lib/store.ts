@@ -222,6 +222,14 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
         .replace(/\{fugiu_fugiram\}/g, conjugated.fugiu_fugiram)
         .replace(/\{envolvido_envolvidos\}/g, conjugated.envolvido_envolvidos)
 
+      // Handle complex conditional expressions
+      const article = conjugated.article
+      template = template
+        .replace(/\{article === 'os' \? 'os' : 'o'\}/g, article === 'os' ? 'os' : 'o')
+        .replace(/\{article === 'os' \? 'os mesmos ficaram' : 'o mesmo ficou'\}/g, article === 'os' ? 'os mesmos ficaram' : 'o mesmo ficou')
+        .replace(/\{article === 'os' \? 's' : ''\}/g, article === 'os' ? 's' : '')
+        .replace(/\{article === 'os' \? 'ficaram inoperantes' : 'ficou inoperante'\}/g, article === 'os' ? 'ficaram inoperantes' : 'ficou inoperante')
+
       // Gerar lista de itens apreendidos no formato compacto
       const itensCompactos = []
 
