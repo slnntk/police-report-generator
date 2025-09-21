@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -11,11 +11,13 @@ import { Slider } from "@/components/ui/slider"
 import { useOccurrenceStore } from "@/lib/store"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
-import { AlertTriangle, Wifi, WifiOff, Plus, Minus, Zap } from "lucide-react"
+import { AlertTriangle, Wifi, WifiOff, Plus, Minus, Zap, Save, CheckCircle } from "lucide-react"
 import { IntelligentAutocomplete } from "@/components/IntelligentAutocomplete"
 import { FixedNumericInput } from "@/components/FixedNumericInput"
 import { PeopleCount } from "@/components/PeopleCount"
 import { CRIMES_LIST, QTH_LIST } from "@/lib/autocomplete-data"
+import { InlineLoader } from "@/components/EnhancedLoadingSpinner"
+import { usePoliceToast } from "@/components/ui/enhanced-toast"
 
 interface QuickOccurrenceFormProps {
   onFormSubmit: () => void
@@ -68,6 +70,7 @@ const fallbackData = {
 
 export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate }: QuickOccurrenceFormProps) {
   const { formData, setFormData, generateReport, calculatePenalty } = useOccurrenceStore()
+  const { success, error, warning, info, formSaved, connectionError } = usePoliceToast()
 
   const [ferramentas, setFerramentas] = useState(fallbackData.ferramentas)
   const [entorpecentes, setEntorpecentes] = useState(fallbackData.entorpecentes)
@@ -76,6 +79,8 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
   const [armas, setArmas] = useState(fallbackData.armas)
   const [tiposInicio, setTiposInicio] = useState(fallbackData.tipos_inicio)
   const [isOnline, setIsOnline] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
   
   // New state for autocomplete data
   // Use the exact data lists provided
@@ -103,9 +108,57 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
   // Estado para slider de desobediência
   const [desobedienciaPenalty, setDesobedienciaPenalty] = useState([30])
 
+  // Auto-save functionality
+  const autoSaveTimeoutRef = useRef<NodeJS.Timeout>()
+  
+  const autoSave = useCallback(() => {
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current)
+    }
+    
+    autoSaveTimeoutRef.current = setTimeout(() => {
+      setIsSaving(true)
+      // Simulate saving to localStorage
+      try {
+        localStorage.setItem('police-form-data', JSON.stringify(formData))
+        setTimeout(() => {
+          setIsSaving(false)
+          if (Object.keys(formData).some(key => formData[key as keyof typeof formData])) {
+            formSaved()
+          }
+        }, 500)
+      } catch (err) {
+        setIsSaving(false)
+        error('Erro ao salvar', 'Não foi possível salvar os dados automaticamente')
+      }
+    }, 2000)
+  }, [formData, formSaved, error])
+
+  useEffect(() => {
+    autoSave()
+    return () => {
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current)
+      }
+    }
+  }, [autoSave])
+
   useEffect(() => {
     const loadData = async () => {
+      setIsLoading(true)
       try {
+        // Try to load saved form data
+        const savedData = localStorage.getItem('police-form-data')
+        if (savedData) {
+          try {
+            const parsedData = JSON.parse(savedData)
+            setFormData(parsedData)
+            info('Dados recuperados', 'Formulário restaurado automaticamente')
+          } catch (err) {
+            warning('Erro ao recuperar dados', 'Não foi possível restaurar o formulário salvo')
+          }
+        }
+
         const responses = await Promise.allSettled([
           fetch("/data/ferramentas.json"),
           fetch("/data/entorpecentes.json"),
@@ -190,33 +243,43 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
         }
 
         setIsOnline(!hasErrors)
-      } catch (error) {
-        console.error("Erro ao carregar dados:", error)
+        if (hasErrors) {
+          connectionError()
+        } else {
+          success('Dados carregados', 'Todas as informações foram carregadas com sucesso')
+        }
+      } catch (err) {
+        console.error("Erro ao carregar dados:", err)
         setIsOnline(false)
+        connectionError()
+      } finally {
+        setIsLoading(false)
       }
     }
 
     loadData()
-  }, [])
+  }, [success, connectionError])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSaving(true)
 
-    // Converter contadores para formato do store
-    const convertCountersToItems = (counters: Record<number, number>, itemsList: any[]) => {
-      return Object.entries(counters)
-        .filter(([_, count]) => count > 0)
-        .map(([id, quantidade]) => {
-          const item = itemsList.find((i) => i.id.toString() === id)
-          return {
-            id,
-            nome: item?.nome || "Item não identificado",
-            quantidade,
-            unidade: item?.unidade || "un",
-            categoria: item?.categoria,
-          }
-        })
-    }
+    try {
+      // Converter contadores para formato do store
+      const convertCountersToItems = (counters: Record<number, number>, itemsList: any[]) => {
+        return Object.entries(counters)
+          .filter(([_, count]) => count > 0)
+          .map(([id, quantidade]) => {
+            const item = itemsList.find((i) => i.id.toString() === id)
+            return {
+              id,
+              nome: item?.nome || "Item não identificado",
+              quantidade,
+              unidade: item?.unidade || "un",
+              categoria: item?.categoria,
+            }
+          })
+      }
 
     // Converter contadores genéricos para itens
     const convertGenericCountersToItems = () => {
@@ -330,10 +393,29 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
       desobediencia_penalidade: formData.desobediencia ? desobedienciaPenalty[0] : 0,
     }
 
+    // Validate required fields
+    const requiredFields = ['crime', 'local_inicio', 'local_prisao']
+    const missingFields = requiredFields.filter(field => !updatedFormData[field as keyof typeof updatedFormData])
+    
+    if (missingFields.length > 0) {
+      error('Campos obrigatórios', `Preencha: ${missingFields.join(', ')}`)
+      setIsSaving(false)
+      return
+    }
+
     setFormData(updatedFormData)
-    generateReport()
-    calculatePenalty()
+    await generateReport()
+    await calculatePenalty()
+    
+    success('Relatório gerado', 'Relatório policial gerado com sucesso!')
     onFormSubmit()
+    
+    } catch (err) {
+      console.error('Erro ao gerar relatório:', err)
+      error('Erro no sistema', 'Não foi possível gerar o relatório. Tente novamente.')
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   const updateCounter = (category: keyof typeof quickCounters, itemId: number, change: number) => {
@@ -590,6 +672,23 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
 
   return (
     <div className="max-w-4xl mx-auto space-y-4">
+      {/* Loading State */}
+      {isLoading && (
+        <InlineLoader 
+          message="Carregando dados da ocorrência..." 
+          variant="form"
+          className="mb-4"
+        />
+      )}
+
+      {/* Auto-save indicator */}
+      {isSaving && (
+        <div className="fixed top-4 right-4 z-50 bg-green-900/90 text-green-100 px-3 py-2 rounded-lg border border-green-500/30 flex items-center gap-2">
+          <Save className="h-4 w-4 animate-pulse" />
+          <span className="text-sm">Salvando...</span>
+        </div>
+      )}
+
       {/* Indicador de status */}
       {!isOnline && (
         <Card className="bg-yellow-500/10 border border-yellow-500/30">
@@ -931,9 +1030,25 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
 
             <Button
               type="submit"
-              className="w-full btn-primary-dark py-3 text-base font-bold transition-all duration-300 transform hover:scale-105"
+              disabled={isSaving || isLoading}
+              className="w-full btn-primary-dark py-3 text-base font-bold transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
-              {showResults ? "🔄 Atualizar" : "⚡ Gerar Relatório"}
+              {isSaving ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Gerando...
+                </div>
+              ) : showResults ? (
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4" />
+                  🔄 Atualizar
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Zap className="h-4 w-4" />
+                  ⚡ Gerar Relatório
+                </div>
+              )}
             </Button>
           </form>
         </CardContent>
