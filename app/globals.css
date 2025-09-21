@@ -577,4 +577,177 @@
   .animate-spin {
     animation: spin 1s linear infinite;
   }
+
+  /* ================= Enhanced Animations ================= */
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.2s ease-out;
+  }
+
+  /* ================= Enhanced Hover Effects ================= */
+  .hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .hover-glow {
+    transition: all 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(217, 195, 138, 0.4);
+  }
+
+  /* ================= Loading States ================= */
+  .loading-skeleton {
+    background: linear-gradient(90deg, #1e1e1e 25%, #2a2a2a 50%, #1e1e1e 75%);
+    background-size: 200% 100%;
+    animation: loading-shimmer 1.5s infinite;
+  }
+
+  /* ================= Status Indicators ================= */
+  .status-online {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  }
+
+  .status-offline {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  }
+
+  .status-error {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  }
+}
+
+/* =================================================================== */
+/* KEYFRAME ANIMATIONS                                                */
+/* =================================================================== */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 5px rgba(217, 195, 138, 0.5);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(217, 195, 138, 0.8);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* =================================================================== */
+/* RESPONSIVE UTILITIES                                               */
+/* =================================================================== */
+@media (max-width: 768px) {
+  .police-card-dark {
+    margin: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  }
+
+  .btn-primary-dark,
+  .btn-secondary-dark {
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* =================================================================== */
+/* ACCESSIBILITY IMPROVEMENTS                                         */
+/* =================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-glow,
+  .animate-float,
+  .animate-slide-up,
+  .animate-fade-in,
+  .animate-scale-in,
+  .loading-skeleton {
+    animation: none;
+  }
+
+  .hover-lift:hover,
+  .police-card-dark:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .dark-bg {
+    background-color: #000000;
+  }
+
+  .dark-box-bg {
+    background-color: #111111;
+    border: 2px solid #ffffff;
+  }
+
+  .dark-text {
+    color: #ffffff;
+  }
 }
