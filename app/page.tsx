@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <ClientWrapper>
-      <div className="min-h-screen h-screen dark-bg flex overflow-hidden">
+      <div className="min-h-screen dark-bg flex">
         {/* Mobile backdrop */}
         {sidebarOpen && (
           <div 
@@ -30,7 +30,7 @@ export default function Home() {
         />
         
         {/* Main content area */}
-        <div className="flex-1 flex flex-col overflow-hidden min-h-0 lg:ml-64">
+        <div className="flex-1 flex flex-col min-h-screen lg:ml-64">
           <MainContent 
             activeTab={activeTab} 
             setActiveTab={setActiveTab}

@@ -64,7 +64,7 @@ export function MainContent({ activeTab, setActiveTab, onOpenSidebar }: MainCont
             exit="out"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex-1 flex flex-col min-h-0"
+            className="flex-1 flex flex-col"
           >
             <QuickOccurrenceForm
               onFormSubmit={handleFormSubmit}
@@ -82,7 +82,7 @@ export function MainContent({ activeTab, setActiveTab, onOpenSidebar }: MainCont
             exit="out"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex-1 flex flex-col min-h-0"
+            className="flex-1 flex flex-col"
           >
             <ReportView onEditForm={() => setCurrentStep("form")} onCopyFeedback={handleCopyFeedback} />
           </motion.div>
@@ -96,7 +96,7 @@ export function MainContent({ activeTab, setActiveTab, onOpenSidebar }: MainCont
             exit="out"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex-1 flex flex-col min-h-0"
+            className="flex-1 flex flex-col"
           >
             <InteractivePenaltyView onEditForm={() => setCurrentStep("form")} />
           </motion.div>
@@ -107,7 +107,7 @@ export function MainContent({ activeTab, setActiveTab, onOpenSidebar }: MainCont
   }
 
   return (
-    <div className="flex-1 flex flex-col gradient-background overflow-hidden">
+    <div className="flex-1 flex flex-col gradient-background">
       {/* Mobile header */}
       <div className="lg:hidden flex items-center justify-between p-4 border-b dark-border dark-bg">
         <Button
@@ -137,8 +137,8 @@ export function MainContent({ activeTab, setActiveTab, onOpenSidebar }: MainCont
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden p-4 lg:p-6">
-        <div className="max-w-6xl mx-auto flex-1 flex flex-col h-full w-full">
+      <div className="flex-1 flex flex-col p-4 lg:p-6">
+        <div className="max-w-6xl mx-auto flex-1 flex flex-col w-full">
           {/* Navegação por etapas */}
           <div className="mb-4 lg:mb-6">
             <StepperNavigation 
@@ -149,7 +149,7 @@ export function MainContent({ activeTab, setActiveTab, onOpenSidebar }: MainCont
           </div>
 
           {/* Conteúdo da etapa atual */}
-          <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          <div className="flex-1 flex flex-col">
             <AnimatePresence mode="wait">{renderCurrentStep()}</AnimatePresence>
           </div>
 
