@@ -470,20 +470,6 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             min={0}
             className="w-12 h-6 text-center text-sm font-bold bg-gray-800 border-gray-600 text-white px-1"
           />
-          
-          <Button
-            type="button"
-            size="sm"
-            variant="ghost"
-            onMouseDown={() => startHold(1)}
-            onMouseUp={stopHold}
-            onMouseLeave={stopHold}
-            onTouchStart={() => startHold(1)}
-            onTouchEnd={stopHold}
-            className="h-6 w-6 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/10 transition-colors"
-          >
-            <Plus className="h-3 w-3" />
-          </Button>
         </div>
       </div>
     )
@@ -527,16 +513,6 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             min={0}
             className="w-16 h-7 text-center text-sm font-bold bg-gray-800 border-indigo-500/50 text-white"
           />
-          
-          <Button
-            type="button"
-            size="sm"
-            variant="ghost"
-            onMouseDown={() => startHold(1)}
-            className="h-7 w-7 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/20 transition-colors"
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
         </div>
       </div>
     )
@@ -736,7 +712,7 @@ export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUp
             {/* Itens Apreendidos - Contadores Rápidos com Scroll */}
             <div className="space-y-3">
               <h3 className="text-lg font-bold dark-highlight flex items-center gap-2">
-                📋 Itens Específicos (clique +/- ou digite)
+                📋 Itens Específicos (digite ou use -)
                 <Badge className="bg-gray-500/20 text-gray-400 text-xs">Detalhado</Badge>
               </h3>
               <p className="text-xs dark-text-soft">💡 Role dentro dos cards para ver mais opções. Use apenas se precisar especificar itens exatos.</p>
