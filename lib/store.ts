@@ -293,6 +293,14 @@ export const useOccurrenceStore = create<OccurrenceStore>((set, get) => ({
         .replace("{responsavel}", "Sistema Automatizado")
         .replace("{data_relatorio}", new Date().toLocaleDateString("pt-BR"))
 
+      // Process conditional expressions in template
+      const article = conjugated.article
+      template = template
+        .replace(/\{article === 'os' \? 'os' : 'o'\}/g, article === 'os' ? 'os' : 'o')
+        .replace(/\{article === 'os' \? 'os mesmos ficaram' : 'o mesmo ficou'\}/g, 
+          article === 'os' ? 'os mesmos ficaram' : 'o mesmo ficou')
+        .replace(/\{article === 'os' \? 's' : ''\}/g, article === 'os' ? 's' : '')
+
       set({ generatedReport: template })
     } catch (error) {
       console.error("Erro ao gerar relatório:", error)
