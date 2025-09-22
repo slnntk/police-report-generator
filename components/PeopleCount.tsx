@@ -17,7 +17,7 @@ interface PeopleCountProps {
   min?: number
   max?: number
   showSlider?: boolean
-  variant?: 'select' | 'slider' | 'both'
+  variant?: 'select' | 'slider' | 'both' | 'compact'
 }
 
 // Enhanced helper function for Portuguese pluralization
@@ -173,9 +173,40 @@ export function PeopleCount({
     </div>
   )
 
+  const renderCompact = () => (
+    <div className="flex items-center justify-between p-2 bg-gray-800/30 rounded border border-gray-700/50">
+      <div className="flex items-center gap-2">
+        {value === 1 ? <User className="h-4 w-4" /> : <Users className="h-4 w-4" />}
+        <span className="text-sm dark-text">{value} {getPersonText(value)}</span>
+      </div>
+      
+      <div className="flex items-center gap-2">
+        <Badge variant="outline" className="text-xs">
+          {getSuspectText(value)}
+        </Badge>
+        
+        <Select value={value.toString()} onValueChange={handleSelectChange}>
+          <SelectTrigger className="w-20 h-8 text-xs">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: max - min + 1 }, (_, i) => {
+              const num = min + i
+              return (
+                <SelectItem key={num} value={num.toString()}>
+                  {num}
+                </SelectItem>
+              )
+            })}
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
+  )
+
   return (
-    <div className="space-y-3">
-      {label && (
+    <div className="space-y-2">
+      {label && variant !== 'compact' && (
         <div className="flex items-center justify-between">
           <Label className="text-sm font-semibold dark-text">
             {label}
@@ -187,19 +218,23 @@ export function PeopleCount({
         </div>
       )}
       
-      <div className="space-y-3 p-3 bg-gray-800/30 rounded-lg border border-gray-700/50">
-        {(variant === 'select' || variant === 'both') && renderSelect()}
-        {(variant === 'slider' || variant === 'both') && showSlider && renderSlider()}
-        
-        {/* Preview of how it affects the report */}
-        <div className="mt-3 p-2 bg-blue-500/10 rounded border border-blue-500/30">
-          <div className="text-xs text-blue-300 font-medium mb-1">💡 Como aparecerá no relatório:</div>
-          <div className="text-xs text-gray-300">
-            "O{value === 1 ? '' : 's'} {getSuspectText(value)} {value === 1 ? 'foi' : 'foram'} 
-            {value === 1 ? ' detido' : ' detidos'} e {value === 1 ? 'conduzido' : 'conduzidos'} ao departamento policial."
+      {variant === 'compact' ? (
+        renderCompact()
+      ) : (
+        <div className="space-y-3 p-3 bg-gray-800/30 rounded-lg border border-gray-700/50">
+          {(variant === 'select' || variant === 'both') && renderSelect()}
+          {(variant === 'slider' || variant === 'both') && showSlider && renderSlider()}
+          
+          {/* Preview of how it affects the report */}
+          <div className="mt-3 p-2 bg-blue-500/10 rounded border border-blue-500/30">
+            <div className="text-xs text-blue-300 font-medium mb-1">💡 Como aparecerá no relatório:</div>
+            <div className="text-xs text-gray-300">
+              "O{value === 1 ? '' : 's'} {getSuspectText(value)} {value === 1 ? 'foi' : 'foram'} 
+              {value === 1 ? ' detido' : ' detidos'} e {value === 1 ? 'conduzido' : 'conduzidos'} ao departamento policial."
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
