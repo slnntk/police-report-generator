@@ -162,20 +162,26 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
     }
     
     autoSaveTimeoutRef.current = setTimeout(() => {
+      // Only save if there's meaningful data
+      const hasData = formData.tipo_crime || formData.local_inicio || formData.local_prisao || formData.observacoes
+      if (!hasData) return
+      
       setIsSaving(true)
       try {
         localStorage.setItem('police-form-data', JSON.stringify(formData))
         setTimeout(() => {
           setIsSaving(false)
-          if (Object.keys(formData).some(key => formData[key as keyof typeof formData])) {
+          // Only show notification once per session to avoid spam
+          if (!sessionStorage.getItem('auto-save-notified')) {
             formSaved()
+            sessionStorage.setItem('auto-save-notified', 'true')
           }
         }, 500)
       } catch (err) {
         setIsSaving(false)
         error('Erro ao salvar', 'Não foi possível salvar os dados automaticamente')
       }
-    }, 2000)
+    }, 3000) // Increased delay to 3 seconds
   }, [formData, formSaved, error])
 
   useEffect(() => {
@@ -188,7 +194,12 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
   }, [autoSave])
 
   useEffect(() => {
+    let hasLoaded = false
+    
     const loadData = async () => {
+      if (hasLoaded) return
+      hasLoaded = true
+      
       setIsLoading(true)
       try {
         // Try to load saved form data
@@ -220,9 +231,11 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
             const ferramentasData = await responses[0].value.json()
             setFerramentas(ferramentasData.ferramentas || fallbackData.ferramentas)
           } catch {
+            setFerramentas(fallbackData.ferramentas)
             hasErrors = true
           }
         } else {
+          setFerramentas(fallbackData.ferramentas)
           hasErrors = true
         }
 
@@ -231,9 +244,11 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
             const entorpecentesData = await responses[1].value.json()
             setEntorpecentes(entorpecentesData.entorpecentes || fallbackData.entorpecentes)
           } catch {
+            setEntorpecentes(fallbackData.entorpecentes)
             hasErrors = true
           }
         } else {
+          setEntorpecentes(fallbackData.entorpecentes)
           hasErrors = true
         }
 
@@ -242,9 +257,11 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
             const municoesData = await responses[2].value.json()
             setMunicoes(municoesData.municoes || fallbackData.municoes)
           } catch {
+            setMunicoes(fallbackData.municoes)
             hasErrors = true
           }
         } else {
+          setMunicoes(fallbackData.municoes)
           hasErrors = true
         }
 
@@ -253,9 +270,11 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
             const produtosData = await responses[3].value.json()
             setProdutos(produtosData.produtos || fallbackData.produtos)
           } catch {
+            setProdutos(fallbackData.produtos)
             hasErrors = true
           }
         } else {
+          setProdutos(fallbackData.produtos)
           hasErrors = true
         }
 
@@ -264,9 +283,11 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
             const armasData = await responses[4].value.json()
             setArmas(armasData.armas || fallbackData.armas)
           } catch {
+            setArmas(fallbackData.armas)
             hasErrors = true
           }
         } else {
+          setArmas(fallbackData.armas)
           hasErrors = true
         }
 
@@ -275,9 +296,11 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
             const templatesData = await responses[5].value.json()
             setTiposInicio(templatesData.tipos_inicio || fallbackData.tipos_inicio)
           } catch {
+            setTiposInicio(fallbackData.tipos_inicio)
             hasErrors = true
           }
         } else {
+          setTiposInicio(fallbackData.tipos_inicio)
           hasErrors = true
         }
 
@@ -290,6 +313,12 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
       } catch (err) {
         console.error("Erro ao carregar dados:", err)
         setIsOnline(false)
+        setFerramentas(fallbackData.ferramentas)
+        setEntorpecentes(fallbackData.entorpecentes)
+        setMunicoes(fallbackData.municoes)
+        setProdutos(fallbackData.produtos)
+        setArmas(fallbackData.armas)
+        setTiposInicio(fallbackData.tipos_inicio)
         connectionError()
       } finally {
         setIsLoading(false)
@@ -297,7 +326,10 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
     }
 
     loadData()
-  }, [success, connectionError])
+  }, [])
+
+  // Check if required fields are filled
+  const isFormValid = formData.tipo_crime && formData.local_inicio && formData.local_prisao
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -376,7 +408,7 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
     }
 
     // Validate required fields
-    const requiredFields = ['crime', 'local_inicio', 'local_prisao']
+    const requiredFields = ['tipo_crime', 'local_inicio', 'local_prisao']
     const missingFields = requiredFields.filter(field => !updatedFormData[field as keyof typeof updatedFormData])
     
     if (missingFields.length > 0) {
@@ -1002,7 +1034,7 @@ export function CompactOccurrenceForm({ onFormSubmit, showResults, onCalculation
           <Button
             type="submit"
             onClick={handleSubmit}
-            disabled={isSaving || isLoading}
+            disabled={isSaving || isLoading || !isFormValid}
             className="w-full btn-primary-dark py-2 text-sm font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSaving ? (
