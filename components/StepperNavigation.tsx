@@ -55,7 +55,7 @@ export function StepperNavigation({ currentStep, onStepChange, hasReport }: Step
           <div className="relative w-10 h-10">
             <Image
               src="/images/emblema-policia.png"
-              alt="Emblema 1º BPM-AP"
+              alt="Emblema da Polícia Militar do 1º BPM-AP"
               width={40}
               height={40}
               className="rounded-lg shadow-md"

@@ -9,7 +9,7 @@ export function Footer() {
           <div className="relative w-12 h-12 gradient-primary rounded-full flex items-center justify-center shadow-lg p-1">
             <Image
                 src="/images/emblema-policia.png"
-                alt="Emblema 1º BPM-AP"
+                alt="Emblema da Polícia Militar do 1º BPM-AP"
                 width={40}
                 height={40}
                 className="rounded-lg"

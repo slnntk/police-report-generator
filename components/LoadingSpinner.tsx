@@ -10,7 +10,7 @@ export function LoadingSpinner() {
           <div className="w-24 h-24 gradient-primary rounded-full flex items-center justify-center shadow-2xl animate-pulse p-2">
             <Image
               src="/images/emblema-policia.png"
-              alt="Emblema 1º BPM-AP"
+              alt="Emblema da Polícia Militar do 1º BPM-AP"
               width={80}
               height={80}
               className="rounded-lg"

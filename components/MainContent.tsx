@@ -122,7 +122,7 @@ export function MainContent({ activeTab, setActiveTab, onOpenSidebar }: MainCont
           <div className="relative w-8 h-8">
             <Image
               src="/images/emblema-policia.png"
-              alt="Emblema 1º BPM-AP"
+              alt="Emblema da Polícia Militar do 1º BPM-AP"
               width={32}
               height={32}
               className="rounded shadow-sm"
