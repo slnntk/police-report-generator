@@ -68,7 +68,20 @@ const fallbackData = {
   ],
 }
 
+import { CompactOccurrenceForm } from "./CompactOccurrenceForm"
+
 export function QuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate }: QuickOccurrenceFormProps) {
+  // Use the compact form for better UX
+  return (
+    <CompactOccurrenceForm 
+      onFormSubmit={onFormSubmit}
+      showResults={showResults}
+      onCalculationUpdate={onCalculationUpdate}
+    />
+  )
+}
+
+export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalculationUpdate }: QuickOccurrenceFormProps) {
   const { formData, setFormData, generateReport, calculatePenalty } = useOccurrenceStore()
   const { success, error, warning, info, formSaved, connectionError } = usePoliceToast()
 

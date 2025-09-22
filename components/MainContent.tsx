@@ -109,38 +109,38 @@ export function MainContent({ activeTab, setActiveTab, onOpenSidebar }: MainCont
   return (
     <div className="flex-1 flex flex-col gradient-background">
       {/* Mobile header */}
-      <div className="lg:hidden flex items-center justify-between p-4 border-b dark-border dark-bg">
+      <div className="lg:hidden flex items-center justify-between p-3 border-b dark-border dark-bg">
         <Button
           variant="ghost"
           size="sm"
           onClick={onOpenSidebar}
-          className="dark-text hover:dark-secondary-hover"
+          className="dark-text hover:dark-secondary-hover h-8 w-8 p-0"
         >
-          <Menu className="h-6 w-6" />
+          <Menu className="h-5 w-5" />
         </Button>
         <div className="flex items-center gap-2">
-          <div className="relative w-8 h-8">
+          <div className="relative w-6 h-6">
             <Image
               src="/images/emblema-policia.png"
               alt="Emblema 1º BPM-AP"
-              width={32}
-              height={32}
+              width={24}
+              height={24}
               className="rounded shadow-sm"
               priority
             />
           </div>
           <div>
-            <h1 className="text-sm font-bold dark-text">1º BPM-AP</h1>
+            <h1 className="text-xs font-bold dark-text">1º BPM-AP</h1>
             <p className="text-xs dark-highlight">Cidade Alta</p>
           </div>
         </div>
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col p-4 lg:p-6">
+      <div className="flex-1 flex flex-col p-3 lg:p-4">
         <div className="max-w-6xl mx-auto flex-1 flex flex-col w-full">
           {/* Navegação por etapas */}
-          <div className="mb-4 lg:mb-6">
+          <div className="mb-3">
             <StepperNavigation 
               currentStep={currentStep} 
               onStepChange={handleStepChange} 
