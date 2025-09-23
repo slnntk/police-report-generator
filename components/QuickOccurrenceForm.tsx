@@ -532,12 +532,11 @@ export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalcu
     }, [])
 
     return (
-      <div className="flex items-center justify-between p-2 dark-secondary-bg rounded border dark-border hover:bg-gray-700/50 transition-colors">
+      <div className="flex items-center justify-between p-1.5 dark-secondary-bg rounded border dark-border hover:bg-gray-700/50 transition-colors">
         <div className="flex-1 min-w-0">
-          <span className="text-sm font-medium dark-text truncate">{item.nome}</span>
-          {item.categoria && <span className="text-xs dark-text-soft ml-2">({item.categoria})</span>}
+          <span className="text-xs font-medium dark-text truncate block">{item.nome}</span>
         </div>
-        <div className="flex items-center gap-2 ml-2">
+        <div className="flex items-center gap-1 ml-2">
           <Button
             type="button"
             size="sm"
@@ -548,17 +547,17 @@ export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalcu
             onTouchStart={(e) => startHold(-1, e)}
             onTouchEnd={stopHold}
             disabled={count === 0}
-            className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/20 active:bg-red-500/30 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-5 w-5 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/20 active:bg-red-500/30 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
             title="Diminuir quantidade"
           >
-            <Minus className="h-4 w-4" />
+            <Minus className="h-3 w-3" />
           </Button>
           
           <FixedNumericInput
             value={count}
             onChange={(value) => setCounterValue(category, item.id, value)}
             min={0}
-            className="w-16 h-8 text-center text-sm font-bold bg-gray-800 border-gray-600 text-white focus:ring-2 focus:ring-blue-500/50 transition-all"
+            className="w-10 h-5 text-center text-xs font-bold bg-gray-800 border-gray-600 text-white focus:ring-1 focus:ring-blue-500/50 transition-all"
           />
           
           <Button
@@ -570,10 +569,10 @@ export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalcu
             onMouseLeave={stopHold}
             onTouchStart={(e) => startHold(1, e)}
             onTouchEnd={stopHold}
-            className="h-8 w-8 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/20 active:bg-green-500/30 transition-all duration-150"
+            className="h-5 w-5 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/20 active:bg-green-500/30 transition-all duration-150"
             title="Aumentar quantidade"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3 w-3" />
           </Button>
         </div>
       </div>
@@ -635,12 +634,12 @@ export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalcu
     }, [])
 
     return (
-      <div className="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-lg border border-indigo-500/30">
+      <div className="flex items-center justify-between p-2 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded border border-indigo-500/30">
         <div className="flex items-center gap-2">
-          <span className="text-lg">{emoji}</span>
-          <span className="text-sm font-semibold text-indigo-300">{title}</span>
+          <span className="text-sm">{emoji}</span>
+          <span className="text-xs font-semibold text-indigo-300">{title}</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Button
             type="button"
             size="sm"
@@ -651,17 +650,17 @@ export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalcu
             onTouchStart={(e) => startHold(-1, e)}
             onTouchEnd={stopHold}
             disabled={count === 0}
-            className="h-9 w-9 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/25 active:bg-red-500/35 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-6 w-6 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/25 active:bg-red-500/35 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
             title="Diminuir quantidade"
           >
-            <Minus className="h-5 w-5" />
+            <Minus className="h-3 w-3" />
           </Button>
           
           <FixedNumericInput
             value={count}
             onChange={(value) => setGenericCounterValue(category, value)}
             min={0}
-            className="w-20 h-9 text-center text-sm font-bold bg-gray-800 border-indigo-500/50 text-white focus:ring-2 focus:ring-indigo-500/50 transition-all"
+            className="w-14 h-6 text-center text-xs font-bold bg-gray-800 border-indigo-500/50 text-white focus:ring-2 focus:ring-indigo-500/50 transition-all"
           />
           
           <Button
@@ -673,10 +672,10 @@ export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalcu
             onMouseLeave={stopHold}
             onTouchStart={(e) => startHold(1, e)}
             onTouchEnd={stopHold}
-            className="h-9 w-9 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/25 active:bg-green-500/35 transition-all duration-150"
+            className="h-6 w-6 p-0 text-green-400 hover:text-green-300 hover:bg-green-500/25 active:bg-green-500/35 transition-all duration-150"
             title="Aumentar quantidade"
           >
-            <Plus className="h-5 w-5" />
+            <Plus className="h-3 w-3" />
           </Button>
         </div>
       </div>
@@ -684,7 +683,7 @@ export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalcu
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-4">
+    <div className="w-full max-w-7xl mx-auto">
       {/* Loading State */}
       {isLoading && (
         <InlineLoader 
@@ -704,7 +703,7 @@ export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalcu
 
       {/* Indicador de status */}
       {!isOnline && (
-        <Card className="bg-yellow-500/10 border border-yellow-500/30">
+        <Card className="bg-yellow-500/10 border border-yellow-500/30 mb-4">
           <CardContent className="p-3">
             <div className="flex items-center gap-2">
               <WifiOff className="h-4 w-4 text-yellow-400" />
@@ -723,346 +722,334 @@ export function OriginalQuickOccurrenceForm({ onFormSubmit, showResults, onCalcu
             {isOnline && <Wifi className="h-4 w-4 text-green-400" />}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 flex-1 overflow-y-auto p-4">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Tipo de início - Grid de 6 colunas para acomodar todos os tipos */}
-            <div className="space-y-2">
-              <Label className="text-sm font-semibold dark-text">Como iniciou?</Label>
-              <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
-                {tiposInicio.map((tipo) => (
-                  <Button
-                    key={tipo.id}
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => updateFormDataWithRegeneration("tipo_inicio", tipo.id)}
-                    className={`h-12 flex flex-col items-center gap-1 text-xs transition-all ${
-                      formData.tipo_inicio === tipo.id
-                        ? "gradient-primary dark-cta-text shadow-md"
-                        : "dark-secondary-bg dark-text hover:dark-hover"
-                    }`}
-                  >
-                    <span className="text-base">{tipo.emoji}</span>
-                    <span className="font-medium leading-tight text-center">{tipo.nome}</span>
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            {/* Dados básicos - Grid compacto com autocompletes */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <IntelligentAutocomplete
-                value={formData.tipo_crime}
-                onChange={(value) => updateFormDataWithRegeneration("tipo_crime", value)}
-                options={crimes}
-                placeholder="Ex: Tráfico de Drogas"
-                label="Crime"
-                required
-                fieldType="crime"
-                allowCustom={true}
-                emptyMessage="Nenhum crime encontrado"
-              />
-              
-              <IntelligentAutocomplete
-                value={formData.local_inicio}
-                onChange={(value) => updateFormDataWithRegeneration("local_inicio", value)}
-                options={locations}
-                placeholder="Ex: Los Santos Central"
-                label="Local de Início"
-                required
-                fieldType="location"
-                allowCustom={true}
-                emptyMessage="Nenhum local encontrado"
-              />
-              
-              <IntelligentAutocomplete
-                value={formData.local_prisao}
-                onChange={(value) => updateFormDataWithRegeneration("local_prisao", value)}
-                options={locations}
-                placeholder="Ex: Próximo a Arcadius"
-                label="Local de Prisão"
-                required
-                fieldType="location"
-                allowCustom={true}
-                emptyMessage="Nenhum local encontrado"
-              />
-              
-              <IntelligentAutocomplete
-                value={formData.veiculo}
-                onChange={(value) => updateFormDataWithRegeneration("veiculo", value)}
-                options={[]} // Empty array for now, can add vehicle data later
-                placeholder="Ex: Elegy RH5 Preto - A1BC1234"
-                label="Veículo"
-                fieldType="location"
-                allowCustom={true}
-                emptyMessage="Digite o veículo"
-              />
-            </div>
-
-            {/* Número de pessoas envolvidas */}
-            <div>
-              <PeopleCount
-                value={formData.numero_pessoas_envolvidas}
-                onChange={(value) => updateFormDataWithRegeneration("numero_pessoas_envolvidas", value)}
-                required={true}
-                min={1}
-                max={10}
-                variant="both"
-              />
-            </div>
-
-            {/* Desobediência - Slider */}
-            <div className="space-y-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex-shrink-0">
-              <div className="flex items-center gap-3">
-                <Checkbox
-                  checked={formData.desobediencia}
-                  onCheckedChange={(checked) => {
-                    updateFormDataWithRegeneration("desobediencia", checked)
-                    if (!checked) {
-                      setDesobedienciaPenalty([30]) // Reset to default when unchecked
-                    }
-                  }}
-                  className="border-red-400"
-                />
-                <AlertTriangle className="h-5 w-5 text-red-400" />
-                <div className="flex-1">
-                  <span className="text-sm font-semibold text-red-300">Desobediência</span>
-                </div>
-                {formData.desobediencia && (
-                  <Badge className="bg-red-500 text-white text-xs">+{desobedienciaPenalty[0]} meses</Badge>
-                )}
-              </div>
-              
-              {formData.desobediencia && (
+        <CardContent className="p-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Layout em duas colunas principais */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Coluna esquerda - Dados básicos e configurações */}
+              <div className="space-y-4">
+                {/* Tipo de início - Grid mais compacto */}
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs text-red-300">
-                    <span>Penalidade: {desobedienciaPenalty[0]} meses</span>
-                    <div className="flex gap-4">
-                      <span>Min: 25</span>
-                      <span>Max: 50</span>
-                    </div>
+                  <Label className="text-sm font-semibold dark-text">Como iniciou?</Label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {tiposInicio.map((tipo) => (
+                      <Button
+                        key={tipo.id}
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => updateFormDataWithRegeneration("tipo_inicio", tipo.id)}
+                        className={`h-10 flex items-center gap-2 text-xs transition-all ${
+                          formData.tipo_inicio === tipo.id
+                            ? "gradient-primary dark-cta-text shadow-md"
+                            : "dark-secondary-bg dark-text hover:dark-hover"
+                        }`}
+                      >
+                        <span className="text-sm">{tipo.emoji}</span>
+                        <span className="font-medium leading-tight truncate">{tipo.nome}</span>
+                      </Button>
+                    ))}
                   </div>
-                  <Slider
-                    value={desobedienciaPenalty}
-                    onValueChange={setDesobedienciaPenalty}
-                    max={50}
-                    min={25}
-                    step={1}
-                    className="w-full"
+                </div>
+
+                {/* Dados básicos - Layout vertical mais compacto */}
+                <div className="space-y-3">
+                  <IntelligentAutocomplete
+                    value={formData.tipo_crime}
+                    onChange={(value) => updateFormDataWithRegeneration("tipo_crime", value)}
+                    options={crimes}
+                    placeholder="Ex: Tráfico de Drogas"
+                    label="Crime"
+                    required
+                    fieldType="crime"
+                    allowCustom={true}
+                    emptyMessage="Nenhum crime encontrado"
+                  />
+                  
+                  <IntelligentAutocomplete
+                    value={formData.local_inicio}
+                    onChange={(value) => updateFormDataWithRegeneration("local_inicio", value)}
+                    options={locations}
+                    placeholder="Ex: Los Santos Central"
+                    label="Local de Início"
+                    required
+                    fieldType="location"
+                    allowCustom={true}
+                    emptyMessage="Nenhum local encontrado"
+                  />
+                  
+                  <IntelligentAutocomplete
+                    value={formData.local_prisao}
+                    onChange={(value) => updateFormDataWithRegeneration("local_prisao", value)}
+                    options={locations}
+                    placeholder="Ex: Próximo a Arcadius"
+                    label="Local de Prisão"
+                    required
+                    fieldType="location"
+                    allowCustom={true}
+                    emptyMessage="Nenhum local encontrado"
+                  />
+                  
+                  <IntelligentAutocomplete
+                    value={formData.veiculo}
+                    onChange={(value) => updateFormDataWithRegeneration("veiculo", value)}
+                    options={[]}
+                    placeholder="Ex: Elegy RH5 Preto - A1BC1234"
+                    label="Veículo"
+                    fieldType="location"
+                    allowCustom={true}
+                    emptyMessage="Digite o veículo"
                   />
                 </div>
-              )}
-            </div>
 
-            {/* Quantidades Genéricas - Seção rápida para especificar apenas totais */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold dark-highlight flex items-center gap-2">
-                🔢 Quantidades Genéricas
-                <Badge className="bg-indigo-500/20 text-indigo-400 text-xs">Opcional</Badge>
-              </h3>
-              <p className="text-xs dark-text-soft">
-                💡 Use esta seção quando não precisar especificar itens exatos. Ex: "30 entorpecentes" em vez de "10 maconha + 10 cocaína + 10 crack"
-              </p>
+                {/* Número de pessoas envolvidas */}
+                <div>
+                  <PeopleCount
+                    value={formData.numero_pessoas_envolvidas}
+                    onChange={(value) => updateFormDataWithRegeneration("numero_pessoas_envolvidas", value)}
+                    required={true}
+                    min={1}
+                    max={10}
+                    variant="both"
+                  />
+                </div>
+
+                {/* Desobediência - Mais compacto */}
+                <div className="space-y-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <Checkbox
+                      checked={formData.desobediencia}
+                      onCheckedChange={(checked) => {
+                        updateFormDataWithRegeneration("desobediencia", checked)
+                        if (!checked) {
+                          setDesobedienciaPenalty([30])
+                        }
+                      }}
+                      className="border-red-400"
+                    />
+                    <AlertTriangle className="h-4 w-4 text-red-400" />
+                    <div className="flex-1">
+                      <span className="text-sm font-semibold text-red-300">Desobediência</span>
+                    </div>
+                    {formData.desobediencia && (
+                      <Badge className="bg-red-500 text-white text-xs">+{desobedienciaPenalty[0]} meses</Badge>
+                    )}
+                  </div>
+                  
+                  {formData.desobediencia && (
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between text-xs text-red-300">
+                        <span>Penalidade: {desobedienciaPenalty[0]} meses</span>
+                        <div className="flex gap-4">
+                          <span>Min: 25</span>
+                          <span>Max: 50</span>
+                        </div>
+                      </div>
+                      <Slider
+                        value={desobedienciaPenalty}
+                        onValueChange={setDesobedienciaPenalty}
+                        max={50}
+                        min={25}
+                        step={1}
+                        className="w-full"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Valores monetários */}
+                <div className="space-y-3">
+                  <FixedNumericInput
+                    value={formData.dinheiro_ilicito}
+                    onChange={(value) => updateFormDataWithRegeneration("dinheiro_ilicito", value)}
+                    label="Dinheiro Ilícito"
+                    placeholder="0,00"
+                    prefix="R$"
+                    step={0.01}
+                    min={0}
+                    className="h-9"
+                  />
+                  
+                  <FixedNumericInput
+                    value={formData.multas_pendentes}
+                    onChange={(value) => updateFormDataWithRegeneration("multas_pendentes", value)}
+                    label="Multas Pendentes"
+                    placeholder="0,00"
+                    prefix="R$"
+                    step={0.01}
+                    min={0}
+                    className="h-9"
+                  />
+                </div>
+
+                {/* Observações */}
+                <div>
+                  <label className="text-sm font-semibold dark-text">Observações</label>
+                  <Textarea
+                    value={formData.observacoes}
+                    onChange={(e) => updateFormDataWithRegeneration("observacoes", e.target.value)}
+                    placeholder="Informações adicionais..."
+                    rows={2}
+                    className="textarea-dark mt-1"
+                  />
+                </div>
+              </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <GenericCounter 
-                  category="entorpecentes_genericos" 
-                  title="Entorpecentes Genéricos"
-                  emoji="💊"
-                />
-                <GenericCounter 
-                  category="ferramentas_genericas" 
-                  title="Ferramentas Genéricas"
-                  emoji="🔧"
-                />
-                <GenericCounter 
-                  category="municoes_genericas" 
-                  title="Munições Genéricas"
-                  emoji="🔫"
-                />
-                <GenericCounter 
-                  category="produtos_genericos" 
-                  title="Produtos Genéricos"
-                  emoji="📱"
-                />
-                <GenericCounter 
-                  category="armas_genericas" 
-                  title="Armas Genéricas"
-                  emoji="🎯"
-                />
+              {/* Coluna direita - Quantidades e Itens */}
+              <div className="space-y-4">
+                {/* Quantidades Genéricas - Compactas */}
+                <div className="space-y-3">
+                  <h3 className="text-base font-bold dark-highlight flex items-center gap-2">
+                    🔢 Quantidades Genéricas
+                    <Badge className="bg-indigo-500/20 text-indigo-400 text-xs">Rápido</Badge>
+                  </h3>
+                  <p className="text-xs dark-text-soft">
+                    💡 Para totais gerais sem especificar itens
+                  </p>
+                  
+                  <div className="space-y-2">
+                    <GenericCounter 
+                      category="entorpecentes_genericos" 
+                      title="Entorpecentes"
+                      emoji="💊"
+                    />
+                    <GenericCounter 
+                      category="ferramentas_genericas" 
+                      title="Ferramentas"
+                      emoji="🔧"
+                    />
+                    <GenericCounter 
+                      category="municoes_genericas" 
+                      title="Munições"
+                      emoji="🔫"
+                    />
+                    <GenericCounter 
+                      category="produtos_genericos" 
+                      title="Produtos"
+                      emoji="📱"
+                    />
+                    <GenericCounter 
+                      category="armas_genericas" 
+                      title="Armas"
+                      emoji="🎯"
+                    />
+                  </div>
+                </div>
+
+                {/* Itens Específicos - Compactos */}
+                <div className="space-y-3">
+                  <h3 className="text-base font-bold dark-highlight flex items-center gap-2">
+                    📋 Itens Específicos
+                    <Badge className="bg-gray-500/20 text-gray-400 text-xs">Detalhado</Badge>
+                  </h3>
+                  <p className="text-xs dark-text-soft">💡 Scroll interno para mais opções</p>
+
+                  <div className="grid grid-cols-1 gap-3">
+                    {/* Ferramentas */}
+                    <Card className="police-card-compact">
+                      <CardHeader className="pb-1">
+                        <CardTitle className="text-xs dark-text flex items-center gap-1">
+                          🔧 Ferramentas
+                          <Badge className="bg-blue-500/20 text-blue-400 text-xs">{ferramentas.length}</Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="max-h-20 overflow-y-auto px-2 pb-2">
+                          <div className="space-y-1">
+                            {ferramentas.slice(0, 3).map((item) => (
+                              <QuickCounter key={item.id} category="ferramentas" item={item} />
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Entorpecentes */}
+                    <Card className="police-card-compact">
+                      <CardHeader className="pb-1">
+                        <CardTitle className="text-xs dark-text flex items-center gap-1">
+                          💊 Entorpecentes
+                          <Badge className="bg-purple-500/20 text-purple-400 text-xs">{entorpecentes.length}</Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="max-h-20 overflow-y-auto px-2 pb-2">
+                          <div className="space-y-1">
+                            {entorpecentes.slice(0, 3).map((item) => (
+                              <QuickCounter key={item.id} category="entorpecentes" item={item} />
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Armas */}
+                    <Card className="police-card-compact">
+                      <CardHeader className="pb-1">
+                        <CardTitle className="text-xs dark-text flex items-center gap-1">
+                          🎯 Armas
+                          <Badge className="bg-red-500/20 text-red-400 text-xs">{armas.length}</Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="max-h-20 overflow-y-auto px-2 pb-2">
+                          <div className="space-y-1">
+                            {armas.slice(0, 3).map((item) => (
+                              <QuickCounter key={item.id} category="armas" item={item} />
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Produtos */}
+                    <Card className="police-card-compact">
+                      <CardHeader className="pb-1">
+                        <CardTitle className="text-xs dark-text flex items-center gap-1">
+                          📱 Produtos
+                          <Badge className="bg-green-500/20 text-green-400 text-xs">{produtos.length}</Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="max-h-20 overflow-y-auto px-2 pb-2">
+                          <div className="space-y-1">
+                            {produtos.slice(0, 3).map((item) => (
+                              <QuickCounter key={item.id} category="produtos" item={item} />
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Itens Apreendidos - Contadores Rápidos com Scroll */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold dark-highlight flex items-center gap-2">
-                📋 Itens Específicos (clique +/- ou digite)
-                <Badge className="bg-gray-500/20 text-gray-400 text-xs">Detalhado</Badge>
-              </h3>
-              <p className="text-xs dark-text-soft">💡 Role dentro dos cards para ver mais opções. Use apenas se precisar especificar itens exatos.</p>
-
-              <div className="items-grid">
-                {/* Ferramentas */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm dark-text flex items-center gap-2 flex-wrap">
-                      🔧 Ferramentas
-                      <span className="text-xs dark-text-soft">(10 + itens×10)</span>
-                      <Badge className="bg-blue-500/20 text-blue-400 text-xs">{ferramentas.length} opções</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="max-h-48 overflow-y-auto scrollbar-thin px-3 pb-3">
-                      <div className="space-y-2">
-                        {ferramentas.map((item) => (
-                          <QuickCounter key={item.id} category="ferramentas" item={item} />
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Entorpecentes */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm dark-text flex items-center gap-2 flex-wrap">
-                      💊 Entorpecentes
-                      <span className="text-xs dark-text-soft">(15 + itens÷2)</span>
-                      <Badge className="bg-purple-500/20 text-purple-400 text-xs">{entorpecentes.length} opções</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="max-h-48 overflow-y-auto scrollbar-thin px-3 pb-3">
-                      <div className="space-y-2">
-                        {entorpecentes.map((item) => (
-                          <QuickCounter key={item.id} category="entorpecentes" item={item} />
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Munições */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm dark-text flex items-center gap-2 flex-wrap">
-                      🔫 Munições
-                      <span className="text-xs dark-text-soft">(15 + grupos/20×5)</span>
-                      <Badge className="bg-yellow-500/20 text-yellow-400 text-xs">{municoes.length} opções</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="max-h-48 overflow-y-auto scrollbar-thin px-3 pb-3">
-                      <div className="space-y-2">
-                        {municoes.map((item) => (
-                          <QuickCounter key={item.id} category="municoes" item={item} />
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Armas */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm dark-text flex items-center gap-2 flex-wrap">
-                      🎯 Armas
-                      <span className="text-xs dark-text-soft">(20 + armas×15)</span>
-                      <Badge className="bg-red-500/20 text-red-400 text-xs">{armas.length} opções</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="max-h-48 overflow-y-auto scrollbar-thin px-3 pb-3">
-                      <div className="space-y-2">
-                        {armas.map((item) => (
-                          <QuickCounter key={item.id} category="armas" item={item} />
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Produtos */}
-                <Card className="police-card-compact">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm dark-text flex items-center gap-2 flex-wrap">
-                      📱 Produtos
-                      <span className="text-xs dark-text-soft">(10 + itens×2)</span>
-                      <Badge className="bg-green-500/20 text-green-400 text-xs">{produtos.length} opções</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="max-h-48 overflow-y-auto scrollbar-thin px-3 pb-3">
-                      <div className="space-y-2">
-                        {produtos.map((item) => (
-                          <QuickCounter key={item.id} category="produtos" item={item} />
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+            {/* Botão de envio */}
+            <div className="pt-4 border-t dark-border">
+              <Button
+                type="submit"
+                disabled={isSaving || isLoading}
+                className="w-full btn-primary-dark py-3 text-base font-bold transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {isSaving ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Gerando...
+                  </div>
+                ) : showResults ? (
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4" />
+                    🔄 Atualizar
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <Zap className="h-4 w-4" />
+                    ⚡ Gerar Relatório
+                  </div>
+                )}
+              </Button>
             </div>
-
-            {/* Valores monetários - Inline com inputs numéricos melhorados */}
-            <div className="grid grid-cols-2 gap-4">
-              <FixedNumericInput
-                value={formData.dinheiro_ilicito}
-                onChange={(value) => updateFormDataWithRegeneration("dinheiro_ilicito", value)}
-                label="Dinheiro Ilícito"
-                placeholder="0,00"
-                prefix="R$"
-                step={0.01}
-                min={0}
-                className="h-9"
-              />
-              
-              <FixedNumericInput
-                value={formData.multas_pendentes}
-                onChange={(value) => updateFormDataWithRegeneration("multas_pendentes", value)}
-                label="Multas Pendentes"
-                placeholder="0,00"
-                prefix="R$"
-                step={0.01}
-                min={0}
-                className="h-9"
-              />
-            </div>
-
-            {/* Observações - Compacto */}
-            <div>
-              <label className="text-sm font-semibold dark-text">Observações</label>
-              <Textarea
-                value={formData.observacoes}
-                onChange={(e) => updateFormDataWithRegeneration("observacoes", e.target.value)}
-                placeholder="Informações adicionais..."
-                rows={3}
-                className="textarea-dark mt-1"
-              />
-            </div>
-
-            <Button
-              type="submit"
-              disabled={isSaving || isLoading}
-              className="w-full btn-primary-dark py-3 text-base font-bold transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            >
-              {isSaving ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Gerando...
-                </div>
-              ) : showResults ? (
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4" />
-                  🔄 Atualizar
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <Zap className="h-4 w-4" />
-                  ⚡ Gerar Relatório
-                </div>
-              )}
-            </Button>
           </form>
         </CardContent>
       </Card>
